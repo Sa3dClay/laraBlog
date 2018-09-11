@@ -110,6 +110,9 @@ $defult-pCol: #636b6f;
         &:hover i { transition-delay: 0.4s; opacity: 1; }
     }
 }
+#dislike {
+    display: none;
+}
 /* end post */
 
 /* str Dashboard card */
@@ -174,5 +177,11 @@ $defult-pCol: #636b6f;
     .navbar-dark .navbar-nav .nav-link::before {
         padding-right: 0.6rem;
         padding-left: 0.6rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        padding: 10px 0;
     }
 }

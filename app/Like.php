@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
+class Like extends Model
 {
     // Table Name
-    protected $table = 'posts';
+    protected $table = 'likes';
     // Primary Key
     public $primaryKey = 'id';
     // Timestamps
@@ -17,7 +17,7 @@ class Post extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function likes() {
-        return $this->hasMany('App\Like');
+    public function post() {
+        return $this->belongsTo('App\Post');
     }
 }

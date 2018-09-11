@@ -23,6 +23,17 @@
         </div>
         
         @if(isset(auth()->user()->id))
+            <div class="float-left">
+                <a href="#" class="btn btn-primary" role="button" data-link="{{ url('/like') }} id="like"><i class="fas fa-thumbs-up"></i> Like</a>
+                <a href="#" class="btn btn-primary" role="button" id="dislike"><i class="fas fa-thumbs-down"></i> Dislike</a>
+                <small>Here will be the number of likes</small>
+            </div>
+            <div class="float-right">
+                <small>Here will be the number of comments</small>
+                <a href="#" class="btn btn-primary" role="button" id="comm"><i class="fas fa-comment"></i> Comment</a>
+            </div>
+            <div class="clearfix"></div>
+            <hr />
             @if(auth()->user()->id == $post->user_id)
                 <a href="/posts/{{$post->id}}/edit" class="btn btn-success">Edit</a>
 
@@ -33,5 +44,11 @@
             @endif
         @endif
     </div>
+
+    <script>
+        var token   = '{{ Session::token() }}';
+        var likeUrl = '{{ route('like') }}';
+        var postId  = '{{ $post->id }}';
+    </script>
 
 @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use App\Like;
 use DB;
 
 class PostsController extends Controller
@@ -170,6 +171,27 @@ class PostsController extends Controller
 
         $post->delete();
 
-        return redirect('/posts')->with('success', 'Post Removed Successfully');
+        return redirect('/home')->with('success', 'Post Removed Successfully');
+    }
+
+    /**
+     * add a like to the post.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function like(Resquest $request) {
+        $post_id = $request['postId'];
+        $post = Post::find($post_id);
+        $is_like = $request['like'];
+        $user = Auth::user();
+
+        $like = new Like();
+        $like->like = $is_like;
+        $like->post_id = $post->id;
+        $like->user_id = $user->id;
+        $like->save();
+
+        return 'done';
     }
 }

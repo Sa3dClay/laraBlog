@@ -32,6 +32,7 @@
 
     <script type="text/javascript" src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/plugins.js') }}"></script>
 
     <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
     <script src="/vendor/unisharp/laravel-ckeditor/adapters/jquery.js"></script>
