@@ -24,7 +24,13 @@
         
         @if(isset(auth()->user()->id))
             <div class="float-left">
+                
+                {!! Form::open(['action' => ['PostsController@like', $post->id], 'method' => 'POST']) !!}
+                    {{ Form::submit('like', ['class' => 'btn btn-primary', 'id' => 'like']) }}
+                {!! Form::close() !!}
+                <!--
                 <a href="#" class="btn btn-primary" id="like"><i class="fas fa-thumbs-up"></i> Like</a>
+                -->
                 <a href="#" class="btn btn-primary" id="dislike"><i class="fas fa-thumbs-down"></i> Dislike</a>
                 <small>Here will be the number of likes</small>
             </div>

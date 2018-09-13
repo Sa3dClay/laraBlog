@@ -183,11 +183,9 @@ class PostsController extends Controller
     public function like(Resquest $request) {
         $post_id = $request['postId'];
         $post = Post::find($post_id);
-        $is_like = $request['like'];
         $user = Auth::user();
 
         $like = new Like();
-        $like->like = $is_like;
         $like->post_id = $post->id;
         $like->user_id = $user->id;
         $like->save();
