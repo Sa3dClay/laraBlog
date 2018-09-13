@@ -15,7 +15,7 @@ $(function(){
             data: {postId: postId, _token: token}
         })
             .done(function() {
-                //
+                console.log('done');
             });
 
     });
