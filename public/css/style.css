@@ -23,6 +23,10 @@
   position: absolute;
 }
 
+a:hover {
+  text-decoration: none;
+}
+
 /* end global */
 /* str load */
 .spinner {
@@ -199,8 +203,8 @@
 /* end Dashboard card */
 /* str extend */
 .post {
-  -webkit-box-shadow: 3px 3px 4px 4px #ccc;
-  box-shadow: 3px 3px 4px 4px #ccc;
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 18px 0 rgba(0, 0, 0, 0.18);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 18px 0 rgba(0, 0, 0, 0.18);
 }
 
 .post a:hover, .post .post-img i, .post .post-img img, .post .post-img span, .navbar-dark .navbar-nav .nav-link::before {
@@ -218,8 +222,8 @@
   color: rgba(255, 255, 255, 0.6);
   display: inline-block;
   position: relative;
-  padding: 10px 0;
-  margin: 10px;
+  padding: 5px 0;
+  margin: 8px;
 }
 
 .navbar-dark .navbar-nav .nav-link::before {
@@ -230,7 +234,7 @@
   white-space: nowrap;
   position: absolute;
   overflow: hidden;
-  padding: 10px 0;
+  padding: 5px 0;
   width: 0%;
   top: -2px;
   left: 0;

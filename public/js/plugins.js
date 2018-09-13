@@ -1,18 +1,19 @@
 $(function(){
 
-    $.ajaxSetup({
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
     $("#like").on('click', function(event) {
         event.preventDefault();
 
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }
+        });
+
         $.ajax({
-            method: 'POST',
+            type: 'POST',
             url: likeUrl,
-            data: {like: true, postId: postId, '_token': token}
+            cache: false,
+            data: {like: true, postId: postId, _token: token}
         })
             .done(function() {
                 //

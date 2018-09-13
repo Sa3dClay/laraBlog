@@ -24,8 +24,8 @@
         
         @if(isset(auth()->user()->id))
             <div class="float-left">
-                <a href="#" class="btn btn-primary" role="button" data-link="{{ url('/like') }} id="like"><i class="fas fa-thumbs-up"></i> Like</a>
-                <a href="#" class="btn btn-primary" role="button" id="dislike"><i class="fas fa-thumbs-down"></i> Dislike</a>
+                <a href="#" class="btn btn-primary" id="like"><i class="fas fa-thumbs-up"></i> Like</a>
+                <a href="#" class="btn btn-primary" id="dislike"><i class="fas fa-thumbs-down"></i> Dislike</a>
                 <small>Here will be the number of likes</small>
             </div>
             <div class="float-right">
