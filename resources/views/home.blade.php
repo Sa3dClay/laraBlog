@@ -14,7 +14,7 @@
                         </div>
                     @endif
                     
-                    <a href="/posts/create" class="btn btn-primary" role="button">Create Post</a>
+                    <a href="/posts/create" class="btn btn-primary mybtn" role="button">Create Post</a>
                     
                     @if(count($posts) > 0)
                         <h3>Your Blog Posts</h3>

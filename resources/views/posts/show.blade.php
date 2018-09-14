@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="container">
-        <a href="/posts" class="btn btn-success">Go back</a>
+        <a href="/posts" class="btn btn-success mybtn">Go back</a>
         
         <div class="post">
             <h2>{{$post->title}}</h2>
@@ -27,10 +27,9 @@
                 <a href="#" class="btn btn-primary" id="like"><i class="fas fa-thumbs-up"></i> Like</a>
                 
                 <a href="#" class="btn btn-primary" id="dislike"><i class="fas fa-thumbs-down"></i> Dislike</a>
-                <small>Here will be the number of likes</small>
+                <small>Number of likes</small>
             </div>
             <div class="float-right">
-                <small>Here will be the number of comments</small>
                 <a href="#" class="btn btn-primary" role="button" id="comm"><i class="fas fa-comment"></i> Comment</a>
             </div>
             <div class="clearfix"></div>

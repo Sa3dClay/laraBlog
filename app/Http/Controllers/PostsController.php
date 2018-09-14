@@ -31,7 +31,7 @@ class PostsController extends Controller
         //$posts = Post::orderBy('id', 'asc')->get(); /* for ordering */
         //$posts = Post::orderBy('id', 'asc')->take(1)->get(); /* max NO posts to return */
         
-        $posts = Post::orderBy('id', 'desc')->paginate(5);
+        $posts = Post::orderBy('id', 'desc')->paginate(4);
         return view('posts.index')->with('posts', $posts);
 
         // we can also use: Post::where('name', 'value')->get(); to return specific post
@@ -58,7 +58,7 @@ class PostsController extends Controller
         $this->validate($request, [
             'title' => 'required',
             'body' => 'required',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024'
         ]);
 
         // Create Post
@@ -70,7 +70,6 @@ class PostsController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             
-            //$img_name = time().'.'.$image->getClientOriginalExtension();
             $image_name = $_FILES['image']['name'];
             $destPath   = public_path('uploads');
             $imgPath    = $destPath.'/'.$image_name;
@@ -78,6 +77,10 @@ class PostsController extends Controller
             if(!file_exists($imgPath)) {
                 $image->move($destPath, $image_name);
             }
+            $post->image_name = $image_name;
+
+        } else if ($request->input('image_select')) {
+            $image_name = $request->input('image_select');
             $post->image_name = $image_name;
         }
 
@@ -128,7 +131,7 @@ class PostsController extends Controller
         $this->validate($request, [
             'title' => 'required',
             'body' => 'required',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024'
         ]);
 
         // Edit Post
@@ -146,6 +149,10 @@ class PostsController extends Controller
             if(!file_exists($imgPath)) {
                 $image->move($destPath, $image_name);
             }
+            $post->image_name = $image_name;
+            
+        } else if ($request->input('image_select')) {
+            $image_name = $request->input('image_select');
             $post->image_name = $image_name;
         }
 

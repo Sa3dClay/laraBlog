@@ -28,6 +28,91 @@ $font_one: "Raleway", sans-serif;
 a:hover {
     text-decoration: none;
 }
+
+.mybtn {
+    display: inline-block;
+    margin: 8px 8px 12px;
+    position: relative;
+    font-style: italic;
+    border-radius: 0%;
+    border: none;
+    &::before, &::after {
+        content: '';
+        width: 12%;
+        height: 3px;
+        @extend %trans;
+        position: absolute;
+        background-color: inherit;
+    }
+    &::before {
+        left: 2px;
+        top: -4px;
+    }
+    &::after {
+        right: 2px;
+        bottom: -4px;
+    }
+    &:hover:before, &:hover:after {
+        width: calc(100% - 4px);
+    }
+    &:hover {
+        border: none;
+    }
+}
+.mybtn.btn-primary:hover {
+    background-color: #007bff;
+}
+.mybtn.btn-success:hover {
+    background-color: #28a745;
+}
+.mybtn.btn-danger:hover {
+    background-color: #dc3545;
+}
+.mybtn.btn-info:hover {
+    background-color: #17a2b8;
+}
+.mybtn.btn-warning:hover {
+    background-color: #ffc107;
+}
+
+.imgSelect {
+    border: 1px solid #ddd;
+    margin: 10px 0;
+    padding: 10px;
+    label {
+        position: relative;
+        > input {
+            visibility: hidden;
+            position: relative;
+            &::before {
+                content: "\f058";
+                font-family: 'Font Awesome 5 Free';
+                background-color: $blue;
+                color: #fff;
+                border-radius: 50%;
+                position: absolute;
+                font-size: 24px;
+                padding: 0 5px;
+                left: -10px;
+                opacity: 0;
+                top: 10px;
+            }
+            + img{
+                cursor: pointer;
+                opacity: 0.5;
+            }
+            &:checked + img, &:checked:before {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+    }
+    @media (min-width: 768px) {
+        label > input + img {
+            height: 150px;
+        }
+    }
+}
 /* end global */
 
 /* str load */
@@ -113,6 +198,12 @@ a:hover {
         &:hover .sp2, &:hover .sp4 { width : 100%; }
         &:hover i { transition-delay: 0.4s; opacity: 1; }
     }
+    .blog-img {
+        max-width: 200px;
+        img {
+            max-height: 200px;
+        }
+    }
 }
 #dislike {
     display: none;
@@ -143,15 +234,22 @@ a:hover {
 /* end extend */
 
 /* Bootstrap */
+.navbar-brand {
+    padding: 8px;
+}
 .navbar-brand i {
     font-size: 24px;
+    @extend %trans;
+}
+.navbar-brand i:hover {
+    transform: translateX(-4px);
 }
 .navbar-dark .navbar-nav .nav-link {
     color: rgba(255, 255, 255, 0.6);
     display: inline-block;
     position: relative;
-    padding: 5px 0;
-    margin: 8px;
+    padding: 8px;
+    margin: 4px;
 }
 .navbar-dark .navbar-nav .nav-link::before {
     border-top: 2px solid rgba(0, 0, 0, 0.0);
@@ -161,8 +259,8 @@ a:hover {
     white-space: nowrap;
     position: absolute;
     overflow: hidden;
-    padding: 5px 0;
     @extend %trans;
+    padding: 8px;
     width: 0%;
     top: -2px;
     left: 0;
