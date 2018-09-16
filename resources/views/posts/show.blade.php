@@ -49,6 +49,7 @@
         var token   = '{{ Session::token() }}';
         var likeUrl = '{{ route('like') }}';
         var postId  = '{{ $post->id }}';
+        console.log(token + " " + likeUrl + " " + postId);
     </script>
 
 @endsection

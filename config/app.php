@@ -148,8 +148,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Unisharp\Ckeditor\ServiceProvider::class,
-        Jadjoubran\LaravelAngular\Provider\LaravelServiceProvider::class,
-
+        
         /*
          * Package Service Providers...
          */
