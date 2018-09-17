@@ -1,19 +1,19 @@
+/* str fonts */
+@font-face {
+    font-family: Raleway;
+    src: url('/webfonts/Raleway-Light.ttf');
+}
+/* end fonts */
+
 $blue: #3498db;
 $blue-hover: #34495e;
 $defult-pCol: #636b6f;
 $font_one: "Raleway", sans-serif;
 
-/* str fonts */
-@font-face {
-    font-family: Raleway;
-    src: url('/fonts/Raleway-Light.ttf');
-}
+/* str global */
 * {
     font-family: $font_one;
 }
-/* end fonts */
-
-/* str global */
 .blank {
     color: $defult-pCol;
     text-align: center;

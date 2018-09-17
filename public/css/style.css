@@ -1,15 +1,15 @@
 /* str fonts */
 @font-face {
   font-family: Raleway;
-  src: url("/fonts/Raleway-Light.ttf");
-}
-
-* {
-  font-family: "Raleway", sans-serif;
+  src: url("/webfonts/Raleway-Light.ttf");
 }
 
 /* end fonts */
 /* str global */
+* {
+  font-family: "Raleway", sans-serif;
+}
+
 .blank {
   color: #636b6f;
   text-align: center;
