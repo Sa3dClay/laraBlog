@@ -10,17 +10,12 @@ class PagesController extends Controller
     public function index () {
         $title = 'Home';
         return view('pages.index', compact('title'));
-
         /* another way to do that */
         //return view('pages.index')->with('title', $title);
     }
 
     public function about () {
     	return view('pages.about');
-    }
-
-    public function services () {
-    	return view('pages.services');
     }
 
 }
