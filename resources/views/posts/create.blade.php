@@ -16,12 +16,14 @@
                 {{ Form::textarea('body', null, ['class' => 'form-control pta', 'placeholder' => 'Body', 'required']) }}
             </div>
 
-            <!--
             <div class="form-group">
-                {{ Form::label('image', 'Upload Image', ['class' => 'control-label']) }}
-                {{ Form::file('image') }}
+                {{ Form::label('image', 'Upload Image', ['class' => 'control-label mar-top-20']) }}
+                <div class="custom-file ">
+                    <p>Upload your image</p>
+                    {{ Form::file('image') }}
+                    <i class="fas fa-upload fa-2x"></i>
+                </div>
             </div>
-            -->
 
             <?php
             $directory = "uploads/*.*";
