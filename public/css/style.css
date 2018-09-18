@@ -331,8 +331,7 @@ a:hover {
 }
 
 .navbar-brand i:hover {
-  -webkit-transform: translateX(-4px);
-          transform: translateX(-4px);
+  color: rgba(0, 0, 0, 0.4);
 }
 
 .navbar-dark .navbar-nav .nav-link {

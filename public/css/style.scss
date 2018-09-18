@@ -242,7 +242,7 @@ a:hover {
     @extend %trans;
 }
 .navbar-brand i:hover {
-    transform: translateX(-4px);
+    color: rgba($color: #000000, $alpha: 0.4);
 }
 .navbar-dark .navbar-nav .nav-link {
     color: rgba(255, 255, 255, 0.6);
