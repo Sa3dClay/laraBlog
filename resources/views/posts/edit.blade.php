@@ -20,7 +20,7 @@
             </div>
             
             <div class="form-group">
-                {{ Form::label('image', 'Update Image', ['class' => 'control-label mar-top-20']) }}
+                {{ Form::label('image', 'Upload Image', ['class' => 'control-label mar-top-20']) }}
                 <div class="custom-file ">
                     <p>Upload your image</p>
                     {{ Form::file('image') }}
