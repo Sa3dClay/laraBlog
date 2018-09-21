@@ -31,7 +31,7 @@ class PostsController extends Controller
         //$posts = Post::orderBy('id', 'asc')->get(); /* for ordering */
         //$posts = Post::orderBy('id', 'asc')->take(1)->get(); /* max NO posts to return */
         
-        $posts = Post::orderBy('id', 'desc')->paginate(4);
+        $posts = Post::orderBy('id', 'desc')->paginate(5);
         return view('posts.index')->with('posts', $posts);
 
         // we can also use: Post::where('name', 'value')->get(); to return specific post

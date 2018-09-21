@@ -3,6 +3,8 @@
 @section('content')
 
     <div class="container">
+        <a href="/home" class="btn btn-success mybtn">Go back</a>
+
         <h1 class="text-center hpc">Create Post</h1>
         {!! Form::open(['action' => 'PostsController@store', 'method' => 'POST', 'files' => true]) !!}
             {{ csrf_field() }}
@@ -16,13 +18,20 @@
                 {{ Form::textarea('body', null, ['class' => 'form-control pta', 'placeholder' => 'Body', 'required']) }}
             </div>
 
-            <div class="form-group">
-                {{ Form::label('image', 'Upload Image', ['class' => 'control-label mar-top-20']) }}
+            <a class="btn btn-success" data-toggle="collapse" href="#upload" role="button" aria-expanded="false" aria-controls="upload">
+                Upload Image
+            </a>
+            <a class="btn btn-danger" data-toggle="collapse" href="#select" role="button" aria-expanded="false" aria-controls="select">
+                Select Image
+            </a>
+
+            <div class="form-group collapse" id="upload">
                 <div class="custom-file ">
                     <p>Upload your image</p>
                     {{ Form::file('image') }}
                     <i class="fas fa-upload fa-2x"></i>
                 </div>
+                <small>Note: If you uploaded an image then selected an image, the selected image will be discarded</small>
             </div>
 
             <?php
@@ -30,8 +39,7 @@
             $images = glob($directory);
             ?>
 
-            {{ Form::label('image_select', 'Select Image', ['class' => 'control-label']) }}
-            <div class="row justify-content-center imgSelect">
+            <div class="row justify-content-center imgSelect collapse" id="select">
                 @foreach($images as $image)
                 <?php
                 $splName = explode('/', $image);
