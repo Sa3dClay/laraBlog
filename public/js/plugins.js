@@ -6,6 +6,9 @@ $(function(){
         cursoropacitymin: 0.4,
         cursoropacitymax: 0.8
     });
+    $("body").mouseover(function() {
+        $("body").getNiceScroll().resize();
+    });
 
     $("#like").on('click', function(event) {
         event.preventDefault();

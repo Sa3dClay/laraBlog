@@ -346,13 +346,54 @@ a:hover {
 }
 
 /* end Dashboard card */
+/* str about */
+.about-me .my-img {
+  position: relative;
+  max-height: 200px;
+  overflow: hidden;
+  margin: 0 8px;
+  z-index: 2;
+}
+
+.about-me .my-img img {
+  opacity: 0.4;
+  max-width: 280px;
+  border-radius: 50%;
+  border: 2px solid #3498db;
+  -webkit-transform: translateY(-90px) translateX(80px);
+          transform: translateY(-90px) translateX(80px);
+  z-index: 1;
+}
+
+.about-me .my-img img:hover {
+  opacity: 0.8;
+  -webkit-transform: translateY(-90px) translateX(20px);
+          transform: translateY(-90px) translateX(20px);
+}
+
+.about-me .my-info {
+  padding: 0 8px;
+}
+
+.about-me .my-info small {
+  color: #3498db;
+  font-size: 16px;
+}
+
+.about-me .my-info p {
+  color: #888;
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+/* end about */
 /* str extend */
 .post {
   -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 18px 0 rgba(0, 0, 0, 0.18);
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 18px 0 rgba(0, 0, 0, 0.18);
 }
 
-.mybtn::before, .mybtn::after, .post a:hover, .post .post-img i, .post .post-img img, .post .post-img span, .navbar-brand i, .navbar-dark .navbar-nav .nav-link::before {
+.mybtn::before, .mybtn::after, .post a:hover, .post .post-img i, .post .post-img img, .post .post-img span, .about-me .my-img img, .navbar-brand i, .navbar-dark .navbar-nav .nav-link::before {
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
