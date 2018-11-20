@@ -1,16 +1,21 @@
-$(function(){
+/*jslint browser: true*/
+/*global $, jQuery, alert*/
 
+$(function () {
+    
+    "use strict";
+    
     $("body").niceScroll({
         cursorcolor     : "#3498db",
         cursorwidth     : "8px",
         cursoropacitymin: 0.4,
         cursoropacitymax: 0.8
-    });
-    $("body").mouseover(function() {
+    })
+    $("body").mouseover(function () {
         $("body").getNiceScroll().resize();
     });
 
-    $("#like").on('click', function(event) {
+    $("#like").on('click', function (event) {
         event.preventDefault();
 
         $.ajaxSetup({
@@ -24,9 +29,9 @@ $(function(){
             url: likeUrl,
             data: {postId: postId, _token: token}
         })
-            .done(function() {
-                console.log('done');
-            });        
+            .done(function () {
+                
+            });
     });
     
 });

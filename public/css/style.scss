@@ -278,12 +278,12 @@ a:hover {
     }
     .my-info {
         padding: 0 8px;
-        small {
+        .myJob {
             color: $blue;
-            font-size: 16px;
+            font-size: 20px;
         }
         p {
-            color: #888;
+            color: #555;
             font-size: 18px;
             margin-top: 20px;
         }

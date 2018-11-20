@@ -10,7 +10,7 @@
 
             <div class="col-md-6 my-info">
                 <h2>Abdulrahman Atef</h2>
-                <small>Web developer</small>
+                <span class="myJob">Web Developer</span>
                 <p>I'm a computer science student who loves coding and programming. I'm from Egypt and live in Cairo.</p>
             </div>
         </div>
