@@ -24,16 +24,28 @@
         
         @if(isset(auth()->user()->id))
             <div class="float-left">
-                <a href="#" class="btn btn-primary" id="like"><i class="fas fa-thumbs-up"></i> Like</a>
-                
-                <a href="#" class="btn btn-primary" id="dislike"><i class="fas fa-thumbs-down"></i> Dislike</a>
-                <small>Number of likes</small>
+                @if(isset($like))
+                    {!! Form::open(['action' => ['PostsController@unlike', $like->id], 'method' => 'POST']) !!}
+                        {{ Form::submit('Dislike', ['class' => 'btn btn-danger']) }}
+                    {!! Form::close() !!}
+                @else
+                    {!! Form::open(['action' => ['PostsController@like', $post->id], 'method' => 'POST']) !!}   
+                        {{ Form::submit('Like', ['class' => 'btn btn-primary']) }}
+                    {!! Form::close() !!}
+                @endif
+
+                @if(isset($likes))
+                    <small>{{ count($likes) }} like this post</small>
+                @endif
             </div>
+
             <div class="float-right">
                 <a href="#" class="btn btn-primary" role="button" id="comm"><i class="fas fa-comment"></i> Comment</a>
             </div>
-            <div class="clearfix"></div>
-            <hr />
+
+            <div class="clearfix"></div><hr />
+            
+            
             @if(auth()->user()->id == $post->user_id)
                 <a href="/posts/{{$post->id}}/edit" class="btn btn-success">Edit</a>
 
@@ -45,11 +57,11 @@
         @endif
     </div>
 
-    <script>
+    {{-- <script>
         var token   = '{{ Session::token() }}';
         var likeUrl = '{{ route('like') }}';
-        var postId  = '{{ $post->id }}';
-        console.log(token + " " + likeUrl + " " + postId);
-    </script>
+        var post_id = '{{ $post->id }}';
+        console.log(token + " " + likeUrl + " " + post_id);
+    </script> --}}
 
 @endsection

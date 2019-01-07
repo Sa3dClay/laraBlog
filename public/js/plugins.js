@@ -27,7 +27,7 @@ $(function () {
         $.ajax({
             type: 'POST',
             url: likeUrl,
-            data: {postId: postId, _token: token}
+            data: {post_id: post_id, _token: token}
         })
             .done(function () {
                 

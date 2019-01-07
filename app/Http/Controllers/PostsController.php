@@ -98,6 +98,17 @@ class PostsController extends Controller
     public function show($id)
     {
         $post = Post::find($id);
+
+        if(isset(auth()->user()->id))
+        {
+            $user_id = auth()->user()->id;
+            
+            $post_likes = DB::table('likes')->where('post_id', $id)->get();
+            $like = DB::table('likes')->where('post_id', $id)->where('user_id', $user_id)->first();
+
+            return view('posts.show')->with('post', $post)->with('likes', $post_likes)->with('like', $like);
+        }
+        
         return view('posts.show')->with('post', $post);
     }
 
@@ -183,20 +194,50 @@ class PostsController extends Controller
 
     /**
      * add a like to the post.
-     *
-     * @param  \Illuminate\Http\Request  $request
+     * 
+     * @param  \Illuminate\Http\Request  $post_id
+     * @param  int  $post_id
      * @return \Illuminate\Http\Response
+     * 
      */
-    public function like(Resquest $request) {
-        $post_id = $request['postId'];
-        $post = Post::find($post_id);
-        $user = Auth::user();
+    public function like($post_id) {
+        $user_id = auth()->user()->id;
+
+        $user_likes = DB::table('likes')->where('user_id', $user_id)->get();
+        if ($user_likes)
+        {
+            foreach ($user_likes as $like)
+            {
+                if($like->post_id == $post_id)
+                    return redirect()->back()->with('error', 'You Already Like This Post');    
+            }
+        }
 
         $like = new Like();
-        $like->post_id = $post->id;
-        $like->user_id = $user->id;
+        $like->post_id = $post_id;
+        $like->user_id = $user_id;
         $like->save();
+        
+        $likes = Like::all();
+        return redirect()->back()->with('success', 'Like Added Successfully');
+    }
 
-        return 'done';
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $link_id
+     * @return \Illuminate\Http\Response
+     */
+    public function unlike($like_id)
+    {
+        $like = Like::find($like_id);
+
+        if(auth()->user()->id !== $like->user_id) {
+            return redirect()->back()->with('error', 'Unauthorized Action');
+        }
+
+        $like->delete();
+
+        return redirect()->back()->with('success', 'Unliked Successfully');
     }
 }
