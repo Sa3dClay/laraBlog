@@ -20,6 +20,5 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::post('/like{id}', 'PostsController@like')->name('like');
-
-Route::post('/unlike{id}', 'PostsController@unlike')->name('unlike');
+Route::post('/like', 'PostsController@like')->name('like');
+Route::post('/unlike', 'PostsController@unlike')->name('unlike');

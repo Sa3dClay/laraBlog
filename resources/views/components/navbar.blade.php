@@ -11,9 +11,9 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a class="nav-link" data-text="Home" href="/">Home</a></li>
-                <li class="nav-item"><a class="nav-link" data-text="Blog" href="/posts">Blog</a></li>
-                <li class="nav-item"><a class="nav-link" data-text="About" href="/about">About</a></li>
+                <li class="nav-item"><a class="nav-link" data-text="Home"  href="{{ url('/') }}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" data-text="Blog"  href="{{ url('/posts') }}">Blog</a></li>
+                <li class="nav-item"><a class="nav-link" data-text="About" href="{{ url('/about') }}">About</a></li>
             </ul>
 
             <!-- Right Side Of Navbar -->
@@ -33,7 +33,7 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/home">Dashpoard</a>
+                            <a class="dropdown-item" href="{{ url('/home') }}">Dashpoard</a>
                             
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();

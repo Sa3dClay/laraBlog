@@ -5,7 +5,7 @@
     <div class="about-me jumbotron">
         <div class="row justify-content-center">
             <div class="col-md-3 my-img">
-                <img src="img/me.jpg" class="img-fuild" title="me" />
+                <img src="{{ asset('img/me.jpg') }}" class="img-fuild" title="me" />
             </div>
 
             <div class="col-md-6 my-info">

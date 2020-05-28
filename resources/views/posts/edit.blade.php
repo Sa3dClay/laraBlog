@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="container">
-        <a href="/posts/{{$post->id}}" class="btn btn-success mybtn">Go back</a>
+        <a href="{{ url('/posts/' . $post->id) }}" class="btn btn-success mybtn">Go back</a>
 
         <h1 class="text-center hpc">Edit Post</h1>
         {!! Form::open(['action' => ['PostsController@update', $post->id], 'method' => 'POST', 'files' => true]) !!}
@@ -49,7 +49,7 @@
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <label>
                             {{ Form::radio('image_select', $imgName) }}
-                            <img src="/{{ $image }}" class="img-fluid img-thumbnail" />
+                            <img src="{{ asset('/' . $image) }}" class="img-fluid img-thumbnail" />
                         </label>
                     </div>
                     @endforeach

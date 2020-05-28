@@ -7,10 +7,10 @@
         <P>My First App With Laravel From Scratch</p>
         <p>
             @if(!isset(auth()->user()->id))
-                <a class="btn btn-primary btn-lg mybtn" href="/login" role="button">Login</a>
-                <a class="btn btn-success btn-lg mybtn" href="/register" role="button">Register</a>
+                <a class="btn btn-primary btn-lg mybtn" href="{{ url('/login') }}" role="button">Login</a>
+                <a class="btn btn-success btn-lg mybtn" href="{{ url('/register') }}" role="button">Register</a>
             @else
-                <a class="btn btn-primary btn-lg mybtn" href="/home" role="button">Dashboard</a>
+                <a class="btn btn-primary btn-lg mybtn" href="{{ url('/home') }}" role="button">Dashboard</a>
             @endif
     	</p>
     </div>

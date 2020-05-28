@@ -14,7 +14,7 @@
                         </div>
                     @endif
                     
-                    <a href="/posts/create" class="btn btn-primary mybtn" role="button">Create Post</a>
+                    <a href="{{ url('/posts/create') }}" class="btn btn-primary mybtn" role="button">Create Post</a>
                     
                     @if(count($posts) > 0)
                         <h3>Your Blog Posts</h3>
@@ -26,8 +26,8 @@
                             </tr>
                             @foreach ($posts as $post)
                                 <tr>
-                                    <td><p><a href="/posts/{{$post->id}}">{{$post->title}}</a></p></td>
-                                    <td><a href="/posts/{{$post->id}}/edit" class="btn btn-success">Edit</a></td>
+                                    <td><p><a href="{{ url('/posts/' . $post->id) }}">{{$post->title}}</a></p></td>
+                                    <td><a href="{{ url('/posts/' . $post->id . '/edit') }}" class="btn btn-success">Edit</a></td>
                                     <td>
                                         {!! Form::open(['action' => ['PostsController@destroy', $post->id], 'method' => 'POST', 'class' => 'float-right']) !!}
                                             {{ Form::hidden('_method', 'DELETE') }}

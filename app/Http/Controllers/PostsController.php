@@ -16,7 +16,7 @@ class PostsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['index', 'show']]);
+        $this->middleware('auth', ['except' => ['index', 'show', 'like', 'unlike']]);
     }
 
     /**
@@ -200,8 +200,9 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      * 
      */
-    public function like($post_id) {
+    public function like(Request $request) {
         $user_id = auth()->user()->id;
+        $post_id = $request->post_id;
 
         $user_likes = DB::table('likes')->where('user_id', $user_id)->get();
         if ($user_likes)
@@ -219,7 +220,15 @@ class PostsController extends Controller
         $like->save();
         
         $likes = Like::all();
-        return redirect()->back()->with('success', 'Like Added Successfully');
+
+        $post_likes = DB::table('likes')->where('post_id', $post_id)->get();
+
+        // return redirect()->back()->with('success', 'Like Added Successfully');
+        return response()->json([
+            'success'=>'like successfully added to the post',
+            'like'=>$like,
+            'likes'=>$post_likes
+        ]);
     }
 
     /**
@@ -228,8 +237,9 @@ class PostsController extends Controller
      * @param  int  $link_id
      * @return \Illuminate\Http\Response
      */
-    public function unlike($like_id)
+    public function unlike(Request $request)
     {
+        $like_id = $request->like_id;
         $like = Like::find($like_id);
 
         if(auth()->user()->id !== $like->user_id) {
@@ -238,6 +248,14 @@ class PostsController extends Controller
 
         $like->delete();
 
-        return redirect()->back()->with('success', 'Unliked Successfully');
+        $post_id = $request->post_id;
+        $post_likes = DB::table('likes')->where('post_id', $post_id)->get();
+
+        // return redirect()->back()->with('success', 'Unliked Successfully');
+        
+        return response()->json([
+            'success'=>'like successfully removed from the post',
+            'likes'=>$post_likes
+        ]);
     }
 }
