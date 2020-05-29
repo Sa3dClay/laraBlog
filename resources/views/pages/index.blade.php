@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="jumbotron text-center">
-        <h1>Welcome To Laravel!</h1>
+        <h1>Welcome To Blog!</h1>
         <P>My First App With Laravel From Scratch</p>
         <p>
             @if(!isset(auth()->user()->id))

@@ -13,12 +13,17 @@
 
 Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
-
-Route::resource('posts', 'PostsController');
+Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Post
+Route::resource('posts', 'PostsController');
+Route::post('/post/like', 'PostsController@like');
+Route::post('/post/dislike', 'PostsController@dislike');
 
-Route::post('/like', 'PostsController@like')->name('like');
-Route::post('/unlike', 'PostsController@unlike')->name('unlike');
+// Comment
+Route::get('/comment/load', 'CommentsController@load');
+Route::put('/comment/edit', 'CommentsController@edit');
+Route::post('/comment/store', 'CommentsController@store');
+Route::delete('/comment/delete', 'CommentsController@delete');

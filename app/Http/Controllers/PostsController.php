@@ -16,7 +16,7 @@ class PostsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['index', 'show', 'like', 'unlike']]);
+        $this->middleware('auth', ['except' => ['index', 'show']]);
     }
 
     /**
@@ -183,7 +183,7 @@ class PostsController extends Controller
         $post = Post::find($id);
 
         // Check for right user
-        if(auth()->user()->id !== $post->user_id) {
+        if (auth()->user()->id !== $post->user_id) {
             return redirect('/posts')->with('error', 'Unauthorized Page');
         }
 
@@ -210,7 +210,7 @@ class PostsController extends Controller
             foreach ($user_likes as $like)
             {
                 if($like->post_id == $post_id)
-                    return redirect()->back()->with('error', 'You Already Like This Post');    
+                    return redirect()->back()->with('error', 'You Already Like This Post');
             }
         }
 
@@ -237,7 +237,7 @@ class PostsController extends Controller
      * @param  int  $link_id
      * @return \Illuminate\Http\Response
      */
-    public function unlike(Request $request)
+    public function dislike(Request $request)
     {
         $like_id = $request->like_id;
         $like = Like::find($like_id);
@@ -251,7 +251,7 @@ class PostsController extends Controller
         $post_id = $request->post_id;
         $post_likes = DB::table('likes')->where('post_id', $post_id)->get();
 
-        // return redirect()->back()->with('success', 'Unliked Successfully');
+        // return redirect()->back()->with('success', 'Disliked Successfully');
         
         return response()->json([
             'success'=>'like successfully removed from the post',

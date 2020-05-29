@@ -20,4 +20,8 @@ class Post extends Model
     public function likes() {
         return $this->hasMany('App\Like');
     }
+    
+    public function comments() {
+        return $this->morphMany('App\Comment', 'commentable')->whereNull('parent_id');
+    }
 }

@@ -10,7 +10,7 @@
             <p>{!!$post->body!!}</p>
             @if(isset($post->image_name))
                 <div class="post-img">
-                    <img src="{{ asset('/uploads/' . $post->image_name) }}" class="img-fluid" />
+                    <img src="{{ asset('/uploads' . '/' . $post->image_name) }}" class="img-fluid" />
                     <span class="sp1"></span>
                     <span class="sp2"></span>
                     <span class="sp3"></span>
@@ -25,11 +25,11 @@
         @if(isset(auth()->user()->id))
             <div class="float-left">
                 @if(isset($like))
-                    {{-- {!! Form::open(['action' => ['PostsController@unlike', $like->id], 'method' => 'POST']) !!}
+                    {{-- {!! Form::open(['action' => ['PostsController@dislike', $like->id], 'method' => 'POST']) !!}
                         {{ Form::submit('Dislike', ['class' => 'btn btn-danger']) }}
                     {!! Form::close() !!} --}}
 
-                    <button class="btn btn-danger" id="unlike_post_ajax">Unlike</button>
+                    <button class="btn btn-danger" id="dislike_post_ajax">Dislike</button>
                     <button class="hidden btn btn-primary" id="like_post_ajax">Like</button>
                     <span class="hidden" id="like_id">{{ $like->id }}</span>
                 @else
@@ -38,7 +38,7 @@
                     {!! Form::close() !!} --}}
 
                     <button class="btn btn-primary" id="like_post_ajax">Like</button>
-                    <button class="hidden btn btn-danger" id="unlike_post_ajax">Unlike</button>
+                    <button class="hidden btn btn-danger" id="dislike_post_ajax">Dislike</button>
                     <span class="hidden" id="like_id"></span>
                 @endif
 
@@ -51,9 +51,21 @@
                 @endif
             </div>
 
+            {{-- STR Comments --}}
             <div class="float-right">
-                <a href="#" class="btn btn-primary" role="button" id="comm"><i class="fas fa-comment"></i> Comment</a>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#commentsModal">
+                    <i class="fas fa-comment"></i> Comment
+                </button>
             </div>
+
+            {{-- Comments Modal --}}
+
+            <div class="modal fade" id="commentsModal">
+                <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                    @include('components.comments')
+                </div>
+            </div>
+            {{-- END Comments --}}
 
             <div class="clearfix"></div><hr />
             
@@ -91,7 +103,7 @@
                 })
 
                 $.ajax({
-                    url: "{{ url('/like') }}",
+                    url: "{{ url('/post/like') }}",
                     method: 'post',
                     data: {
                         post_id
@@ -99,7 +111,7 @@
                     success: function(response) {
                         console.log(response)
                         $('#like_post_ajax').hide()
-                        $('#unlike_post_ajax').show()
+                        $('#dislike_post_ajax').show()
 
                         $("#like_id").text(response.like.id)
                         
@@ -113,7 +125,7 @@
                 })
             })
 
-            $("#unlike_post_ajax").on('click', function (event) {
+            $("#dislike_post_ajax").on('click', function (event) {
                 event.preventDefault();
                 
                 var like_id = $('#like_id').text()
@@ -126,7 +138,7 @@
                 })
 
                 $.ajax({
-                    url: "{{ url('/unlike') }}",
+                    url: "{{ url('/post/dislike') }}",
                     method: 'post',
                     data: {
                         like_id,
@@ -135,7 +147,7 @@
                     success: function(response) {
                         console.log(response)
                         $('#like_post_ajax').show()
-                        $('#unlike_post_ajax').hide()
+                        $('#dislike_post_ajax').hide()
 
                         var likes = response.likes
                         if(likes.length > 0) {
