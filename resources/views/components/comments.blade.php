@@ -38,7 +38,7 @@
                         // str html
                         $('#commentCard').append(`
                             <div class="card-body" id="cardBody` + comment.id + `">
-                                <small>` + comment.created_at + `, by: ` + comment.user_name + `</small>
+                                <small>` + comment.created_at + ` by: <i>` + comment.user_name + `</i></small>
                                 
                                 <p id="old_comment` + comment.id + `"
                                     class="card-text">` + comment.body + `</p>
