@@ -95,6 +95,10 @@ a:hover {
     display: none;
 }
 
+textarea {
+    resize: none;
+}
+
 .custom-file {
     z-index: 1;
     height: 40px;

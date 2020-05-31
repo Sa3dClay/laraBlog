@@ -13,6 +13,7 @@
 
 Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
@@ -21,6 +22,7 @@ Auth::routes();
 Route::resource('posts', 'PostsController');
 Route::post('/post/like', 'PostsController@like');
 Route::post('/post/dislike', 'PostsController@dislike');
+Route::get('/post/getWhoLike', 'PostsController@getWhoLike');
 
 // Comment
 Route::get('/comment/load', 'CommentsController@load');

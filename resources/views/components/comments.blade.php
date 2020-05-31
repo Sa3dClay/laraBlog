@@ -105,8 +105,8 @@
                                 {{-- str edit collapse --}}
                                 <div class="collapse" id="editCollapse` + comment.id + `">
                                     <div class="form-group">
-                                        <input type="text" id="new_comment` + comment.id + `"
-                                            class="form-control" value="` + comment.body + `">
+                                        <textarea id="new_comment` + comment.id + `"
+                                            class="form-control">` + comment.body + `</textarea>
                                     </div>
 
                                     <div id="` + comment.id + `">
@@ -221,8 +221,8 @@
                             {{-- str edit collapse --}}
                             <div class="collapse" id="editCollapse` + comment.id + `">
                                 <div class="form-group">
-                                    <input type="text" id="new_comment` + comment.id + `"
-                                        class="form-control" value="` + comment.body + `">
+                                    <textarea id="new_comment` + comment.id + `"
+                                        class="form-control">` + comment.body + `</textarea>
                                 </div>
                                 
                                 <div id="` + comment.id + `">
@@ -338,8 +338,8 @@
 
         {{-- add new comment --}}
         <div class="form-group">
-            <input type="text" id="comment_body" class="form-control"
-            placeholder="Respect others while you give your opinion">
+            <textarea placeholder="Respect others while you give your opinion"
+                class="form-control" id="comment_body"></textarea>
         </div>
     </div>
   

@@ -224,6 +224,7 @@ class PostsController extends Controller
         $post_likes = DB::table('likes')->where('post_id', $post_id)->get();
 
         // return redirect()->back()->with('success', 'Like Added Successfully');
+        
         return response()->json([
             'success'=>'like successfully added to the post',
             'like'=>$like,
@@ -256,6 +257,21 @@ class PostsController extends Controller
         return response()->json([
             'success'=>'like successfully removed from the post',
             'likes'=>$post_likes
+        ]);
+    }
+
+    public function getWhoLike(Request $request) {
+        $post_id = $request->post_id;
+
+        $likers = DB::table('likes')
+            ->where('likes.post_id', '=', $post_id)
+            ->join('users', 'users.id', '=', 'likes.user_id')
+            ->select('users.name as user_name')
+            ->get();
+
+        return response()->json([
+            'msg'=>'get likers successfully',
+            'likers'=>$likers
         ]);
     }
 }
