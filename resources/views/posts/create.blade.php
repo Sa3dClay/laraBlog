@@ -18,10 +18,10 @@
                 {{ Form::textarea('body', null, ['class' => 'form-control pta', 'placeholder' => 'Body', 'required']) }}
             </div>
 
-            <a class="btn btn-success" data-toggle="collapse" href="#upload" role="button" aria-expanded="false" aria-controls="upload">
+            <a class="btn btn-sm btn-success hidden" data-toggle="collapse" href="#upload" role="button" aria-expanded="false" aria-controls="upload">
                 Upload Image
             </a>
-            <a class="btn btn-danger" data-toggle="collapse" href="#select" role="button" aria-expanded="false" aria-controls="select">
+            <a class="btn btn-sm btn-danger" data-toggle="collapse" href="#select" role="button" aria-expanded="false" aria-controls="select">
                 Select Image
             </a>
 
@@ -54,7 +54,7 @@
                 @endforeach
             </div>
 
-            {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
+            {{ Form::submit('Submit', ['class' => 'btn btn-sm btn-primary']) }}
         {!! Form::close() !!}
     </div>
 

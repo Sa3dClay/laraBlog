@@ -35,7 +35,13 @@ class CommentsController extends Controller
     public function load(Request $request) {
         $post_id = $request->post_id;
 
-        $comments = DB::table('comments')->where('commentable_id', $post_id)->get();
+        // $post = Post::find($post_id);
+
+        $comments = DB::table('comments')
+            ->where('comments.commentable_id', '=' , $post_id)
+            ->join('users', 'users.id', '=', 'comments.user_id')
+            ->select('comments.*', 'users.name as user_name')
+            ->get();
 
         return response()->json([
             'msg'=>'all comments has been loaded for this post',

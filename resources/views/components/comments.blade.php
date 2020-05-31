@@ -29,16 +29,16 @@
             success: function(response) {
                 console.log(response)
 
-                // str loop
                 var comments = response.comments
 
+                // str condition
                 if(comments && comments.length>0) {
+                    // str loop
                     $.each(comments, function(i, comment) {
-                        // console.log(i, comment)
-
+                        // str html
                         $('#commentCard').append(`
                             <div class="card-body" id="cardBody` + comment.id + `">
-                                <small>` + comment.created_at + `</small>
+                                <small>` + comment.created_at + `, by: ` + comment.user_name + `</small>
                                 
                                 <p id="old_comment` + comment.id + `"
                                     class="card-text">` + comment.body + `</p>
@@ -57,7 +57,7 @@
                                                     class="btn btn-sm btn-primary"
                                                     data-toggle="collapse"
                                                     data-target="#editCollapse` + comment.id + `"
-                                                    aria-controls="#editCollapse` + comment.id + `"
+                                                    aria-controls="editCollapse` + comment.id + `"
                                                     aria-expanded="false"
                                                 >
                                                     <i class="far fa-edit"></i>
@@ -75,14 +75,34 @@
                                         ) +
                                         `
                                         
-                                        <div class="float-right">
-                                            <button class="btn btn-sm btn-primary" id="addReply">Reply</button>
-                                        </div>
+                                        `
+                                        + (
+                                            true ?
+                                            `
+                                            <div class="float-right">
+                                                <button
+                                                    class="btn btn-sm btn-primary"
+                                                    id="addReply"
+                                                    type="button"
+                                                    data-toggle="collapse"
+                                                    data-target="#replyCollapse` + comment.id + `"
+                                                    aria-controls="replyCollapse` + comment.id + `"
+                                                    aria-expanded="false"
+                                                    disabled
+                                                >
+                                                    Show Replies
+                                                </button>
+                                            </div>
+                                            `
+                                            :
+                                            ""
+                                        ) +
+                                        `
 
                                     </div>
                                 </div>
 
-                                {{-- Collapse for Edit --}}
+                                {{-- str edit collapse --}}
                                 <div class="collapse" id="editCollapse` + comment.id + `">
                                     <div class="form-group">
                                         <input type="text" id="new_comment` + comment.id + `"
@@ -96,21 +116,33 @@
                                             id="editComment"
                                             data-toggle="collapse"
                                             data-target="#editCollapse` + comment.id + `"
-                                            aria-controls="#editCollapse` + comment.id + `"
+                                            aria-controls="editCollapse` + comment.id + `"
                                             aria-expanded="false"
                                         >
                                             Save
                                         </button>
                                     </div>
                                 </div>
-                                {{-- end of Collapse --}}
+                                {{-- end edit collapse --}}
+
+                                {{-- str reply collapse --}}
+                                <div class="collapse ml-5 px-2 py-2" id="replyCollapse` + comment.id + `">
+                                    
+                                    <div class="card" id="replyCard">
+                                        <small>reply card body</small>
+                                    </div>
+
+                                </div>
+                                {{-- end reply collapse --}}
 
                                 <hr>
                             </div>
                         `)
+                        // end html
                     })
+                    // end loop
                 }
-                // end loop
+                // end condition
             },
             error: function(error) {
                 console.log(error)
@@ -165,7 +197,7 @@
                                                 class="btn btn-sm btn-primary"
                                                 data-toggle="collapse"
                                                 data-target="#editCollapse` + comment.id + `"
-                                                aria-controls="#editCollapse` + comment.id + `"
+                                                aria-controls="editCollapse` + comment.id + `"
                                                 aria-expanded="false"
                                             >
                                                 <i class="far fa-edit"></i>
@@ -182,15 +214,11 @@
                                         ""
                                     ) +
                                     `
-                                    
-                                    <div class="float-right">
-                                        <button class="btn btn-sm btn-primary" id="addReply">Reply</button>
-                                    </div>
 
                                 </div>
                             </div>
 
-                            {{-- Collapse for Edit --}}
+                            {{-- str edit collapse --}}
                             <div class="collapse" id="editCollapse` + comment.id + `">
                                 <div class="form-group">
                                     <input type="text" id="new_comment` + comment.id + `"
@@ -204,14 +232,14 @@
                                         id="editComment"
                                         data-toggle="collapse"
                                         data-target="#editCollapse` + comment.id + `"
-                                        aria-controls="#editCollapse` + comment.id + `"
+                                        aria-controls="editCollapse` + comment.id + `"
                                         aria-expanded="false"
                                     >
                                         Save
                                     </button>
                                 </div>
                             </div>
-                            {{-- end of Collapse --}}
+                            {{-- end edit collapse --}}
 
                             <hr>
                         </div>

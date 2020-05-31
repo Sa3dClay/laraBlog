@@ -2,8 +2,8 @@
 
 @section('content')
 
-    <div class="container">
-        <a href="{{ url('/posts/' . $post->id) }}" class="btn btn-success mybtn">Go back</a>
+    <div class="container py-4">
+        <a href="{{ url('/posts'. '/' . $post->id) }}" class="btn btn-success mybtn">Go back</a>
 
         <h1 class="text-center hpc">Edit Post</h1>
         {!! Form::open(['action' => ['PostsController@update', $post->id], 'method' => 'POST', 'files' => true]) !!}
@@ -19,44 +19,44 @@
                 {{ Form::textarea('body', $post->body, ['class' => 'form-control pta', 'placeholder' => 'Body', 'required']) }}
             </div>
             
-            <a class="btn btn-success" data-toggle="collapse" href="#upload" role="button" aria-expanded="false" aria-controls="upload">
-                    Upload Image
-                </a>
-                <a class="btn btn-danger" data-toggle="collapse" href="#select" role="button" aria-expanded="false" aria-controls="select">
-                    Select Image
-                </a>
+            <a class="btn btn-sm btn-success hidden" data-toggle="collapse" href="#upload" role="button" aria-expanded="false" aria-controls="upload">
+                Upload Image
+            </a>
+            <a class="btn btn-sm btn-danger" data-toggle="collapse" href="#select" role="button" aria-expanded="false" aria-controls="select">
+                Select Image
+            </a>
     
-                <div class="form-group collapse" id="upload">
-                    <div class="custom-file ">
-                        <p>Upload your image</p>
-                        {{ Form::file('image') }}
-                        <i class="fas fa-upload fa-2x"></i>
-                    </div>
-                    <small>Note: If you uploaded an image then selected an image, the selected image will be discarded</small>
+            <div class="form-group collapse" id="upload">
+                <div class="custom-file ">
+                    <p>Upload your image</p>
+                    {{ Form::file('image') }}
+                    <i class="fas fa-upload fa-2x"></i>
                 </div>
+                <small>Note: If you uploaded an image then selected an image, the selected image will be discarded</small>
+            </div>
     
+            <?php
+            $directory = "uploads/*.*";
+            $images = glob($directory);
+            ?>
+    
+            <div class="row justify-content-center imgSelect collapse" id="select">
+                @foreach($images as $image)
                 <?php
-                $directory = "uploads/*.*";
-                $images = glob($directory);
+                $splName = explode('/', $image);
+                $imgName = $splName[1];
                 ?>
-    
-                <div class="row justify-content-center imgSelect collapse" id="select">
-                    @foreach($images as $image)
-                    <?php
-                    $splName = explode('/', $image);
-                    $imgName = $splName[1];
-                    ?>
-                    <div class="col-lg-3 col-md-4 col-sm-6">
-                        <label>
-                            {{ Form::radio('image_select', $imgName) }}
-                            <img src="{{ asset('/' . $image) }}" class="img-fluid img-thumbnail" />
-                        </label>
-                    </div>
-                    @endforeach
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <label>
+                        {{ Form::radio('image_select', $imgName) }}
+                        <img src="{{ asset('/' . $image) }}" class="img-fluid img-thumbnail" />
+                    </label>
                 </div>
+                @endforeach
+            </div>
 
             {{ Form::hidden('_method', 'PUT') }}
-            {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
+            {{ Form::submit('Submit', ['class' => 'btn btn-sm btn-primary']) }}
         {!! Form::close() !!}
     </div>
 

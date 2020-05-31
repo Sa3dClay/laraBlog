@@ -61,7 +61,7 @@
             {{-- Comments Modal --}}
 
             <div class="modal fade" id="commentsModal">
-                <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
                     @include('components.comments')
                 </div>
             </div>
