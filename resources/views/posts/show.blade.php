@@ -29,12 +29,12 @@
                         {{ Form::submit('Dislike', ['class' => 'btn btn-danger']) }}
                     {!! Form::close() !!} --}}
 
-                    <button class="btn btn-danger" id="dislike_post_ajax">
-                        <i class="far fa-thumbs-down"></i> Dislike
+                    <button class="btn btn-sm btn-danger" id="dislike_post_ajax">
+                        <i class="far fa-thumbs-down"></i><span class="d-none d-md-inline"> Dislike</span>
                     </button>
 
-                    <button class="hidden btn btn-primary" id="like_post_ajax">
-                        <i class="far fa-thumbs-up"></i> Like
+                    <button class="hidden btn btn-sm btn-primary" id="like_post_ajax">
+                        <i class="far fa-thumbs-up"></i><span class="d-none d-md-inline"> Like</span>
                     </button>
 
                     <span class="hidden" id="like_id">{{ $like->id }}</span>
@@ -43,12 +43,12 @@
                         {{ Form::submit('Like', ['class' => 'btn btn-primary']) }}
                     {!! Form::close() !!} --}}
 
-                    <button class="btn btn-primary" id="like_post_ajax">
-                        <i class="far fa-thumbs-up"></i> Like
+                    <button class="btn btn-sm btn-primary" id="like_post_ajax">
+                        <i class="far fa-thumbs-up"></i><span class="d-none d-md-inline"> Like</span>
                     </button>
 
-                    <button class="hidden btn btn-danger" id="dislike_post_ajax">
-                        <i class="far fa-thumbs-down"></i> Dislike
+                    <button class="hidden btn btn-sm btn-danger" id="dislike_post_ajax">
+                        <i class="far fa-thumbs-down"></i><span class="d-none d-md-inline"> Dislike</span>
                     </button>
 
                     <span class="hidden" id="like_id"></span>
@@ -61,7 +61,7 @@
                         </small>
                     @else
                         <small role="button" class="btn btn-sm" id="count_likes" data-toggle="modal" data-target="#likesModal">
-                            {{-- no comments --}}
+                            {{-- no likes --}}
                         </small>
                     @endif
                 @endif
@@ -92,8 +92,8 @@
 
             {{-- STR Comments --}}
             <div class="float-right">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#commentsModal">
-                    <i class="far fa-comment"></i> Comment
+                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#commentsModal">
+                    <i class="far fa-comment"></i><span class="d-none d-md-inline"> Comment</span>
                 </button>
             </div>
 
@@ -207,7 +207,7 @@
                         post_id
                     },
                     success: (response) => {
-                        console.log(response)
+                        // console.log(response)
 
                         var likers = response.likers
 
@@ -216,7 +216,7 @@
                             
                             $.each(likers, (i, liker) => {
                                 $('#likers_list').append(`
-                                    <li class="list-group-item">` + liker.user_name + `</li>
+                                    <li class="list-group-item text-center">` + liker.user_name + `</li>
                                 `)
                             })
                         }
