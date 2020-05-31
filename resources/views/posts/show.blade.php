@@ -94,7 +94,7 @@
 
             $("#like_post_ajax").on('click', function (event) {
                 event.preventDefault();
-                console.log(post_id)
+                // console.log(post_id)
 
                 $.ajaxSetup({
                     headers: {
@@ -109,7 +109,7 @@
                         post_id
                     },
                     success: function(response) {
-                        console.log(response)
+                        // console.log(response)
                         $('#like_post_ajax').hide()
                         $('#dislike_post_ajax').show()
 
@@ -129,7 +129,7 @@
                 event.preventDefault();
                 
                 var like_id = $('#like_id').text()
-                console.log(like_id)
+                // console.log(like_id)
 
                 $.ajaxSetup({
                     headers: {
@@ -145,7 +145,7 @@
                         post_id
                     },
                     success: function(response) {
-                        console.log(response)
+                        // console.log(response)
                         $('#like_post_ajax').show()
                         $('#dislike_post_ajax').hide()
 

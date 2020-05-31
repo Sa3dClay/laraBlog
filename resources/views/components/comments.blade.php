@@ -9,7 +9,7 @@
 
         @if(isset(auth()->user()->id))
             var user_id = {{ auth()->user()->id }}
-            console.log('user_id:', user_id)
+            // console.log('user_id:', user_id)
         @endif
 
         // setup ajax
@@ -27,7 +27,7 @@
                 post_id
             },
             success: function(response) {
-                console.log(response)
+                // console.log(response)
 
                 var comments = response.comments
 
@@ -145,7 +145,7 @@
                 // end condition
             },
             error: function(error) {
-                console.log(error)
+                // console.log(error)
             }
         })
         // end get comments
@@ -169,7 +169,7 @@
                     comment_body
                 },
                 success: function(response) {
-                    console.log(response)
+                    // console.log(response)
 
                     $('#comment_body').val('')
 
@@ -247,7 +247,7 @@
                     // end html
                 },
                 error: function(error) {
-                    console.log(error)
+                    // console.log(error)
                 }
             })
         })
@@ -258,7 +258,7 @@
             e.preventDefault()
 
             var comment_id = this.parentNode.id
-            console.log('comment_id:',comment_id)
+            // console.log('comment_id:', comment_id)
             
             var new_comment = $('#new_comment'+comment_id).val()
 
@@ -277,12 +277,12 @@
                     comment_body: new_comment,
                 },
                 success: function(response) {
-                    console.log(response)
+                    // console.log(response)
 
                     $('#old_comment'+comment_id).text(new_comment)
                 },
                 error:function(error) {
-                    console.log(error)
+                    // console.log(error)
                 }
             })
         })
@@ -293,7 +293,7 @@
             e.preventDefault()
 
             var comment_id = this.parentNode.id
-            console.log('comment_id:',comment_id)
+            // console.log('comment_id:',comment_id)
 
             var int_comment_id = parseInt(comment_id, 10)
 
@@ -304,12 +304,12 @@
                     comment_id: int_comment_id,
                 },
                 success: function(response) {
-                    console.log(response)
+                    // console.log(response)
 
                     $('#cardBody'+comment_id).remove()
                 },
                 error:function(error) {
-                    console.log(error)
+                    // console.log(error)
                 }
             })
         })
