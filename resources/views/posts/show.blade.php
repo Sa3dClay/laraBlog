@@ -111,7 +111,7 @@
             
             <div class="mar-bot-20">
                 @if(auth()->user()->id == $post->user_id)
-                    <a href="/posts/{{$post->id}}/edit" class="btn btn-success">Edit</a>
+                    <a href="{{ url('/posts'.'/'.$post->id.'/edit') }}" class="btn btn-success">Edit</a>
 
                     {!! Form::open(['action' => ['PostsController@destroy', $post->id], 'method' => 'POST', 'class' => 'float-right']) !!}
                         {{ Form::hidden('_method', 'DELETE') }}

@@ -9,7 +9,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Lara Blog') }}</title>
 
     <!-- Styles -->
     <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" />
@@ -17,6 +17,7 @@
 
     <!-- FontAwesome -->
     <link href="{{ asset('css/all.css') }}" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
 
     <!-- Icon -->
     <link href="{{ asset('img/logo.png') }}" rel="icon" />

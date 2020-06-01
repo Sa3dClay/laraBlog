@@ -1,10 +1,4 @@
 @charset "UTF-8";
-/* str fonts */
-@font-face {
-  font-family: Raleway;
-  src: url("/webfonts/Raleway-Light.ttf");
-}
-/* end fonts */
 /* str global */
 * {
   font-family: "Raleway", sans-serif;
@@ -458,6 +452,9 @@ textarea {
     padding: 10px 0;
   }
 }
+/*# sourceMappingURL=style.css.map */
+/*# sourceMappingURL=style.css.map */
+/*# sourceMappingURL=style.css.map */
 /*# sourceMappingURL=style.css.map */
 /*# sourceMappingURL=style.css.map */
 
