@@ -1,8 +1,4 @@
 {{-- STR JS --}}
-<script src="http://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
-</script>
-
 <script>
     $(function () {
         var post_id = {{ $post->id }}
@@ -147,7 +143,7 @@
                 // end condition
             },
             error: function(error) {
-                // console.log(error)
+                console.log(error)
             }
         })
         // end get comments
@@ -250,7 +246,7 @@
                     // end html
                 },
                 error: function(error) {
-                    // console.log(error)
+                    console.log(error)
                 }
             })
         })
@@ -284,8 +280,8 @@
 
                     $('#old_comment'+comment_id).text(new_comment)
                 },
-                error:function(error) {
-                    // console.log(error)
+                error: function(error) {
+                    console.log(error)
                 }
             })
         })
@@ -311,8 +307,8 @@
 
                     $('#cardBody'+comment_id).remove()
                 },
-                error:function(error) {
-                    // console.log(error)
+                error: function(error) {
+                    console.log(error)
                 }
             })
         })
@@ -324,7 +320,7 @@
 {{-- STR PHP --}}
 <div class="modal-content">
     <div class="modal-header">
-        <h5 class="modal-title">Opinions</h5>
+        <h5 class="modal-title blueColor">Opinions</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -335,7 +331,6 @@
         <div class="card border-0" id="commentCard">
             <p id="noComments" class="hidden">No Comments Yet</p>
         </div>
-        {{-- end loop --}}
         
         <hr>
 

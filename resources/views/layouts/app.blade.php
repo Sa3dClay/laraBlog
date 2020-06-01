@@ -19,6 +19,9 @@
 
     <!-- Icon -->
     <link href="{{ asset('img/logo.png') }}" rel="icon" />
+
+    {{-- jQuery --}}
+    <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
 </head>
 <body>
     <div id="app">
@@ -26,11 +29,11 @@
 
         <div class="container">
             @include('components.messages')
+            
             @yield('content')
         </div>
     </div>
 
-    <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
     <script src="{{ asset('js/jquery.nicescroll.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('js/plugins.js') }}"></script>

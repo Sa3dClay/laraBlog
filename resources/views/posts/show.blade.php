@@ -24,6 +24,7 @@
         
         @if(isset(auth()->user()->id))
             <div class="float-left">
+
                 @if(isset($like))
                     {{-- {!! Form::open(['action' => ['PostsController@dislike', $like->id], 'method' => 'POST']) !!}
                         {{ Form::submit('Dislike', ['class' => 'btn btn-danger']) }}
@@ -73,15 +74,15 @@
 
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Who likes this post</h5>
+                            <h5 class="modal-title blueColor">Who likes this post</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                     
-                        <div class="modal-body">
+                        <div class="modal-body px-2 py-2">
                             <ul id="likers_list" class="list-group list-group-flush">
-                                {{-- placed by js --}}
+                                {{-- list placed by js --}}
                             </ul>
                         </div>
                     </div>
@@ -122,10 +123,6 @@
     </div>
 
     {{-- JS --}}
-
-    <script src="http://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
-    </script>
 
     <script>
         $(function () {
@@ -220,7 +217,7 @@
                             
                             $.each(likers, (i, liker) => {
                                 $('#likers_list').append(`
-                                    <li class="list-group-item text-center">` + liker.user_name + `</li>
+                                    <li class="list-group-item text-center px-1 py-1">` + liker.user_name + `</li>
                                 `)
                             })
                         }
