@@ -27,11 +27,11 @@
                             @foreach ($posts as $post)
                                 <tr>
                                     <td><p><a href="{{ url('/posts'. '/' .$post->id) }}">{{$post->title}}</a></p></td>
-                                    <td><a href="{{ url('/posts'. '/' .$post->id . '/edit') }}" class="btn btn-success">Edit</a></td>
+                                    <td><a href="{{ url('/posts'. '/' .$post->id . '/edit') }}" class="btn btn-sm btn-success">Edit</a></td>
                                     <td>
                                         {!! Form::open(['action' => ['PostsController@destroy', $post->id], 'method' => 'POST', 'class' => 'float-right']) !!}
                                             {{ Form::hidden('_method', 'DELETE') }}
-                                            {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
+                                            {{ Form::submit('Delete', ['class' => 'btn btn-sm btn-danger']) }}
                                         {!! Form::close() !!}
                                     </td>
                                 </tr>
