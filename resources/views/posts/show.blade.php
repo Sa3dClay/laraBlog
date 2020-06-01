@@ -6,8 +6,8 @@
         <a href="{{ url('/posts') }}" class="btn btn-success mybtn">Go back</a>
         
         <div class="post">
-            <h2 class="blueColor">{{$post->title}}</h2>
-            <p>{!!$post->body!!}</p>
+            <h2 class="blueColor">{{ $post->title }}</h2>
+            <p>{{ $post->body }}</p>
             @if(isset($post->image_name))
                 <div class="post-img">
                     <img src="{{ asset('/uploads' . '/' . $post->image_name) }}" class="img-fluid" />

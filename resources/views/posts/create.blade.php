@@ -15,7 +15,7 @@
             </div>
             <div class="form-group">
                 {{ Form::label('body', 'Body', ['class' => 'control-label']) }}
-                {{ Form::textarea('body', null, ['class' => 'form-control pta', 'id' => 'ckeditor', 'placeholder' => 'Body', 'required']) }}
+                {{ Form::textarea('body', null, ['class' => 'form-control pta', 'rows'=>'4', 'placeholder' => 'Body', 'required']) }}
             </div>
 
             <a class="btn btn-sm btn-success hidden" data-toggle="collapse" href="#upload" role="button" aria-expanded="false" aria-controls="upload">

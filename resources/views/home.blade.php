@@ -26,8 +26,8 @@
                             </tr>
                             @foreach ($posts as $post)
                                 <tr>
-                                    <td><p><a href="{{ url('/posts/' . $post->id) }}">{{$post->title}}</a></p></td>
-                                    <td><a href="{{ url('/posts/' . $post->id . '/edit') }}" class="btn btn-success">Edit</a></td>
+                                    <td><p><a href="{{ url('/posts'. '/' .$post->id) }}">{{$post->title}}</a></p></td>
+                                    <td><a href="{{ url('/posts'. '/' .$post->id . '/edit') }}" class="btn btn-success">Edit</a></td>
                                     <td>
                                         {!! Form::open(['action' => ['PostsController@destroy', $post->id], 'method' => 'POST', 'class' => 'float-right']) !!}
                                             {{ Form::hidden('_method', 'DELETE') }}

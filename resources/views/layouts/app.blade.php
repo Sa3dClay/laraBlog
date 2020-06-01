@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8" />
@@ -23,6 +24,7 @@
     {{-- jQuery --}}
     <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
 </head>
+
 <body>
     <div id="app">
         @include('components.navbar')
@@ -37,11 +39,5 @@
     <script src="{{ asset('js/jquery.nicescroll.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('js/plugins.js') }}"></script>
-
-    <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
-    <script src="/vendor/unisharp/laravel-ckeditor/adapters/jquery.js"></script>
-    <script>
-        $('#ckeditor').ckeditor();
-    </script>
 </body>
 </html>
