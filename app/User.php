@@ -28,10 +28,27 @@ class User extends Authenticatable
     ];
 
     public function posts() {
-        return $this->hasMany('App\Post');
+        return $this->hasMany('App\Post', 'user_id');
     }
 
     public function likes() {
-        return $this->hasMany('App\Like');
+        return $this->hasMany('App\Like', 'user_id');
+    }
+
+    public function comments() {
+        return $this->hasMany('App\Comment', 'user_id');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($user) {
+            // delete owned posts with its activities
+            $user->posts()->delete();
+            // delete activities on other users posts
+            $user->likes()->delete();
+            $user->comments()->delete();
+        });
     }
 }
