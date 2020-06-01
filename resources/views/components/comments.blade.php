@@ -37,7 +37,7 @@
                     $.each(comments, function(i, comment) {
                         // str html
                         $('#commentCard').append(`
-                            <div class="card-body" id="cardBody` + comment.id + `">
+                            <div class="card-body shadowEffect mb-4" id="cardBody` + comment.id + `">
                                 <small>` + comment.created_at + ` by: <i>` + comment.user_name + `</i></small>
                                 
                                 <p id="old_comment` + comment.id + `"
@@ -141,6 +141,8 @@
                         // end html
                     })
                     // end loop
+                } else {
+                    $('#noComments').show()
                 }
                 // end condition
             },
@@ -171,13 +173,14 @@
                 success: function(response) {
                     // console.log(response)
 
+                    $('#noComments').hide()
                     $('#comment_body').val('')
 
                     // str html
                     var comment = response.comment
 
                     $('#commentCard').append(`
-                        <div class="card-body" id="cardBody` + comment.id + `">
+                        <div class="card-body shadowEffect mb-4" id="cardBody` + comment.id + `">
                             <small>` + comment.created_at + `</small>
                             
                             <p id="old_comment` + comment.id + `"
@@ -329,8 +332,8 @@
 
     <div class="modal-body">
         {{-- loop over all comments --}}
-        <div class="card" id="commentCard">
-            {{-- content placed dynamically by JS --}}
+        <div class="card border-0" id="commentCard">
+            <p id="noComments" class="hidden">No Comments Yet</p>
         </div>
         {{-- end loop --}}
         

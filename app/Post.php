@@ -18,10 +18,20 @@ class Post extends Model
     }
 
     public function likes() {
-        return $this->hasMany('App\Like');
+        return $this->hasMany('App\Like', 'post_id');
     }
     
     public function comments() {
         return $this->morphMany('App\Comment', 'commentable')->whereNull('parent_id');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($post) {
+            $post->likes()->delete();
+            $post->comments()->delete();
+        });
     }
 }

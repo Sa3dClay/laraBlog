@@ -6,7 +6,7 @@
         <a href="{{ url('/posts') }}" class="btn btn-success mybtn">Go back</a>
         
         <div class="post">
-            <h2>{{$post->title}}</h2>
+            <h2 class="blueColor">{{$post->title}}</h2>
             <p>{!!$post->body!!}</p>
             @if(isset($post->image_name))
                 <div class="post-img">
@@ -57,7 +57,7 @@
                 @if(isset($likes))
                     @if(count($likes) > 0)
                         <small role="button" class="btn btn-sm" id="count_likes" data-toggle="modal" data-target="#likesModal">
-                            <span>{{ count($likes) }}</span> like this post
+                            <span>{{ count($likes) }}</span> likes this post
                         </small>
                     @else
                         <small role="button" class="btn btn-sm" id="count_likes" data-toggle="modal" data-target="#likesModal">
@@ -73,7 +73,7 @@
 
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Who like this post</h5>
+                            <h5 class="modal-title">Who likes this post</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -157,7 +157,11 @@
                         
                         var likes = response.likes
                         if(likes.length > 0) {
-                            $("#count_likes").text(likes.length + ' like this post')
+                            if (likes.length === 1) {
+                                $("#count_likes").text('you likes this post')
+                            } else {
+                                $("#count_likes").text('you and ' + (likes.length-1) + ' likes this post')
+                            }
                         } else {
                             $("#count_likes").text('')
                         }
@@ -187,7 +191,7 @@
 
                         var likes = response.likes
                         if(likes.length > 0) {
-                            $("#count_likes").text(likes.length + ' like this post')
+                            $("#count_likes").text(likes.length + ' likes this post')
                         } else {
                             $("#count_likes").text('')
                         }

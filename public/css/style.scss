@@ -99,6 +99,14 @@ textarea {
     resize: none;
 }
 
+.shadowEffect {
+    @extend %shadow;
+}
+
+.blueColor {
+    color: $blue;
+}
+
 .custom-file {
     z-index: 1;
     height: 40px;
@@ -200,6 +208,7 @@ textarea {
 .post {
     padding: 18px 0;
     @extend %shadow;
+    color: #2c3e50;
     text-align: center;
     margin: 10px 0 20px;
     a {
@@ -209,9 +218,6 @@ textarea {
             color: $blue-hover;
             @extend %trans;
         }
-    }
-    h2 {
-        color: $blue;
     }
     p {
         font-size: 20px;
