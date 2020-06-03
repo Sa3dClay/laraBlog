@@ -16,7 +16,7 @@
             
             <div class="form-group">
                 {{ Form::label('body', 'Body', ['class' => 'control-label']) }}
-                {{ Form::textarea('body', $post->body, ['class' => 'form-control pta', 'rows'=>'4', 'placeholder' => 'Body', 'required']) }}
+                {{ Form::textarea('body', $post->body, ['class' => 'form-control', 'id'=>'CKEditor', 'rows'=>'4', 'placeholder' => 'Body', 'required']) }}
             </div>
             
             <a class="btn btn-sm btn-success hidden" data-toggle="collapse" href="#upload" role="button" aria-expanded="false" aria-controls="upload">
@@ -59,5 +59,46 @@
             {{ Form::submit('Submit', ['class' => 'btn btn-sm btn-primary']) }}
         {!! Form::close() !!}
     </div>
+
+    {{-- JS --}}
+    <script src="https://cdn.ckeditor.com/4.14.0/full/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace( 'CKEditor' );
+
+        $(function() {
+            const x =  new RegExp("[\x00-\x80]+");
+
+            $input = $('#title')
+            if( $input.val() ) {
+                var isAscii = x.test($input.val().charAt(0));
+                console.log($input.val().charAt(0), isAscii)
+
+                if(isAscii) {
+                    $input.css("direction", "ltr");
+                    $input.css("text-align", "left")
+                } else {
+                    $input.css("direction", "rtl");
+                    $input.css("text-align", "right")
+                }
+            }
+
+            $('#title').on('keyup', function () {
+                $this = $(this);
+
+                if( $this.val() ) {
+                    var isAscii = x.test($this.val().charAt(0));
+                    // console.log(isAscii)
+
+                    if(isAscii) {
+                        $this.css("direction", "ltr");
+                        $this.css("text-align", "left")
+                    } else {
+                        $this.css("direction", "rtl");
+                        $this.css("text-align", "right")
+                    }
+                }
+            })
+        })
+    </script>
 
 @endsection

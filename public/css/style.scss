@@ -88,15 +88,12 @@ a:hover {
 .hidden {
     display: none;
 }
-
 textarea {
     resize: none;
 }
-
 .shadowEffect {
     @extend %shadow;
 }
-
 .blueColor {
     color: $blue;
 }
@@ -200,11 +197,11 @@ textarea {
 
 /* str post */
 .post {
-    padding: 18px 0;
+    padding: 20px;
+    margin: 20px 0;
     @extend %shadow;
     color: #2c3e50;
     text-align: center;
-    margin: 10px 0 20px;
     a {
         color: $blue;
         &:hover {
@@ -213,9 +210,8 @@ textarea {
             @extend %trans;
         }
     }
-    p {
-        font-size: 20px;
-        padding: 10px;
+    .postBody {
+        padding: 20px 0;
     }
     .post-img {
         position: relative;

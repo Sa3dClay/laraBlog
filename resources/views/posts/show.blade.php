@@ -2,12 +2,15 @@
 
 @section('content')
 
-    <div class="container">
+    <div class="container-fluid">
         <a href="{{ url('/posts') }}" class="btn btn-success mybtn">Go back</a>
         
         <div class="post">
             <h2 class="blueColor">{{ $post->title }}</h2>
-            <p>{{ $post->body }}</p>
+            <div class="postBody">
+                {!! $post->body !!}
+            </div>
+
             @if(isset($post->image_name))
                 <div class="post-img">
                     <img src="{{ asset('/uploads' . '/' . $post->image_name) }}" class="img-fluid" />
@@ -229,6 +232,33 @@
             })
             // end getWhoLike request
         })
+
+        // string directions based on detected language
+        $(function() {
+            $('.postBody p').each(function(i, pTag) {
+                $this = $(this)
+                // console.log($this)
+
+                if( $this.text() ) {
+                    const x =  new RegExp("[\x00-\x80]+")
+                    // console.log($this.text().charAt(0))
+
+                    var isAscii = x.test($this.text().charAt(0))
+                    // console.log(isAscii)
+
+                    if(isAscii)
+                    {
+                        $this.css("direction", "ltr")
+                        $this.css("text-align", "left")
+                    }
+                    else
+                    {
+                        $this.css("direction", "rtl")
+                        $this.css("text-align", "right")
+                    }
+                }
+            });
+        });
     </script>
 
 @endsection

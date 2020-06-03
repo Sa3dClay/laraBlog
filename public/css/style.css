@@ -234,10 +234,10 @@ textarea {
 /* end load */
 /* str post */
 .post {
-  padding: 18px 0;
+  padding: 20px;
+  margin: 20px 0;
   color: #2c3e50;
   text-align: center;
-  margin: 10px 0 20px;
 }
 
 .post a {
@@ -249,9 +249,8 @@ textarea {
   color: #34495e;
 }
 
-.post p {
-  font-size: 20px;
-  padding: 10px;
+.post .postBody {
+  padding: 20px 0;
 }
 
 .post .post-img {
@@ -452,10 +451,6 @@ textarea {
     padding: 10px 0;
   }
 }
-/*# sourceMappingURL=style.css.map */
-/*# sourceMappingURL=style.css.map */
-/*# sourceMappingURL=style.css.map */
-/*# sourceMappingURL=style.css.map */
 /*# sourceMappingURL=style.css.map */
 
 /*# sourceMappingURL=style.css.map */
