@@ -202,6 +202,7 @@ textarea {
     @extend %shadow;
     color: #2c3e50;
     text-align: center;
+    background-color: #fff;
     a {
         color: $blue;
         &:hover {
@@ -211,7 +212,7 @@ textarea {
         }
     }
     .postBody {
-        padding: 20px 0;
+        padding: 20px;
     }
     .post-img {
         position: relative;

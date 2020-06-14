@@ -24,6 +24,15 @@
 
     {{-- jQuery --}}
     <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+
+    <style>
+        #app {
+            background-image: url("{{ asset('img/Pattern-Randomized.svg') }}");
+            background-color: #ffffff;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+    </style>
 </head>
 
 <body>

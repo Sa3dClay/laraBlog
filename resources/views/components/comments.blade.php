@@ -29,6 +29,8 @@
 
                 // str condition
                 if(comments && comments.length>0) {
+                    $('#countComments').text(comments.length)
+
                     // str loop
                     $.each(comments, function(i, comment) {
                         // str html

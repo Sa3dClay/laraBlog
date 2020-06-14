@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="about-me jumbotron">
+    <div class="about-me jumbotron my-4 py-4">
         <div class="row justify-content-center">
             <div class="col-md-3 my-img">
                 <img src="{{ asset('img/me.jpg') }}" class="img-fuild" title="me" />

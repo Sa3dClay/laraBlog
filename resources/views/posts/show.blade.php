@@ -96,6 +96,8 @@
 
             {{-- STR Comments --}}
             <div class="float-right">
+                <span id="countComments" class="px-2"></span>
+
                 <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#commentsModal">
                     <i class="far fa-comment"></i><span class="d-none d-md-inline"> Comment</span>
                 </button>

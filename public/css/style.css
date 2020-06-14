@@ -238,6 +238,7 @@ textarea {
   margin: 20px 0;
   color: #2c3e50;
   text-align: center;
+  background-color: #fff;
 }
 
 .post a {
@@ -250,7 +251,7 @@ textarea {
 }
 
 .post .postBody {
-  padding: 20px 0;
+  padding: 20px;
 }
 
 .post .post-img {
@@ -451,6 +452,7 @@ textarea {
     padding: 10px 0;
   }
 }
+/*# sourceMappingURL=style.css.map */
 /*# sourceMappingURL=style.css.map */
 
 /*# sourceMappingURL=style.css.map */
