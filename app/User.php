@@ -39,6 +39,10 @@ class User extends Authenticatable
         return $this->hasMany('App\Comment', 'user_id');
     }
 
+    public function notifications() {
+        return $this->hasMany('App\Notification', 'user_id');
+    }
+
     protected static function boot()
     {
         parent::boot();
@@ -49,6 +53,7 @@ class User extends Authenticatable
             // delete activities on other users posts
             $user->likes()->delete();
             $user->comments()->delete();
+            $user->notifications()->delete();
         });
     }
 }
