@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Bus\Queueable;
 use App\Notification;
 use App\Post;
+use DB;
 
 class NotificationsController extends Controller
 {
@@ -37,6 +38,14 @@ class NotificationsController extends Controller
     $notification->post_id = $post_id;
     $notification->message = $message;
     $notification->save();
+  }
+
+  public function delete($type,$post_id)
+  {
+    $notification = DB::table('notifications')->where('post_id', $post_id)
+    ->where('user_id', auth()->user()->id)->where('type', $type)->first();
+    $notification->delete();
+    echo "done";
   }
 
 }

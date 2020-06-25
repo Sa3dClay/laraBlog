@@ -32,4 +32,5 @@ Route::delete('/comment/delete', 'CommentsController@delete');
 
 //notification
 Route::post('/notifications/send', 'NotificationsController@send');
- Route::get('/notifications/index', 'NotificationsController@index');
+Route::get('/notifications/index', 'NotificationsController@index');
+Route::delete('/notifications/delete/{type}/{post_id}', 'NotificationsController@delete');
