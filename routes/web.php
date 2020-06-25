@@ -29,3 +29,7 @@ Route::get('/comment/load', 'CommentsController@load');
 Route::put('/comment/edit', 'CommentsController@edit');
 Route::post('/comment/store', 'CommentsController@store');
 Route::delete('/comment/delete', 'CommentsController@delete');
+
+//notification
+Route::post('/notifications/send', 'NotificationsController@send');
+ Route::get('/notifications/index', 'NotificationsController@index');
