@@ -7,6 +7,8 @@ use Illuminate\Bus\Queueable;
 use App\Notification;
 use App\Post;
 use DB;
+//use Illuminate\Support\Facades\Auth;
+//use Session;
 
 class NotificationsController extends Controller
 {
@@ -19,7 +21,10 @@ class NotificationsController extends Controller
 
   public function index()
   {
-    return view('notifications.index')->with('notifications',auth()->user()->notifications);
+    //$this->mark_last_view();
+    $notifications = auth()->user()->notifications;
+    $this->mark_last_view();
+    return view('notifications.index')->with('notifications',$notifications);
   }
 
   public function send($type,$toWhom_id,$post_id)
@@ -42,10 +47,16 @@ class NotificationsController extends Controller
 
   public function delete($type,$post_id)
   {
-    $notification = DB::table('notifications')->where('post_id', $post_id)
-    ->where('user_id', auth()->user()->id)->where('type', $type)->first();
+    $notification = Notification::where([['post_id','=', $post_id]
+    ,['user_id','=', auth()->user()->id],['type','=', $type]])->first();
     $notification->delete();
     echo "done";
+  }
+
+  private function mark_last_view(){
+      //Session::forget('new_notif');
+      session()->forget('new_notif');
+      Notification::where([['user_id','=',auth()->user()->id]])->update(array('updated_at' => date("Y-m-d H:i:s")));
   }
 
 }

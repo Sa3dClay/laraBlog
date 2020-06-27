@@ -7,7 +7,13 @@
           <h2>Notifications</h2>
                 @foreach ($notifications as $notification)
                     <tr>
-                       <td class="float-left"><li>{{$notification->message}}</li></td>
+                       <td class="float-left">
+                         <li>{{$notification->message}}
+                             @if($notification->updated_at == $notification->created_at)
+                                  (<span class="note1x">new</span>)
+                             @endif
+                         </li>
+                       </td>
                         <td class="float-right">{{$notification->created_at}}</td>
                     </tr>
                 @endforeach
