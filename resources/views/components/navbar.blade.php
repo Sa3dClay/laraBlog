@@ -35,8 +35,9 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ url('/home') }}">Dashboard</a>
                             <a class="dropdown-item" href="{{ url('notifications/index') }}" >Notifications
-                               @if(session()->has('new_notif')) <span <span class="badge badge-secondary">New</span>
-                               @endif
+                               {{--@if(session()->has('new_notif')) <!--<span class="badge badge-secondary">New</span>-->
+                               @endif--}}
+                               <span id="newICON" class="badge badge-secondary" style="display:none">New</span>
                             </a>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
@@ -54,3 +55,38 @@
         </div>
     </div>
 </nav>
+
+<script>
+
+$(function () {
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    // on load
+//setInterval(
+    $(document).ready(setInterval(function() {
+
+        $.ajax({
+            url: "{{ url('notifications/isThereNew') }}",
+            method: 'post',
+            success: (response) => {
+                 //console.log(response)
+                if(response.new_notif) {
+                  document.getElementById("newICON").style.display = "inline";
+                }else {
+                  document.getElementById("newICON").style.display = "none";
+                }
+            },
+            error: (error)=>{
+               consol.log(error)
+            }
+        });
+    },1000 * 60 * 1));//,1000 * 60 * 1) Check The DB every 1 min
+  });
+
+
+</script>

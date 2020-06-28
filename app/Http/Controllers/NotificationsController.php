@@ -59,8 +59,16 @@ class NotificationsController extends Controller
 
   private function mark_last_view(){
       //Session::forget('new_notif');
-      session()->forget('new_notif');
+      //session()->forget('new_notif');
       Notification::where([['user_id','=',auth()->user()->id]])->update(array('updated_at' => date("Y-m-d H:i:s")));
+  }
+
+  public function isThereNew(Request $request){
+    if(!auth()->guest()){
+       $note = Notification::whereColumn('created_at','=','updated_at')->where('user_id','=', auth()->user()->id)->first();
+        return response()->json(['new_notif'=>$note]);
+    }
+    return response()->json(['new_notif'=>'']);
   }
 
 }
