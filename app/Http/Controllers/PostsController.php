@@ -256,7 +256,7 @@ class PostsController extends Controller
         $post_id = $request->post_id;
         $post_likes = DB::table('likes')->where('post_id', $post_id)->get();
         //delete sent-notification
-        NotificationsController::delete('like',$post_id);
+        NotificationsController::delete('like',$post_id,null);
 
         // return redirect()->back()->with('success', 'Disliked Successfully');
 

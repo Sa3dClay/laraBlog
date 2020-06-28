@@ -44,10 +44,15 @@ class NotificationsController extends Controller
     $notification->save();
   }
 
-  public static function delete($type,$post_id)
+  public static function delete($type,$post_id,$date)
   {
-    $notification = Notification::where([['post_id','=', $post_id]
-    ,['user_id','=', auth()->user()->id],['type','=', $type]])->delete();
+    if($type == 'comment'){
+      $notification = Notification::where([['post_id','=', $post_id]
+      ,['user_id','=', auth()->user()->id],['type','=', $type],['created_at','=',$date]])->delete();
+    }else if($type == 'like'){
+      $notification = Notification::where([['post_id','=', $post_id]
+      ,['user_id','=', auth()->user()->id],['type','=', $type]])->delete();
+    }
     //$notification->delete();
     //not working because it compares the primary key id automatically but it doesn't exist
   }

@@ -75,7 +75,7 @@ class CommentsController extends Controller
         $comment_id = $request->comment_id;
         $comment = Comment::find($comment_id);
         //delete sent-notification
-      //  NotificationsController::delete('comment',$comment->post()->id);
+        NotificationsController::delete('comment',$comment->post->id,$comment->created_at);
 
         if(auth()->user()->id == $comment->user_id) {
             $comment->delete();
