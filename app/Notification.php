@@ -23,9 +23,11 @@ class notification extends Model
   }
 
   public static function isTherenew(){
-    $note = Notification::where([['user_id','=', auth()->user()->id],['created_at','=','updated_at']])->first();
-    if(!empty($note)){
-        session(['new_notif' => 'true']);
+    if(!auth()->guest()){
+      $note = Notification::where([['user_id','=', auth()->user()->id],['created_at','=','updated_at']])->first();
+      if(!empty($note)){
+          session(['new_notif' => 'true']);
+      }
     }
   }
 }

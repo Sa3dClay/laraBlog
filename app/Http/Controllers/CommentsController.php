@@ -25,6 +25,8 @@ class CommentsController extends Controller
         $post = Post::find($post_id);
 
         $post->comments()->save($comment);
+        //send a notification to post's owner
+        NotificationsController::send('comment',Post::find($post_id)->user_id,$post_id);
 
         return response()->json([
             'msg'=>'comment has been added successfully',
@@ -72,6 +74,8 @@ class CommentsController extends Controller
     public function delete(Request $request) {
         $comment_id = $request->comment_id;
         $comment = Comment::find($comment_id);
+        //delete sent-notification
+      //  NotificationsController::delete('comment',$comment->post()->id);
 
         if(auth()->user()->id == $comment->user_id) {
             $comment->delete();

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Post;
 use App\Like;
 use DB;
+use App\Http\Controllers\NotificationsController;
 
 class PostsController extends Controller
 {
@@ -30,7 +31,7 @@ class PostsController extends Controller
         //$posts = DB::select('SELECT * FROM posts'); /* for database */
         //$posts = Post::orderBy('id', 'asc')->get(); /* for ordering */
         //$posts = Post::orderBy('id', 'asc')->take(1)->get(); /* max NO posts to return */
-        
+
         $posts = Post::orderBy('id', 'desc')->paginate(5);
         return view('posts.index')->with('posts', $posts);
 
@@ -66,14 +67,14 @@ class PostsController extends Controller
         $post->title = $request->input('title');
         $post->body = $request->input('body');
         $post->user_id = auth()->user()->id;
-        
+
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            
+
             $image_name = $_FILES['image']['name'];
             $destPath   = public_path('uploads');
             $imgPath    = $destPath.'/'.$image_name;
-            
+
             if(!file_exists($imgPath)) {
                 $image->move($destPath, $image_name);
             }
@@ -102,13 +103,13 @@ class PostsController extends Controller
         if(isset(auth()->user()->id))
         {
             $user_id = auth()->user()->id;
-            
+
             $post_likes = DB::table('likes')->where('post_id', $id)->get();
             $like = DB::table('likes')->where('post_id', $id)->where('user_id', $user_id)->first();
 
             return view('posts.show')->with('post', $post)->with('likes', $post_likes)->with('like', $like);
         }
-        
+
         return view('posts.show')->with('post', $post);
     }
 
@@ -152,16 +153,16 @@ class PostsController extends Controller
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            
+
             $image_name = $_FILES['image']['name'];
             $destPath   = public_path('uploads');
             $imgPath    = $destPath.'/'.$image_name;
-            
+
             if(!file_exists($imgPath)) {
                 $image->move($destPath, $image_name);
             }
             $post->image_name = $image_name;
-            
+
         } else if ($request->input('image_select')) {
             $image_name = $request->input('image_select');
             $post->image_name = $image_name;
@@ -194,16 +195,19 @@ class PostsController extends Controller
 
     /**
      * add a like to the post.
-     * 
+     *
      * @param  \Illuminate\Http\Request  $post_id
      * @param  int  $post_id
      * @return \Illuminate\Http\Response
-     * 
+     *
      */
     public function like(Request $request) {
         $user_id = auth()->user()->id;
         $post_id = $request->post_id;
-
+        //send a notification to post's owner
+        //echo "<script>alert('done1')</script>";//ajax request can't print out output functions
+         NotificationsController::send('like',Post::find($post_id)->user_id,$post_id);
+        // echo "<script>alert('done2')</script>";
         $user_likes = DB::table('likes')->where('user_id', $user_id)->get();
         if ($user_likes)
         {
@@ -218,13 +222,13 @@ class PostsController extends Controller
         $like->post_id = $post_id;
         $like->user_id = $user_id;
         $like->save();
-        
+
         $likes = Like::all();
 
         $post_likes = DB::table('likes')->where('post_id', $post_id)->get();
 
         // return redirect()->back()->with('success', 'Like Added Successfully');
-        
+
         return response()->json([
             'success'=>'like successfully added to the post',
             'like'=>$like,
@@ -251,9 +255,11 @@ class PostsController extends Controller
 
         $post_id = $request->post_id;
         $post_likes = DB::table('likes')->where('post_id', $post_id)->get();
+        //delete sent-notification
+        NotificationsController::delete('like',$post_id);
 
         // return redirect()->back()->with('success', 'Disliked Successfully');
-        
+
         return response()->json([
             'success'=>'like successfully removed from the post',
             'likes'=>$post_likes

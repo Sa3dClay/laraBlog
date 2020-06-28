@@ -21,23 +21,22 @@ class NotificationsController extends Controller
 
   public function index()
   {
-    //$this->mark_last_view();
     $notifications = auth()->user()->notifications;
     $this->mark_last_view();
     return view('notifications.index')->with('notifications',$notifications);
   }
 
-  public function send($type,$toWhom_id,$post_id)
+  public static function send($type,$toWhom_id,$post_id)
   {
     $post = Post::find($post_id);
     $notification = new Notification;
     $message = null;
     if($type == 'like'){
-        $message = auth()->user()->name.'has liked your post "';
+        $message = auth()->user()->name.' has liked your post "';
     }else{
-        $message = auth()->user()->name.'has commented on your post "';
+        $message = auth()->user()->name.' has commented on your post "';
     }
-    $message +=$post->title.'"';
+    $message .= $post->title.'"';
     $notification->type = $type;
     $notification->user_id = $toWhom_id;
     $notification->post_id = $post_id;
@@ -45,12 +44,12 @@ class NotificationsController extends Controller
     $notification->save();
   }
 
-  public function delete($type,$post_id)
+  public static function delete($type,$post_id)
   {
     $notification = Notification::where([['post_id','=', $post_id]
-    ,['user_id','=', auth()->user()->id],['type','=', $type]])->first();
-    $notification->delete();
-    echo "done";
+    ,['user_id','=', auth()->user()->id],['type','=', $type]])->delete();
+    //$notification->delete();
+    //not working because it compares the primary key id automatically but it doesn't exist
   }
 
   private function mark_last_view(){
