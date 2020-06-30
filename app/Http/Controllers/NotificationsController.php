@@ -21,9 +21,11 @@ class NotificationsController extends Controller
 
   public function index()
   {
-    $notifications = auth()->user()->notifications;
+    $notifications = Notification::where('user_id','=',auth()->user()->id)->orderBy('created_at', 'desc')->get();
+    //$notifications = auth()->user()->notifications;
     $this->mark_last_view();
     return view('notifications.index')->with('notifications',$notifications);
+    //return response()->json(['notifications'=> $notifications]);
   }
 
   public static function send($type,$toWhom_id,$post_id)
@@ -65,10 +67,16 @@ class NotificationsController extends Controller
 
   public function isThereNew(Request $request){
     if(!auth()->guest()){
-       $note = Notification::whereColumn('created_at','=','updated_at')->where('user_id','=', auth()->user()->id)->first();
+        $note = Notification::whereColumn('created_at','=','updated_at')->where('user_id','=', auth()->user()->id)->first();
         return response()->json(['new_notif'=>$note]);
     }
     return response()->json(['new_notif'=>'']);
+  }
+
+  public function get_new_Notif(Request $request){
+      $newNots = Notification::whereColumn('created_at','=','updated_at')->where('user_id','=', auth()->user()->id)->orderBy('created_at', 'desc')->get();
+      $this->mark_last_view();
+      return response()->json(['newNots'=>$newNots]);
   }
 
 }

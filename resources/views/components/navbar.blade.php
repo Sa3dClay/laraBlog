@@ -74,7 +74,7 @@ $(function () {
             url: "{{ url('notifications/isThereNew') }}",
             method: 'post',
             success: (response) => {
-                 //console.log(response)
+                 //console.log(response);
                 if(response.new_notif) {
                   document.getElementById("newICON").style.display = "inline";
                 }else {
@@ -82,7 +82,7 @@ $(function () {
                 }
             },
             error: (error)=>{
-               consol.log(error)
+               //console.log(error);
             }
         });
     },1000 * 60 * 1));//,1000 * 60 * 1) Check The DB every 1 min

@@ -33,6 +33,7 @@ Route::delete('/comment/delete', 'CommentsController@delete');
 // Notification
 Route::get('/notifications/send/{type}/{user_id}/{post_id}', 'NotificationsController@send');
 //Route::get('/notifications/mark_last_view', 'NotificationsController@mark_last_view')->name('mark_last_view'); //private function
+//Route::get('/notifications/delete/{type}/{post_id}', 'NotificationsController@delete');
+Route::get('/notifications/get_new_Notif', 'NotificationsController@get_new_Notif');
 Route::get('/notifications/index', 'NotificationsController@index');
 Route::post('/notifications/isThereNew', 'NotificationsController@isThereNew');
-//Route::get('/notifications/delete/{type}/{post_id}', 'NotificationsController@delete');
