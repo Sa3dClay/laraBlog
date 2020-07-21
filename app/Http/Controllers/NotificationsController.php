@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use App\Notification;
 use App\Post;
 use DB;
+use App\Http\Resources\Notification_resource;
 //use Illuminate\Support\Facades\Auth;
 //use Session;
 
@@ -16,7 +17,7 @@ class NotificationsController extends Controller
 
   public function __construct()
   {
-      $this->middleware('auth');
+      $this->middleware('auth')->except('index_userN_api'); //then we should make a develop a middleware for api authentication
   }
 
   public function index()
@@ -24,6 +25,9 @@ class NotificationsController extends Controller
     $notifications = Notification::where('user_id','=',auth()->user()->id)->orderBy('created_at', 'desc')->get();
     //$notifications = auth()->user()->notifications;
     $this->mark_last_view();
+    // if(strpos(url()->current(),"api")!==false){ //for the api
+    //     return Notification_resource::collection($notifications);
+    // }
     return view('notifications.index')->with('notifications',$notifications);
     //return response()->json(['notifications'=> $notifications]);
   }
@@ -78,5 +82,12 @@ class NotificationsController extends Controller
       $this->mark_last_view();
       return response()->json(['newNots'=>$newNots]);
   }
+
+  public function index_userN_api($user_id){
+     $notifications = Notification::where('user_id','=',$user_id)->orderBy('created_at', 'desc')->get();
+     //$notifications = auth()->user()->notifications;
+     return Notification_resource::collection($notifications);
+  }
+
 
 }
