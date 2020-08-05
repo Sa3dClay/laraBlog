@@ -13,16 +13,18 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" />
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
 
     <!-- FontAwesome -->
     <link href="{{ asset('css/all.css') }}" rel="stylesheet" />
+
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
 
     <!-- Icon -->
     <link href="{{ asset('img/logo.png') }}" rel="icon" />
 
-    {{-- jQuery --}}
+    <!-- jQuery -->
     <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
 </head>
 
@@ -39,6 +41,7 @@
 
     <script src="{{ asset('js/jquery.nicescroll.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('js/plugins.js') }}"></script>
+    
+    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

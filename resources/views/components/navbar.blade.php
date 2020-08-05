@@ -28,17 +28,22 @@
                     </li>
                 @else
                     <li class="nav-item dropdown">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('notifications/index') }}" >
+                                <i class="fas fa-bell"></i>
+                                <span id="newICON" class="badge badge-secondary" style="display:none">
+                                    New
+                                </span>
+                            </a>
+                        </li>
+
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ url('/home') }}">Dashboard</a>
-                            <a class="dropdown-item" href="{{ url('notifications/index') }}" >Notifications
-                               {{--@if(session()->has('new_notif')) <!--<span class="badge badge-secondary">New</span>-->
-                               @endif--}}
-                               <span id="newICON" class="badge badge-secondary" style="display:none">New</span>
-                            </a>
+                            
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">
