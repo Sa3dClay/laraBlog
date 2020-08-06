@@ -1,0 +1,11 @@
+.note1x {
+  color: black;
+  animation-name: newNotif;
+  animation-duration: 1s;
+  animation-iteration-count:infinite;
+}
+
+@keyframes newNotif {
+  from {color: black;}
+  to {color: yellow;}
+}

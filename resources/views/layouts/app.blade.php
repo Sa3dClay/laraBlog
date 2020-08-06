@@ -13,6 +13,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
 
     <!-- FontAwesome -->
@@ -34,14 +35,14 @@
 
         <div class="container">
             @include('components.messages')
-            
+
             @yield('content')
         </div>
     </div>
 
     <script src="{{ asset('js/jquery.nicescroll.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-    
+
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>
