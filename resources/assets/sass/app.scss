@@ -307,6 +307,28 @@ textarea {
 }
 /* end about */
 
+/* str notification */
+.new-notification {
+    color: $blue;
+    margin-left: 40px;
+    animation: new_notification 1.5s;
+}
+
+@keyframes new_notification {
+    0%  {transform: rotate(0deg);}
+    10% {transform: rotate(40deg);}
+    20% {transform: rotate(0deg);}
+    30% {transform: rotate(-40deg);}
+    40% {transform: rotate(0deg);}
+    50% {transform: rotate(40deg);}
+    60% {transform: rotate(0deg);}
+    70% {transform: rotate(-40deg);}
+    80% {transform: rotate(0deg);}
+    90% {transform: rotate(40deg);}
+    100%{transform: rotate(0deg);}
+}
+/* end notification */
+
 /* str extend */
 %shadow {
     -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 18px 0 rgba(0, 0, 0, 0.18);

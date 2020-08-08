@@ -11,9 +11,9 @@
                     <tr>
                         <td class="float-left">
                             {{ $notification->message }}
-                                
+                            
                             @if($notification->updated_at == $notification->created_at)
-                                <span class="note1x">(new)</span>
+                                <i class="far fa-bell new-notification"></i>
                             @endif
                         </td>
 

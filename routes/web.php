@@ -13,10 +13,12 @@
 
 Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
-
 Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
+
+// Admin
+Route::get('/users', 'UserController@listUsers')->name('users');
 
 // Post
 Route::resource('posts', 'PostsController');
