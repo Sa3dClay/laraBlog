@@ -44,8 +44,8 @@
 
                     <span class="hidden" id="like_id">{{ $like->id }}</span>
                 @else
-                    {{-- {!! Form::open(['action' => ['PostsController@like', $post->id], 'method' => 'POST']) !!}
-                        {{ Form::submit('Like', ['class' => 'btn btn-primary']) }}
+                    {{-- {!! Form::open(['action' => ['PostsController@like', $post->id], 'method' => 'POST' ,'id' => 'form']) !!}
+                        {{ Form::submit('Like', ['id' => 'submitLike' ,'class' => 'btn btn-primary']) }}
                     {!! Form::close() !!} --}}
 
                     <button class="btn btn-sm btn-primary" id="like_post_ajax">
@@ -140,6 +140,7 @@
 
             // str like request
             $("#like_post_ajax").on('click', function (event) {
+                $("#submit").attr("disabled", true);
                 event.preventDefault();
                 // console.log(post_id)
 
@@ -260,6 +261,20 @@
                 }
             });
         });
+       //  // prevent redundant requests //Not for ajax
+       //  $(function(){
+       //   $("#submit").click(function () {
+       //     $("#submit").attr("disabled", true);
+       //     $('#form').submit();
+       //   });
+       // });
+         // function Click(){
+         //   document.getElementById("submitLike").disabled=true;
+         //
+         //   setTimeout(function(){
+         //       document.getElementById("submitLike").disabled=false;
+         //   }, 5*1000); //time in ms -sleep 5s
+         // }
     </script>
 
 @endsection

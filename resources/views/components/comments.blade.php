@@ -35,7 +35,7 @@
                         $('#commentCard').append(`
                             <div class="card-body shadowEffect mb-4" id="cardBody` + comment.id + `">
                                 <small>` + comment.created_at + ` by: <i>` + comment.user_name + `</i></small>
-                                
+
                                 <p id="old_comment` + comment.id + `"
                                     class="card-text">` + comment.body + `</p>
 
@@ -70,7 +70,7 @@
                                             ""
                                         ) +
                                         `
-                                        
+
                                         `
                                         + (
                                             true ?
@@ -123,7 +123,7 @@
 
                                 {{-- str reply collapse --}}
                                 <div class="collapse ml-5 px-2 py-2" id="replyCollapse` + comment.id + `">
-                                    
+
                                     <div class="card" id="replyCard">
                                         <small>reply card body</small>
                                     </div>
@@ -178,7 +178,7 @@
                     $('#commentCard').append(`
                         <div class="card-body shadowEffect mb-4" id="cardBody` + comment.id + `">
                             <small>` + comment.created_at + `</small>
-                            
+
                             <p id="old_comment` + comment.id + `"
                                 class="card-text">` + comment.body + `</p>
 
@@ -223,7 +223,7 @@
                                     <textarea id="new_comment` + comment.id + `"
                                         class="form-control">` + comment.body + `</textarea>
                                 </div>
-                                
+
                                 <div id="` + comment.id + `">
                                     <button
                                         type="button"
@@ -258,7 +258,7 @@
 
             var comment_id = this.parentNode.id
             // console.log('comment_id:', comment_id)
-            
+
             var new_comment = $('#new_comment'+comment_id).val()
 
             if(new_comment.length <= 0) {
@@ -331,7 +331,7 @@
         <div class="card border-0" id="commentCard">
             <p id="noComments" class="hidden">No Comments Yet</p>
         </div>
-        
+
         <hr>
 
         {{-- add new comment --}}
@@ -340,10 +340,22 @@
                 class="form-control" id="comment_body"></textarea>
         </div>
     </div>
-  
+
     <div class="modal-footer">
         <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-sm btn-primary" id="addComment">Say It</button>
+        <button type="button" class="btn btn-sm btn-primary" id="addComment" onclick="Click();">Say It</button>
     </div>
 </div>
 {{-- END PHP --}}
+
+{{--STR JS--}}
+<script>
+  function Click(){
+    document.getElementById("addComment").disabled=true;
+
+    setTimeout(function(){
+        document.getElementById("addComment").disabled=false;
+    }, 10*1000); //time in ms -sleep 10s
+  }
+</script>
+{{--END JS--}}

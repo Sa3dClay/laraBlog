@@ -6,7 +6,7 @@
         <a href="{{ url('/home') }}" class="btn btn-success mybtn">Go back</a>
 
         <h1 class="text-center hpc">Create Post</h1>
-        {!! Form::open(['action' => 'PostsController@store', 'method' => 'POST', 'files' => true]) !!}
+        {!! Form::open(['action' => 'PostsController@store', 'method' => 'POST', 'files' => true , 'id' => 'form']) !!}
             {{ csrf_field() }}
 
             <div class="form-group">
@@ -59,7 +59,7 @@
                 @endforeach
             </div>
 
-            {{ Form::submit('Submit', ['class' => 'btn btn-sm btn-primary']) }}
+            {{ Form::submit('Submit', ['id'=>'submit','class' => 'btn btn-sm btn-primary' ]) }}
         {!! Form::close() !!}
     </div>
 
@@ -88,7 +88,14 @@
                     }
                 }
             })
-        })
-    </script>
+        });
+      // prevent redundant requests
+      $(function(){
+       $("#submit").click(function () {
+         $("#submit").attr("disabled", true);
+         $('#form').submit();
+       });
+     });
+  </script>
 
 @endsection
