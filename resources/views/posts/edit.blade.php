@@ -13,19 +13,25 @@
                 {{ Form::label('title', 'Title', ['class' => 'control-label']) }}
                 {{ Form::text('title', $post->title, ['class' => 'form-control', 'placeholder' => 'Title', 'required']) }}
             </div>
+
+            <div class="form-group">
+                {{ Form::label('category', 'Category', ['class' => 'control-label']) }}
+                {{ Form::select('category', array('info' => 'Information', 'cs' => 'Computer science&IT', 'pd' => 'Problem dicussion',
+                  'love' => 'Love', 'marketing' =>'Marketing', 'social' => 'Social media', 'news' => 'News', 'other' => 'Other'), 'other' ,['class' => 'form-control']) }}
+            </div>
             
             <div class="form-group">
                 {{ Form::label('body', 'Body', ['class' => 'control-label']) }}
                 {{ Form::textarea('body', $post->body, ['class' => 'form-control', 'id'=>'CKEditor', 'rows'=>'4', 'placeholder' => 'Body', 'required']) }}
             </div>
-            
+
             <a class="btn btn-sm btn-success hidden" data-toggle="collapse" href="#upload" role="button" aria-expanded="false" aria-controls="upload">
                 Upload Image
             </a>
             <a class="btn btn-sm btn-danger" data-toggle="collapse" href="#select" role="button" aria-expanded="false" aria-controls="select">
                 Select Image
             </a>
-    
+
             <div class="form-group collapse" id="upload">
                 <div class="custom-file ">
                     <p>Upload your image</p>
@@ -34,12 +40,12 @@
                 </div>
                 <small>Note: If you uploaded an image then selected an image, the selected image will be discarded</small>
             </div>
-    
+
             <?php
             $directory = "uploads/*.*";
             $images = glob($directory);
             ?>
-    
+
             <div class="row justify-content-center imgSelect collapse" id="select">
                 @foreach($images as $image)
                 <?php

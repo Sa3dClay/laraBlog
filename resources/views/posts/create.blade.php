@@ -14,6 +14,11 @@
                 {{ Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Title', 'required']) }}
             </div>
             <div class="form-group">
+                {{ Form::label('category', 'Category', ['class' => 'control-label']) }}
+                {{ Form::select('category', array('info' => 'Information', 'cs' => 'Computer science&IT', 'pd' => 'Problem dicussion',
+                  'love' => 'Love', 'marketing' =>'Marketing', 'social' => 'Social media', 'news' => 'News', 'other' => 'Other'), 'other' ,['class' => 'form-control']) }}
+            </div>
+            <div class="form-group">
                 {{ Form::label('body', 'Body', ['class' => 'control-label']) }}
                 {{ Form::textarea('body', null, ['class' => 'form-control', 'id'=>'CKEditor', 'rows'=>'4', 'placeholder' => 'Body', 'required']) }}
             </div>
