@@ -18,7 +18,14 @@ Route::get('/home', 'HomeController@index')->name('home');
 Auth::routes();
 
 // Admin
-Route::get('/users', 'UserController@listUsers')->name('users');
+Route::get('admin/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.loginForm');
+Route::post('admin/login', 'Auth\AdminLoginController@login')->name('admin.login');
+Route::post('admin/logout','Auth\AdminLoginController@logout')->name('admin.logout');
+
+Route::group(['prefix' => 'admin', 'middleware' => 'assign.guard:admin,admin/login'], function() {
+	Route::get('/home', 'AdminController@index');
+	Route::get('/users', 'AdminController@listUsers');
+});
 
 // Post
 Route::resource('posts', 'PostsController');
@@ -34,8 +41,6 @@ Route::delete('/comment/delete', 'CommentsController@delete');
 
 // Notification
 Route::get('/notifications/send/{type}/{user_id}/{post_id}', 'NotificationsController@send');
-//Route::get('/notifications/mark_last_view', 'NotificationsController@mark_last_view')->name('mark_last_view'); //private function
-//Route::get('/notifications/delete/{type}/{post_id}', 'NotificationsController@delete');
 Route::get('/notifications/get_new_Notif', 'NotificationsController@get_new_Notif');
 Route::get('/notifications/index', 'NotificationsController@index');
 Route::post('/notifications/isThereNew', 'NotificationsController@isThereNew');

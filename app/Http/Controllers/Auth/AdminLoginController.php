@@ -6,11 +6,11 @@ use Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
-class LoginController extends Controller
+class AdminLoginController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
-    | User Login Controller
+    | Admin Login Controller
     |--------------------------------------------------------------------------
     */
 
@@ -21,7 +21,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = 'admin/home';
 
     /**
      * Create a new controller instance.
@@ -30,25 +30,34 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest:user,home')->except('logout');
+       $this->middleware('guest:admin,admin/home')->except('logout');
     }
 
     public function redirectTo()
     {
-        return 'home';
+        return 'admin/home';
     }
 
     protected function guard()
     {
-        return \Auth::guard('user');
+        return \Auth::guard('admin');
     }
 
     public function showLoginForm()
     {
-        if(Auth::guard('admin')->check()) {
-            return redirect('admin/home');
+        if(Auth::guard('user')->check()) {
+            return redirect('home');
         }
 
-        return view('auth.login');
+        return view('auth.adminlogin');
+    }
+
+    public function logout()
+    {
+        Auth::guard('admin')->logout();
+
+        return redirect()
+            ->route('admin.loginForm')
+            ->with('status','Admin has been logged out!');
     }
 }
