@@ -6,7 +6,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-        
+
         $(document).ready(setInterval(function() {
 
             $.ajax({
@@ -30,5 +30,5 @@
             });
         },1000 * 60 * 1)); //Check The DB every 1 min
     });
-</script>    
+</script>
 {{-- END JS --}}

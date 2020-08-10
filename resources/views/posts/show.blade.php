@@ -4,7 +4,7 @@
 
     <div class="container-fluid">
         <a href="{{ url('/posts') }}" class="btn btn-success mybtn">Go back</a>
-        
+
         <div class="post">
             <h2 class="blueColor">{{ $post->title }}</h2>
             <div class="postBody">
@@ -22,9 +22,10 @@
                 </div>
             @endif
             <hr>
-            <small>Written on {{$post->created_at}} by {{$post->user->name}}</small>
+            <small class="float-right" >Written on {{$post->created_at}} by {{$post->user->name}}</small>
+            <small class="float-left"> <b> Category </b> : {{$post->category}} </small>
         </div>
-        
+
         @if(isset(auth()->user()->id))
             <div class="float-left">
 
@@ -43,8 +44,8 @@
 
                     <span class="hidden" id="like_id">{{ $like->id }}</span>
                 @else
-                    {{-- {!! Form::open(['action' => ['PostsController@like', $post->id], 'method' => 'POST']) !!}   
-                        {{ Form::submit('Like', ['class' => 'btn btn-primary']) }}
+                    {{-- {!! Form::open(['action' => ['PostsController@like', $post->id], 'method' => 'POST' ,'id' => 'form']) !!}
+                        {{ Form::submit('Like', ['id' => 'submitLike' ,'class' => 'btn btn-primary']) }}
                     {!! Form::close() !!} --}}
 
                     <button class="btn btn-sm btn-primary" id="like_post_ajax">
@@ -82,7 +83,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                    
+
                         <div class="modal-body px-2 py-2">
                             <ul id="likers_list" class="list-group list-group-flush">
                                 {{-- list placed by js --}}
@@ -111,7 +112,7 @@
             {{-- END Comments --}}
 
             <div class="clearfix"></div><hr />
-            
+
             <div class="mar-bot-20">
                 @if(auth()->user()->id == $post->user_id)
                     <a href="{{ url('/posts'.'/'.$post->id.'/edit') }}" class="btn btn-success">Edit</a>
@@ -139,6 +140,7 @@
 
             // str like request
             $("#like_post_ajax").on('click', function (event) {
+                $("#submit").attr("disabled", true);
                 event.preventDefault();
                 // console.log(post_id)
 
@@ -154,7 +156,7 @@
                         $('#dislike_post_ajax').show()
 
                         $("#like_id").text(response.like.id)
-                        
+
                         var likes = response.likes
                         if(likes.length > 0) {
                             if (likes.length === 1) {
@@ -173,7 +175,7 @@
             // str dislike request
             $("#dislike_post_ajax").on('click', function (event) {
                 event.preventDefault();
-                
+
                 var like_id = $('#like_id').text()
                 // console.log(like_id)
 
@@ -217,7 +219,7 @@
 
                         if(likers && likers.length>0) {
                             $('#likers_list').text('')
-                            
+
                             $.each(likers, (i, liker) => {
                                 $('#likers_list').append(`
                                     <li class="list-group-item text-center px-1 py-1">` + liker.user_name + `</li>
@@ -259,6 +261,20 @@
                 }
             });
         });
+       //  // prevent redundant requests //Not for ajax
+       //  $(function(){
+       //   $("#submit").click(function () {
+       //     $("#submit").attr("disabled", true);
+       //     $('#form').submit();
+       //   });
+       // });
+         // function Click(){
+         //   document.getElementById("submitLike").disabled=true;
+         //
+         //   setTimeout(function(){
+         //       document.getElementById("submitLike").disabled=false;
+         //   }, 5*1000); //time in ms -sleep 5s
+         // }
     </script>
 
 @endsection

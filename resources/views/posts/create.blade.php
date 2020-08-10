@@ -6,12 +6,17 @@
         <a href="{{ url('/home') }}" class="btn btn-success mybtn">Go back</a>
 
         <h1 class="text-center hpc">Create Post</h1>
-        {!! Form::open(['action' => 'PostsController@store', 'method' => 'POST', 'files' => true]) !!}
+        {!! Form::open(['action' => 'PostsController@store', 'method' => 'POST', 'files' => true , 'id' => 'form']) !!}
             {{ csrf_field() }}
 
             <div class="form-group">
                 {{ Form::label('title', 'Title', ['class' => 'control-label']) }}
                 {{ Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Title', 'required']) }}
+            </div>
+            <div class="form-group">
+                {{ Form::label('category', 'Category', ['class' => 'control-label']) }}
+                {{ Form::select('category', array('info' => 'Information', 'cs' => 'Computer science&IT', 'pd' => 'Problem dicussion',
+                  'love' => 'Love', 'marketing' =>'Marketing', 'social' => 'Social media', 'news' => 'News', 'other' => 'Other'), 'other' ,['class' => 'form-control']) }}
             </div>
             <div class="form-group">
                 {{ Form::label('body', 'Body', ['class' => 'control-label']) }}
@@ -54,7 +59,7 @@
                 @endforeach
             </div>
 
-            {{ Form::submit('Submit', ['class' => 'btn btn-sm btn-primary']) }}
+            {{ Form::submit('Submit', ['id'=>'submit','class' => 'btn btn-sm btn-primary' ]) }}
         {!! Form::close() !!}
     </div>
 
@@ -83,7 +88,14 @@
                     }
                 }
             })
-        })
-    </script>
+        });
+      // prevent redundant requests
+      $(function(){
+       $("#submit").click(function () {
+         $("#submit").attr("disabled", true);
+         $('#form').submit();
+       });
+     });
+  </script>
 
 @endsection

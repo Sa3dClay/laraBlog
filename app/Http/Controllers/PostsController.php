@@ -66,6 +66,7 @@ class PostsController extends Controller
         $post = new Post;
         $post->title = $request->input('title');
         $post->body = $request->input('body');
+        $post->category = $request->input('category');
         $post->user_id = auth()->user()->id;
 
         if ($request->hasFile('image')) {
@@ -150,6 +151,7 @@ class PostsController extends Controller
         $post = Post::find($id);
         $post->title = $request->input('title');
         $post->body = $request->input('body');
+        $post->category = $request->input('category');
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
