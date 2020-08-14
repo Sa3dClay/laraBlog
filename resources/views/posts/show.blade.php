@@ -22,8 +22,8 @@
                 </div>
             @endif
             <hr>
-            <small class="float-right" >Written on {{$post->created_at}} by {{$post->user->name}}</small>
-            <small class="float-left"> <b> Category </b> : {{$post->category}} </small>
+            <small class="float-right" >Written on {{$post->created_at}} by <b> {{$post->user->name}} </b> </small>
+            <small class="float-left">  Category: <b> {{$post->category}} </b> </small>
         </div>
 
         @if(isset(auth()->user()->id))
@@ -261,20 +261,6 @@
                 }
             });
         });
-       //  // prevent redundant requests //Not for ajax
-       //  $(function(){
-       //   $("#submit").click(function () {
-       //     $("#submit").attr("disabled", true);
-       //     $('#form').submit();
-       //   });
-       // });
-         // function Click(){
-         //   document.getElementById("submitLike").disabled=true;
-         //
-         //   setTimeout(function(){
-         //       document.getElementById("submitLike").disabled=false;
-         //   }, 5*1000); //time in ms -sleep 5s
-         // }
     </script>
 
 @endsection

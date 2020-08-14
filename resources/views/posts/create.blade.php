@@ -59,28 +59,29 @@
                 @endforeach
             </div>
 
-            {{ Form::submit('Submit', ['id'=>'submit','class' => 'btn btn-sm btn-primary' ]) }}
+            {{ Form::submit('Submit', ['id' => 'submit', 'class' => 'btn btn-sm btn-primary']) }}
         {!! Form::close() !!}
     </div>
 
     {{-- JS --}}
     <script src="https://cdn.ckeditor.com/4.14.0/full/ckeditor.js"></script>
+
     <script>
-        CKEDITOR.replace( 'CKEditor' );
+        CKEDITOR.replace( 'CKEditor' )
 
         $(function() {
             $('#title').on('keyup', function () {
-                $this = $(this);
+                $this = $(this)
 
                 if( $this.val() ) {
-                    var x =  new RegExp("[\x00-\x80]+");
+                    var x =  new RegExp("[\x00-\x80]+")
                     // console.log($this.val().charAt(0))
 
                     var isAscii = x.test($this.val().charAt(0));
                     // console.log(isAscii)
 
                     if(isAscii) {
-                        $this.css("direction", "ltr");
+                        $this.css("direction", "ltr")
                         $this.css("text-align", "left")
                     } else {
                         $this.css("direction", "rtl");
@@ -89,13 +90,15 @@
                 }
             })
         });
-      // prevent redundant requests
-      $(function(){
-       $("#submit").click(function () {
-         $("#submit").attr("disabled", true);
-         $('#form').submit();
-       });
-     });
-  </script>
+      
+        // prevent redundant requests
+        $(function(){
+            // $("#submit").click(function (e) {
+            //     e.preventDefault()
+            //     $("#submit").attr("disabled", true)
+            //     $('#form').submit()
+            // });
+        });
+    </script>
 
 @endsection

@@ -206,11 +206,12 @@ class PostsController extends Controller
     public function like(Request $request) {
         $user_id = auth()->user()->id;
         $post_id = $request->post_id;
+        
         //send a notification to post's owner
-        //echo "<script>alert('done1')</script>";//ajax request can't print out output functions
-         NotificationsController::send('like',Post::find($post_id)->user_id,$post_id);
-        // echo "<script>alert('done2')</script>";
+        NotificationsController::send('like',Post::find($post_id)->user_id,$post_id);
+        
         $user_likes = DB::table('likes')->where('user_id', $user_id)->get();
+        
         if ($user_likes)
         {
             foreach ($user_likes as $like)

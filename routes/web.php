@@ -25,6 +25,7 @@ Route::post('admin/logout','Auth\AdminLoginController@logout')->name('admin.logo
 Route::group(['prefix' => 'admin', 'middleware' => 'assign.guard:admin,admin/login'], function() {
 	Route::get('/home', 'AdminController@index');
 	Route::get('/users', 'AdminController@listUsers');
+	Route::delete('/deleteUser/{user}', 'AdminController@deleteUser');
 });
 
 // Post
