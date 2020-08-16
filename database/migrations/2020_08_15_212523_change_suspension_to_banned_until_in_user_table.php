@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddRoleAndSuspensionToUsers extends Migration
+class ChangeSuspensionToBannedUntilInUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,8 @@ class AddRoleAndSuspensionToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('role')->default('user');
-            $table->boolean('suspension')->default(0);
+            $table->dropColumn('suspension');
+            $table->timestamp('banned_until')->nullable();
         });
     }
 
@@ -26,8 +26,9 @@ class AddRoleAndSuspensionToUsers extends Migration
      */
     public function down()
     {
-        Schema::table('users', function($table) {
-            $table->dropColumn(['role','suspension']);
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('banned_until');
+            $table->boolean('suspension')->default(0);
         });
     }
 }

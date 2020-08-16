@@ -19,7 +19,7 @@
               <th scope="col">Email</th>
               <th scope="col">Block</th>
               <th scope="col">Delete</th>
-              <th scope="col">State</th>
+              <th scope="col">Status</th>
             </thead>
 
             <tbody>
@@ -36,9 +36,93 @@
                   
                   {{-- block user --}}
                   <td>
-                    <button type="submit" class="btn btn-warning btn-sm">
-                      <i class="fas fa-ban"></i>
-                    </button>
+                    
+                    @if($user->banned_until)
+                      {{-- User already blocked, so can revoke --}}
+                      {!! Form::open([
+                        'action' => ['AdminController@revokeUser', $user->id],
+                        'method' => 'POST'
+                      ]) !!}
+                        <button type="submit" class="btn btn-success btn-sm">
+                          <i class="fas fa-user-check"></i>
+                        </button>
+                      {!! Form::close() !!}
+
+                    @else
+                      {{-- User already active, so can block --}}
+                      <button
+                        type="button"
+                        class="btn btn-warning btn-sm"
+                        data-toggle="modal"
+                        data-target="#blockModal{{ $user->id }}"
+                      >
+                        <i class="fas fa-user-slash"></i>
+                      </button>
+
+                      <!-- str block modal -->
+                      <div
+                        class="modal fade"
+                        id="blockModal{{ $user->id }}"
+                        tabindex="-1"
+                        role="dialog"
+                        aria-labelledby="blockModalLabel"
+                        aria-hidden="true"
+                      >
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="blockModalLabel">Block User</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+
+                            <div class="modal-body">
+
+                              {!! Form::open([
+                                'action' => 'AdminController@blockUser',
+                                'method' => 'post'
+                              ]) !!}
+
+                                <div class="form-group">
+                                  <label class="control-label">block until</label>
+                                  <input
+                                    type="date"
+                                    name="block_until"
+                                    class="form-control"
+                                    required
+                                  >
+                                </div>
+
+                                <div class="form-group">
+                                  <label class="control-label">block reason</label>
+                                  <input
+                                    type="text"
+                                    name="block_reason"
+                                    class="form-control"
+                                    required
+                                  >
+                                </div>
+
+                                <input type="hidden" name="user_id" value="{{ $user->id }}">
+
+                                <button type="submit" class="btn btn-danger">Block</button>
+
+                              {!! Form::close() !!}
+
+                            </div>
+
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                      <!-- end block modal -->
+                    @endif
+
                   </td>
                   
                   {{-- delete user --}}
@@ -57,7 +141,7 @@
                   </td>
                   
                   <td>
-                    {{ $user->suspension? 'Blocked' : 'Active' }}
+                    {{ $user->banned_until? 'Blocked until '.$user->banned_until : 'Active' }}
                   </td>
                 </tr>
               @endforeach
