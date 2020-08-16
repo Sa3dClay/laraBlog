@@ -133,7 +133,6 @@
                       'method' => 'POST'
                     ]) !!}
                       {{ Form::hidden('_method', 'DELETE') }}
-
                       <button type="button" class="btn btn-danger btn-sm deleteUser" id="{{ $user->id }}">
                         <i class="fas fa-trash"></i>
                       </button>                      
@@ -163,7 +162,7 @@
         e.preventDefault()
 
         var userId = $(this).attr('id')
-        console.log(userId)
+        // console.log(userId)
         
         Swal.fire({
           icon: 'warning',
@@ -175,7 +174,7 @@
           confirmButtonText: 'Yes, delete him!'
         }).then((result) => {
           if (result.value) {
-            console.log('deleteUser'+userId)
+            // console.log('deleteUser'+userId)
             $('#deleteUser'+userId).submit()
           }
         })
