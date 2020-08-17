@@ -32,7 +32,7 @@ class PostsController extends Controller
         //$posts = Post::orderBy('id', 'asc')->get(); /* for ordering */
         //$posts = Post::orderBy('id', 'asc')->take(1)->get(); /* max NO posts to return */
 
-        $posts = Post::orderBy('id', 'desc')->paginate(5);
+        $posts = Post::orderBy('id', 'desc')->where('hidden','=',0)->paginate(5);
         return view('posts.index')->with('posts', $posts);
 
         // we can also use: Post::where('name', 'value')->get(); to return specific post
@@ -100,6 +100,10 @@ class PostsController extends Controller
     public function show($id)
     {
         $post = Post::find($id);
+
+        if($post->hidden) {
+            return redirect()->back()->with('error', 'Sorry, this post is hidden!');
+        }
 
         if(isset(auth()->user()->id))
         {

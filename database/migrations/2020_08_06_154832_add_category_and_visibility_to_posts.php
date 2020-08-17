@@ -13,10 +13,10 @@ class AddCategoryAndVisibilityToPosts extends Migration
      */
     public function up()
     {
-      Schema::table('posts', function (Blueprint $table) {
-          $table->string('category')->default('other');
-          $table->boolean('visibility')->default(0);
-      });
+        Schema::table('posts', function (Blueprint $table) {
+            $table->string('category')->default('other');
+            $table->boolean('visibility')->default(0);
+        });
     }
 
     /**
@@ -26,8 +26,8 @@ class AddCategoryAndVisibilityToPosts extends Migration
      */
     public function down()
     {
-      Schema::table('posts', function($table) {
-          $table->dropColumn(['category','visibility']);
-      });
+        Schema::table('posts', function($table) {
+            $table->dropColumn(['category', 'visibility']);
+        });
     }
 }

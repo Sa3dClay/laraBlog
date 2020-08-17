@@ -13,9 +13,9 @@ class AddVisibilityToComments extends Migration
      */
     public function up()
     {
-      Schema::table('comments', function (Blueprint $table) {
-          $table->boolean('visibility')->default(0);
-      });
+        Schema::table('comments', function (Blueprint $table) {
+            $table->boolean('visibility')->default(0);
+        });
     }
 
     /**
@@ -25,8 +25,8 @@ class AddVisibilityToComments extends Migration
      */
     public function down()
     {
-      Schema::table('comments', function (Blueprint $table) {
-          $table->dropColumn('visibility');
-      });
+        Schema::table('comments', function (Blueprint $table) {
+            $table->dropColumn('visibility');
+        });
     }
 }

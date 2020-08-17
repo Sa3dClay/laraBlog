@@ -82,7 +82,7 @@
 
                               {!! Form::open([
                                 'action' => 'AdminController@blockUser',
-                                'method' => 'post'
+                                'method' => 'POST'
                               ]) !!}
 
                                 <div class="form-group">
@@ -107,15 +107,15 @@
 
                                 <input type="hidden" name="user_id" value="{{ $user->id }}">
 
-                                <button type="submit" class="btn btn-danger">Block</button>
+                                <button type="submit" class="btn btn-danger btn-sm px-4">Block</button>
 
                               {!! Form::close() !!}
 
                             </div>
 
-                            <div class="modal-footer">
+                            {{-- <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
+                            </div> --}}
 
                           </div>
                         </div>

@@ -15,6 +15,7 @@ Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
 Route::get('/home', 'HomeController@index')->name('home');
 
+// User
 Auth::routes();
 
 // Admin
@@ -22,12 +23,19 @@ Route::get('admin/login', 'Auth\AdminLoginController@showLoginForm')->name('admi
 Route::post('admin/login', 'Auth\AdminLoginController@login')->name('admin.login');
 Route::post('admin/logout','Auth\AdminLoginController@logout')->name('admin.logout');
 
-Route::group(['prefix' => 'admin', 'middleware' => 'assign.guard:admin,admin/login'], function() {
+Route::group(['prefix' => 'admin', 'middleware' => 'assign.guard:admin,admin/login'], function()
+{
+	// manage home
 	Route::get('/home', 'AdminController@index');
+	// manage users
 	Route::get('/users', 'AdminController@listUsers');
 	Route::post('/blockUser', 'AdminController@blockUser');
 	Route::post('/revokeUser/{user}', 'AdminController@revokeUser');
 	Route::delete('/deleteUser/{user}', 'AdminController@deleteUser');
+	// manage posts
+	Route::post('/hidePost', 'AdminController@hidePost');
+	Route::get('/posts', 'AdminController@listHiddenPosts');
+	Route::post('/showPost/{post}', 'AdminController@showPost');
 });
 
 // Post
