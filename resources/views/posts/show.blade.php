@@ -22,11 +22,73 @@
                 </div>
             @endif
             <hr>
-            <small class="float-right" >Written on {{$post->created_at}} by {{$post->user->name}}</small>
-            <small class="float-left"> <b> Category </b> : {{$post->category}} </small>
+            <small class="float-right" >Written on {{$post->created_at}} by <b> {{$post->user->name}} </b> </small>
+            <small class="float-left">  Category: <b> {{$post->category}} </b> </small>
         </div>
 
-        @if(isset(auth()->user()->id))
+        {{-- Admin --}}
+        @if(Auth::guard('admin')->check())
+            <button
+                type="button"
+                data-toggle="modal"
+                data-target="#hideModal"
+                class="btn btn-primary btn-sm my-2 px-4"
+            >
+                Hide This Post
+            </button>
+
+            <!-- str hide modal -->
+            <div
+                id="hideModal"
+                class="modal fade"
+                tabindex="-1"
+                role="dialog"
+                aria-hidden="true"
+                aria-labelledby="hideModalLabel"
+            >
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="hideModalLabel">Hide Post</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+
+                            {!! Form::open([
+                                'action' => 'AdminController@hidePost',
+                                'method' => 'Post'
+                            ]) !!}
+
+                                <div class="form-group">
+                                    <label class="control-label">hide reason</label>
+                                    <input
+                                        type="text"
+                                        name="hide_reason"
+                                        class="form-control"
+                                        required
+                                    >
+                                </div>
+
+                                <input type="hidden" name="post_id" value="{{ $post->id }}">
+
+                                <button type="submit" class="btn btn-danger btn-sm px-4">Hide</button>
+
+                            {!! Form::close() !!}
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- end hide modal -->
+        @endif
+
+        {{-- User --}}
+        @if(Auth::guard('user')->check())
             <div class="float-left">
 
                 @if(isset($like))
@@ -152,6 +214,7 @@
                     },
                     success: function(response) {
                         // console.log(response)
+
                         $('#like_post_ajax').hide()
                         $('#dislike_post_ajax').show()
 
@@ -188,6 +251,7 @@
                     },
                     success: function(response) {
                         // console.log(response)
+
                         $('#like_post_ajax').show()
                         $('#dislike_post_ajax').hide()
 
@@ -214,7 +278,6 @@
                     },
                     success: (response) => {
                         // console.log(response)
-
                         var likers = response.likers
 
                         if(likers && likers.length>0) {
@@ -261,20 +324,6 @@
                 }
             });
         });
-       //  // prevent redundant requests //Not for ajax
-       //  $(function(){
-       //   $("#submit").click(function () {
-       //     $("#submit").attr("disabled", true);
-       //     $('#form').submit();
-       //   });
-       // });
-         // function Click(){
-         //   document.getElementById("submitLike").disabled=true;
-         //
-         //   setTimeout(function(){
-         //       document.getElementById("submitLike").disabled=false;
-         //   }, 5*1000); //time in ms -sleep 5s
-         // }
     </script>
 
 @endsection

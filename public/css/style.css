@@ -9,3 +9,11 @@
   from {color: black;}
   to {color: yellow;}
 }
+
+.searchPost{
+  display:inline-block;
+  width:87%;
+  margin-top:8px;
+  position:relative;
+  overflow: auto;
+}
