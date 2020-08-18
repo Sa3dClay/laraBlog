@@ -40,9 +40,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'assign.guard:admin,admin/log
 
 // Post
 Route::resource('posts', 'PostsController');
+Route::post('/post/search', 'PostsController@search');
+// Like
 Route::post('/post/like', 'PostsController@like');
 Route::post('/post/dislike', 'PostsController@dislike');
-Route::post('/post/search', 'PostsController@search');
 Route::get('/post/getWhoLike', 'PostsController@getWhoLike');
 
 // Comment
@@ -54,5 +55,5 @@ Route::delete('/comment/delete', 'CommentsController@delete');
 // Notification
 Route::get('/notifications/send/{type}/{user_id}/{post_id}', 'NotificationsController@send');
 Route::get('/notifications/get_new_Notif', 'NotificationsController@get_new_Notif');
-Route::get('/notifications/index', 'NotificationsController@index');
 Route::post('/notifications/isThereNew', 'NotificationsController@isThereNew');
+Route::get('/notifications/index', 'NotificationsController@index');

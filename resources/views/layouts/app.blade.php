@@ -13,16 +13,11 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" />
-<<<<<<< HEAD
 
-=======
-    
     <!-- My Styles -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
->>>>>>> ba347bb9903d56748a212ed164596b2751a0bc12
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
 
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
     <!-- FontAwesome -->
     <link href="{{ asset('css/all.css') }}" rel="stylesheet" />
 
@@ -50,7 +45,7 @@
         </div>
     </div>
 
-    <script src="{{ asset('js/jquery.nicescroll.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.nicescroll.js') }}"></script>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 
     <script src="{{ asset('js/app.js') }}"></script>
