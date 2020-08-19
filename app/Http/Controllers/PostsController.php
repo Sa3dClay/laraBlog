@@ -211,12 +211,12 @@ class PostsController extends Controller
     public function like(Request $request) {
         $user_id = auth()->user()->id;
         $post_id = $request->post_id;
-        
+
         //send a notification to post's owner
         NotificationsController::send('like',Post::find($post_id)->user_id,$post_id);
-        
+
         $user_likes = DB::table('likes')->where('user_id', $user_id)->get();
-        
+
         if ($user_likes)
         {
             foreach ($user_likes as $like)
@@ -292,7 +292,7 @@ class PostsController extends Controller
     public function search(Request $request){
       $strword = $request->input('search');
       $search_type = $request->input('searchField');
-
+      $strword = preg_replace('/[^A-Za-z0-9\-]/', '', $strword); // replace special characters with empty word
       if(strlen($strword)==0){
           return back();
       }
@@ -325,9 +325,9 @@ class PostsController extends Controller
               $newstr[$i] = "'".$newstr[$i]."'";
           }
           if(strpos($str, "computer science&it") !== false || strpos($str, "computer science") !== false || strpos($str, "it") !== false){ //for different keywords
-            array_push($newstr,'cs');
+            array_push($newstr,"'cs'");
           }if(strpos($str, "problem discussion") !== false){
-            array_push($newstr, 'pd');
+            array_push($newstr, "'pd'");
           }
           $words = implode(',', $newstr);
           if($search_type != 'user'){ // to check for search type

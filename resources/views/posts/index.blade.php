@@ -18,7 +18,8 @@
                             {{ Form::text('search', null, [
                                 'type' => 'search',
                                 'class' => 'form-control',
-                                'placeholder' => 'search for a post'
+                                'placeholder' => 'search for a post',
+                                'required'
                             ]) }}
 
                             {{ Form::hidden('searchField', 'all') }}
