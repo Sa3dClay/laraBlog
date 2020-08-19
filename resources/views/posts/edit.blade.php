@@ -16,8 +16,17 @@
 
             <div class="form-group">
                 {{ Form::label('category', 'Category', ['class' => 'control-label']) }}
-                {{ Form::select('category', array('info' => 'Information', 'cs' => 'Computer science&IT', 'pd' => 'Problem discussion',
-                  'love' => 'Love', 'marketing' =>'Marketing', 'social' => 'Social media', 'news' => 'News', 'other' => 'Other'), 'other' ,['class' => 'form-control']) }}
+                {{ Form::select('category', array(
+                    'info' => 'Information',
+                    'cs' => 'Computer science & IT',
+                    'pd' => 'Problem discussion',
+                    'love' => 'Love',
+                    'marketing' =>'Marketing',
+                    'social' => 'Social media',
+                    'news' => 'News',
+                    'other' => 'Other'
+                    ),'other', ['class' => 'form-control']
+                ) }}
             </div>
 
             <div class="form-group">
@@ -38,6 +47,7 @@
                     {{ Form::file('image') }}
                     <i class="fas fa-upload fa-2x"></i>
                 </div>
+                
                 <small>Note: If you uploaded an image then selected an image, the selected image will be discarded</small>
             </div>
 
@@ -48,16 +58,17 @@
 
             <div class="row justify-content-center imgSelect collapse" id="select">
                 @foreach($images as $image)
-                <?php
-                $splName = explode('/', $image);
-                $imgName = $splName[1];
-                ?>
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <label>
-                        {{ Form::radio('image_select', $imgName) }}
-                        <img src="{{ asset('/' . $image) }}" class="img-fluid img-thumbnail" />
-                    </label>
-                </div>
+                    <?php
+                    $splName = explode('/', $image);
+                    $imgName = $splName[1];
+                    ?>
+
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <label>
+                            {{ Form::radio('image_select', $imgName) }}
+                            <img src="{{ asset('/' . $image) }}" class="img-fluid img-thumbnail" />
+                        </label>
+                    </div>
                 @endforeach
             </div>
 

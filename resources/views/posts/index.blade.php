@@ -7,31 +7,27 @@
             <div class="col-12">
 
                 {{-- str search --}}
-                <div class="row text-center">
-                    <div class="col-10">
-                        {!! Form::open([
-                            'action' => 'PostsController@search',
-                            'id' => 'searchPost',
-                            'method' => 'POST'
-                        ]) !!}
+                {!! Form::open([
+                    'action' => 'PostsController@search',
+                    'method' => 'GET'
+                ]) !!}
 
-                            {{ Form::text('search', null, [
-                                'type' => 'search',
-                                'class' => 'form-control',
-                                'placeholder' => 'search for a post'
-                            ]) }}
+                    <div class="row text-center">
+                        <div class="col-10">
+                            <input type="text" name="search" class="form-control" required
+                                placeholder="Search for a post by title, category or author-name">
 
                             {{ Form::hidden('searchField', 'all') }}
+                        </div>
 
-                        {!! Form::close() !!}
+                        <div class="col-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
+                        </div>
                     </div>
 
-                    <div class="col-2">
-                        <button class="btn btn-primary" id="searchButton">
-                            <i class="fa fa-search" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                </div>
+                {!! Form::close() !!}
                 {{-- end search --}}
 
                 @if( isset($posts) && count($posts)>0 )
@@ -69,15 +65,5 @@
             </div>
         </div>
     </div>
-
-    {{-- STR JS --}}
-    <script>
-        $(function () {
-            $('#searchButton').on('click', () => {
-                $('#searchPost').submit()
-            })
-        })
-    </script>
-    {{-- END JS --}}
 
 @endsection

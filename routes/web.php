@@ -40,7 +40,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'assign.guard:admin,admin/log
 
 // Post
 Route::resource('posts', 'PostsController');
-Route::post('/post/search', 'PostsController@search');
+Route::get('/post/search', 'PostsController@search');
 // Like
 Route::post('/post/like', 'PostsController@like');
 Route::post('/post/dislike', 'PostsController@dislike');

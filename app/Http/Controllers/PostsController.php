@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\NotificationsController;
+
+use DB;
 use App\Post;
 use App\User;
 use App\Like;
-use DB;
-use App\Http\Controllers\NotificationsController;
 
 class PostsController extends Controller
 {
@@ -18,7 +19,7 @@ class PostsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['index', 'show']]);
+        $this->middleware('auth', ['except' => ['index', 'show', 'search']]);
     }
 
     /**
@@ -33,7 +34,7 @@ class PostsController extends Controller
         //$posts = Post::orderBy('id', 'asc')->get(); /* for ordering */
         //$posts = Post::orderBy('id', 'asc')->take(1)->get(); /* max NO posts to return */
 
-        $posts = Post::orderBy('id', 'desc')->where('hidden','=',0)->paginate(5);
+        $posts = Post::orderBy('id', 'desc')->where('hidden', '=', 0)->paginate(5);
         return view('posts.index')->with('posts', $posts);
 
         // we can also use: Post::where('name', 'value')->get(); to return specific post
@@ -289,70 +290,110 @@ class PostsController extends Controller
         ]);
     }
 
-    public function search(Request $request){
-      $strword = $request->input('search');
-      $search_type = $request->input('searchField');
+    // Search
+    public function search(Request $request) {
+        $search_text = $request->input('search');
+        $search_type = $request->input('searchField');
 
-      if(strlen($strword)==0){
-          return back();
-      }
-      $str = strtolower($strword);
-      $chars = str_split($str);
-      $str2 = '';
-      $n = strpos($str, ' ');
-      if(!is_numeric($n)) {
-          $str2 = implode($str2, $chars); //remove spaces
-          if(strtolower($str2) == "computerscience&it" || strtolower($str2) == "computerscience" || strtolower($str2) == "it"){ //for different keywords
-            $str2 = 'cs';
-          }if(($str2) == 'problemdiscussion'){
-            $str2 = 'pd';
-          }
-          if($search_type != 'user'){ // to check for search type
-            //$user_ids = User::where('name', '=', "$str2")->select('id')->get();
-            $posts = Post::whereRaw("lower(title) like '$str2%'")
-            ->orWhereRaw("lower(category) like '$str2%'")
-            ->orWhereIn('user_id', function($query) use($str2){
-              $query->select('id')->from('users')->where('name', '=', "$str2");
-            }) // ->orWhereIn('user_id', $user_ids) //nested select
-            ->orderBy('created_at', 'desc')->paginate(5);
-          }else{
-            $posts = Post::find_no_space($str2 ); // for user search
-          }
+        
+        $str = strtolower($search_text);
+        $chars = str_split($str);
+        $str2 = '';
+        $n = strpos($str, ' ');
+      
+        if( !is_numeric($n) )
+        {
+            $str2 = implode($str2, $chars); //remove spaces
+          
+            if( strtolower($str2) == "computerscience&it"
+                || strtolower($str2) == "computerscience"
+                || strtolower($str2) == "it" ) { //for different keywords
+                $str2 = 'cs';
+            }
+            
+            if( ($str2) == 'problemdiscussion' ) {
+                $str2 = 'pd';
+            }
+          
+            if( $search_type != 'user' ) { // to check for search type
+                
+                $posts = Post::whereRaw("lower(title) like '$str2%'")
+                    ->orWhereRaw("lower(category) like '$str2%'")
+                    ->orWhereIn('user_id', function($query) use($str2) {
+                        $query->select('id')->from('users')->where('name', '=', "$str2");
+                    })
+                    ->orderBy('created_at', 'desc')->paginate(5);
+                
+            } else {
+                $posts = Post::find_no_space($str2); // for user search
+            }
 
-      } else {
-          $newstr = explode(" ", $str);
-          for($i = 0; $i < count($newstr); $i++){
-              $newstr[$i] = "'".$newstr[$i]."'";
-          }
-          if(strpos($str, "computer science&it") !== false || strpos($str, "computer science") !== false || strpos($str, "it") !== false){ //for different keywords
-            array_push($newstr,'cs');
-          }if(strpos($str, "problem discussion") !== false){
-            array_push($newstr, 'pd');
-          }
-          $words = implode(',', $newstr);
-          if($search_type != 'user'){ // to check for search type
-             //var_dump($words);
-             //$user_ids = DB::select("SELECT id FROM users where lower(name) in ($words)");
-             $posts = Post::whereRaw("lower(title) in ($words)")
-             ->orWhereRaw("lower(category) in ($words)")
-             ->orWhereIn('user_id', function($query) use($newstr){ //$words isn't working because it's a string dedicated for queries
-               $query->select('id')->from('users')->whereIn('name',$newstr);
-             }) // ->orWhereIn('user_id', $user_ids) //nested select
-             ->orderBy('created_at', 'desc')->paginate(5);
-          }else{
-           $posts = Post::find_space($words); // for user search
-         }
-      }
-        // return response()->json([ // search results for ajax
-        //     'posts'=>$posts
-        // ]);
+        } else {
+            $newstr = explode(" ", $str);
+            
+            for($i=0; $i<count($newstr); $i++) {
+                $newstr[$i] = "'".$newstr[$i]."'";
+            }
 
-        //var_dump($posts);
-     if($search_type == 'user'){ // search results
-        return view('home')->with('posts', $posts);
-     }else{
-        return view('posts.index')->with('posts', $posts);
-     }
+            if( strpos($str, "computer science&it") !== false
+                || strpos($str, "computer science") !== false
+                || strpos($str, "it") !== false ) { //for different keywords
+                array_push($newstr, 'cs');
+            }
+            
+            if( strpos($str, "problem discussion") !== false ) {
+                array_push($newstr, 'pd');
+            }
 
+            $words = implode(',', $newstr);
+          
+            if( $search_type != 'user' ) { // to check for search type
+
+                $posts = Post::whereRaw("lower(title) in ($words)")
+                    ->orWhereRaw("lower(category) in ($words)")
+                    ->orWhereIn('user_id', function($query) use($newstr) {
+                        // $words isn't working because it's a string dedicated for queries
+                        $query->select('id')->from('users')->whereIn('name', $newstr);
+                    })
+                ->orderBy('created_at', 'desc')->paginate(5);
+
+            } else {
+                $posts = Post::find_space($words); // for user search
+            }
+        }
+        
+
+        // var_dump($posts);
+        
+        if( $search_type == 'user' ){ // search results
+            return view('home')->with('posts', $posts);
+        } else {
+            return view('posts.index')->with('posts', $posts);
+        }        
+    }
+
+    public function draftSearch(Request $request) {
+        $search_text = $request->input('search');
+        $search_type = $request->input('searchField');
+    
+        
+        $search_text = strtolower($search_text);
+    
+        if ( $search_type == "user" ) {
+    
+            $user_id = auth()->user()->id;
+    
+            $posts = Post::where('user_id', '=', $user_id)
+                ->whereRaw('LOWER(`title`) LIKE ? ', ['%'. $search_text .'%'])
+                ->orWhereRaw('LOWER(`category`) LIKE ? ', ['%'. $search_text .'%'])
+                ->orderBy('created_at', 'desc')->paginate(5);
+    
+        } else {
+    
+            $posts = Post::whereRaw('LOWER(`title`) LIKE ? ', ['%'. $search_text .'%'])
+                ->orWhereRaw('LOWER(`category`) LIKE ? ', ['%'. $search_text .'%'])
+                ->orderBy('created_at', 'desc')->paginate(5);
+            
+        }
     }
 }
