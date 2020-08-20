@@ -18,22 +18,6 @@
                     <a href="{{ url('/posts/create') }}" class="btn btn-primary mybtn" role="button">Create Post</a>
 
                     {{-- str search --}}
-<<<<<<< HEAD
-                    <div class="row text-center mb-3">
-                        <div class="col-10">
-                            {!! Form::open([
-                                'action' => 'PostsController@search',
-                                'id' => 'searchPost',
-                                'method' => 'POST'
-                            ]) !!}
-
-                                {{ Form::text('search', null, [
-                                    'type' => 'search',
-                                    'class' => 'form-control',
-                                    'placeholder' => 'search for a post',
-                                    'required'
-                                ]) }}
-=======
                     {!! Form::open([
                         'action' => 'PostsController@search',
                         'method' => 'GET'
@@ -43,7 +27,6 @@
                             <div class="col-10">
                                 <input type="text" name="search" class="form-control" required
                                     placeholder="Search for your own posts by title or category">
->>>>>>> 362a73e612f6fd570bb8dd4153cc4edbfd7773a6
 
                                 {{ Form::hidden('searchField', 'user') }}
                             </div>
