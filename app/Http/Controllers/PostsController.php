@@ -295,27 +295,27 @@ class PostsController extends Controller
         $search_type = $request->input('searchField');
 
         // replace special characters with empty word
-        $strword = preg_replace('/[^A-Za-z0-9\-]/', '', $strword);
-        
-        if( strlen($strword)==0 ) {
+        $strword = preg_replace('/[^A-Za-z0-9\s\-]/', '', $strword);
+
+        if( strlen($strword) == 0 ) {
             return back();
         }
 
         $str = strtolower($strword);
-        $chars = str_split($str);
+        //$chars = str_split($str);
         $str2 = '';
         $n = strpos($str, ' ');
-      
+
         if(!is_numeric($n)) {
-            // remove spaces
-            $str2 = implode($str2, $chars);
-          
+            //$str2 = implode($str2, $chars);
+            $str2 = $str;
+
             if( strtolower($str2) == "computerscience&it"
                 || strtolower($str2) == "computerscience"
                 || strtolower($str2) == "it" ) {
                 $str2 = 'cs';
             }
-            
+
             if( strtolower($str2) == "problemdiscussion"
                 || strtolower($str2) == "discussion"
                 || strtolower($str2) == "problem" ) {
@@ -331,7 +331,7 @@ class PostsController extends Controller
                         $query->select('id')->from('users')->where('name', '=', "$str2");
                     })
                     ->orderBy('created_at', 'desc')->paginate(5);
-                
+
             } else {
                 $posts = Post::find_no_space($str2 ); // for user search
             }
@@ -339,6 +339,7 @@ class PostsController extends Controller
         } else {
             // split by spaces
             $newstr = explode(" ", $str);
+            array_push($newstr, str_replace(' ', '', $str));
 
             for($i=0; $i<count($newstr); $i++) {
                 $newstr[$i] = "'".$newstr[$i]."'";
@@ -349,7 +350,7 @@ class PostsController extends Controller
                 || strpos($str, "it") !== false) {
                 array_push($newstr, "'cs'");
             }
-            
+
             if ( strpos($str, "problem discussion") !== false
                 || strpos($str, "discussion") !== false
                 || strpos($str, "problem") !== false ) {
@@ -357,24 +358,19 @@ class PostsController extends Controller
             }
 
             $words = implode(',', $newstr);
-
             // check for search type
             if( $search_type != 'user' ) {
-                
-                $posts = Post::whereRaw("lower(title) in ($words)")
-                    ->orWhereRaw("lower(category) in ($words)")
-                    ->orWhereIn('user_id', function($query) use($newstr) {
-                        $query->select('id')->from('users')->whereIn('name',$newstr);
+                $posts = Post::whereRaw("lower(replace(title,' ','')) in ($words)")
+                    ->orWhereRaw("lower(replace(category,' ','')) in ($words)")
+                    ->orWhereIn('user_id', function($query) use($words) {
+                        $query->select('id')->from('users')->whereRaw("lower(replace(name,' ','')) in ($words)");
                     })
                     ->orderBy('created_at', 'desc')->paginate(5);
-
             } else {
                 $posts = Post::find_space($words); // for user search
             }
         }
 
-        //var_dump($posts);
-        
         if( $search_type == 'user' ) {
             return view('home')->with('posts', $posts);
         } else {
