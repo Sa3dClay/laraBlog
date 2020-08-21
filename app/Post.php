@@ -44,20 +44,20 @@ class Post extends Model
     // search
     public static function find_no_space($str2) {
         $user_id = auth()->user()->id;
-        $user_name = auth()->user()->name;
-        
-        $posts = DB::select("SELECT DISTINCT * from posts where user_id = $user_id and (LOWER(title) LIKE '$str2%' or LOWER(category) LIKE '$str2%' or '$str2' = '$user_name') order by posts.created_at desc");
-      
+        $user_name = strtolower(auth()->user()->name);
+
+        $posts = DB::select("SELECT DISTINCT * from posts where user_id = $user_id and (lower(replace(title,' ','')) LIKE '$str2%' or lower(replace(category,' ','')) LIKE '$str2%' or '$str2' = '$user_name') order by posts.created_at desc");
+
         return $posts;
     }
 
     // search
     public static function find_space($words){
         $user_id = auth()->user()->id;
-        $user_name = auth()->user()->name;
-        
-        $posts = DB::select("SELECT DISTINCT * FROM posts where user_id = $user_id and (LOWER(title) in ($words) or LOWER(category) in ($words) or '$user_name' in ($words)) order by posts.created_at desc");
-      
+        $user_name = strtolower(auth()->user()->name);
+
+        $posts = DB::select("SELECT DISTINCT * FROM posts where user_id = $user_id and (lower(replace(title,' ','')) in ($words) or lower(replace(category,' ','')) in ($words) or '$user_name' in ($words)) order by posts.created_at desc");
+
         return $posts;
     }
 }
