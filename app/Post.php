@@ -46,7 +46,7 @@ class Post extends Model
         $user_id = auth()->user()->id;
         $user_name = strtolower(auth()->user()->name);
 
-        $posts = DB::select("SELECT DISTINCT * from posts where user_id = $user_id and (lower(replace(title,' ','')) LIKE '$str2%' or lower(replace(category,' ','')) LIKE '$str2%' or '$str2' = '$user_name') order by posts.created_at desc");
+        $posts = DB::select("SELECT DISTINCT * from posts where user_id = $user_id and (lower(replace(title,' ','')) LIKE '%$str2%' or lower(replace(category,' ','')) LIKE '%$str2%' or '$str2' = '$user_name') order by posts.created_at desc");
 
         return $posts;
     }
