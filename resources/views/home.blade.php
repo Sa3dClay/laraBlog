@@ -68,10 +68,17 @@
                                     </td>
 
                                     <td>
-                                        {!! Form::open(['action' => ['PostsController@destroy', $post->id], 'method' => 'POST', 'class' => 'float-right']) !!}
+                                        {!! Form::open([
+                                            'action' => ['PostsController@destroy', $post->id],
+                                            'id' => 'deletePost'.$post->id,
+                                            'class' => 'float-right',
+                                            'method' => 'POST',
+                                        ]) !!}
 
                                             {{ Form::hidden('_method', 'DELETE') }}
-                                            {{ Form::submit('Delete', ['class' => 'btn btn-sm btn-danger']) }}
+                                            
+                                            <button type="button" id="{{ $post->id }}"
+                                                class="btn btn-sm btn-danger deletePost">Delete</button>
 
                                         {!! Form::close() !!}
                                     </td>
@@ -96,5 +103,35 @@
         </div>
     </div>
 </div>
+
+{{-- str js --}}
+<script>
+    $(function () {
+        $('.deletePost').on('click', function(e) {
+            e.preventDefault()
+
+            var postId = $(this).attr('id')
+            // console.log(postId)
+            
+            Swal.fire({
+                icon: 'warning',
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.value) {
+                    // console.log('deletePost'+postId)
+
+                    $('#deletePost'+postId).submit()
+                }
+            })
+
+        })
+    })
+</script>
+{{-- end js --}}
 
 @endsection
