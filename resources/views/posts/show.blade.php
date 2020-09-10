@@ -22,7 +22,13 @@
                 </div>
             @endif
             <hr>
-            <small class="float-right" >Written on {{$post->created_at}} by <b> {{$post->user->name}} </b> </small>
+            <small class="float-right" >
+                Written on {{$post->created_at}} by 
+
+                <b>
+                    <a href="{{ url('/profile' . '/' . $post->user->id) }}">{{$post->user->name}}</a>
+                </b>
+            </small>
             <small class="float-left">  Category: <b> {{$post->category}} </b> </small>
         </div>
 

@@ -36,7 +36,12 @@
                         <div class="row post justify-content-md-center">
                             <div class="col-md-6">
                                 <h2><a href="{{ url('/posts' . '/' . $post->id) }}">{{ $post->title }}</a></h2>
-                                <small>Written on {{ $post->created_at }} by {{ $post->user->name }}</small>
+                                <small>
+                                    Written on {{ $post->created_at }} by 
+                                    <b>
+                                        <a href="{{ url('/profile' . '/' . $post->user->id) }}">{{$post->user->name}}</a>
+                                    </b>
+                                </small>
                             </div>
 
                             <div class="col-md-4">
