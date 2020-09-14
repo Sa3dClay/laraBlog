@@ -379,43 +379,37 @@ textarea {
 
 /* str about */
 
-.about-me .my-img {
+.about-us .about-img {
   position: relative;
-  max-height: 200px;
   overflow: hidden;
-  margin: 0 8px;
-  z-index: 2;
+  padding: 40px 0;
 }
 
-.about-me .my-img img {
-  opacity: 0.4;
-  max-width: 280px;
-  border-radius: 50%;
-  border: 2px solid #3498db;
-  -webkit-transform: translateY(-90px) translateX(80px);
-          transform: translateY(-90px) translateX(80px);
-  z-index: 1;
-}
-
-.about-me .my-img img:hover {
+.about-us .about-img img {
   opacity: 0.8;
-  -webkit-transform: translateY(-90px) translateX(20px);
-          transform: translateY(-90px) translateX(20px);
+  border-radius: 44%;
+  -webkit-transform: scale(1.4);
+          transform: scale(1.4);
+  border: 1px solid #3498db;
 }
 
-.about-me .my-info {
-  padding: 0 8px;
+.about-us .about-info {
+  padding: 40px 20px;
 }
 
-.about-me .my-info .myJob {
+.about-us .about-info .name {
+  font-size: 24px;
+}
+
+.about-us .about-info .bio {
   color: #3498db;
   font-size: 20px;
 }
 
-.about-me .my-info p {
+.about-us .about-info p {
   color: #555;
-  font-size: 18px;
-  margin-top: 20px;
+  font-size: 16px;
+  padding-top: 20px;
 }
 
 /* end about */
@@ -559,7 +553,6 @@ textarea {
 .post .post-img i,
 .post .post-img img,
 .post .post-img span,
-.about-me .my-img img,
 .navbar-brand i,
 .navbar-dark .navbar-nav .nav-link::before {
   -webkit-transition: all 0.3s;
@@ -620,11 +613,45 @@ textarea {
     padding-right: 0.6rem;
     padding-left: 0.6rem;
   }
+
+  .about-us .about-img {
+    padding: 40px;
+  }
+
+  .about-us .about-info {
+    padding: 40px 0;
+  }
+
+  .about-us .about-info .name {
+    font-size: 28px;
+  }
+
+  .about-us .about-info .bio {
+    font-size: 22px;
+  }
+
+  .about-us .about-info p {
+    font-size: 18px;
+  }
 }
 
 @media (min-width: 1200px) {
   .container {
     padding: 10px 0;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .about-us .about-info .name {
+    font-size: 22px;
+  }
+
+  .about-us .about-info .bio {
+    font-size: 18px;
+  }
+
+  .about-us .about-info p {
+    font-size: 14px;
   }
 }
 
