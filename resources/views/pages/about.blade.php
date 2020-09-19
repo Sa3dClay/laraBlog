@@ -23,7 +23,7 @@
             <div class="col-1"></div>
             <div class="col-8 about-info">
                 <h2 class="name">Abdulrahman Sobh</h2>
-                <span class="bio">Back-end Web Developer & Desktop app developer</span>
+                <span class="bio">Back-end Web Developer & Desktop App Developer</span>
                 <p>I'm a programmer who loves coding, working in web development/Desktop app development and have a few experiences about UI/UX, building web applications with Laravel/desktop apps with Java SE , And a good team-cooperator with a nice knowledge of problem solving correlated to data structures&algorithms</p>
             </div>
 
