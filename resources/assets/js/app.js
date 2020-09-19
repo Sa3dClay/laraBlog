@@ -1,4 +1,3 @@
-// NiceScroll
 $(function () {
     $("body").niceScroll({
         cursorcolor: "#3498db",
@@ -10,14 +9,3 @@ $(function () {
         $("body").getNiceScroll().resize();
     });
 });
-
-// import Vue from 'vue'
-
-// import VueRouter from 'vue-router'
-// Vue.use(VueRouter)
-
-// Vue.component('example-component', require('./components/ExampleComponent.vue'));
-
-// const app = new Vue({
-//     el: '#app'
-// });

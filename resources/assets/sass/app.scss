@@ -271,37 +271,31 @@ textarea {
 /* end Dashboard card */
 
 /* str about */
-.about-me {
-    .my-img {
+.about-us {
+    .about-img {
         position: relative;
-        max-height: 200px;
         overflow: hidden;
-        margin: 0 8px;
-        z-index: 2;
+        padding: 40px 0;
         img {
-            opacity: 0.4;
-            max-width: 280px;
-            border-radius: 50%;
-            border: 2px solid $blue;
-            transform: translateY(-90px) translateX(80px);
-            @extend %trans;
-            z-index: 1;
-            &:hover {
-                opacity: 0.8;
-                transform: translateY(-90px) translateX(20px);
-            }
+            opacity: 0.8;
+            border-radius: 44%;
+            transform: scale(1.4);
+            border: 1px solid $blue;
         }
     }
-    .my-info {
-        padding: 0 8px;
-        .myJob {
+    .about-info {
+        padding: 40px 20px;
+        .name {
+            font-size: 24px;
+        }
+        .bio {
             color: $blue;
             font-size: 20px;
         }
         p {
             color: #555;
-            font-size: 18px;
-            margin-top: 20px;
+            font-size: 16px;
+            padding-top: 20px;
         }
     }
 }
@@ -380,7 +374,7 @@ textarea {
     border-top-color: #fff;
 }
 
-// screens
+// large screens
 @media (min-width: 992px) {
     .navbar-expand-lg .navbar-nav .nav-link {
         padding-right: 0.6rem;
@@ -390,10 +384,44 @@ textarea {
         padding-right: 0.6rem;
         padding-left: 0.6rem;
     }
+    .about-us {
+        .about-img {
+            padding: 40px;
+        }
+        .about-info {
+            padding: 40px 0;
+            .name {
+                font-size: 28px;
+            }
+            .bio {
+                font-size: 22px;
+            }
+            p {
+                font-size: 18px;
+            }
+        }
+    }
 }
 
 @media (min-width: 1200px) {
     .container {
         padding: 10px 0;
+    }
+}
+
+// extra small
+@media (max-width: 575.98px) {
+    .about-us {
+        .about-info {
+            .name {
+                font-size: 22px;
+            }
+            .bio {
+                font-size: 18px;
+            }
+            p {
+                font-size: 14px;
+            }
+        }
     }
 }

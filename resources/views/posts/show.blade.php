@@ -22,7 +22,13 @@
                 </div>
             @endif
             <hr>
-            <small class="float-right" >Written on {{$post->created_at}} by <b> {{$post->user->name}} </b> </small>
+            <small class="float-right" >
+                Written on {{$post->created_at}} by 
+
+                <b>
+                    <a href="{{ url('/profile' . '/' . $post->user->id) }}">{{$post->user->name}}</a>
+                </b>
+            </small>
             <small class="float-left">  Category: <b> {{$post->category}} </b> </small>
         </div>
 
@@ -179,9 +185,17 @@
                 @if(auth()->user()->id == $post->user_id)
                     <a href="{{ url('/posts'.'/'.$post->id.'/edit') }}" class="btn btn-success">Edit</a>
 
-                    {!! Form::open(['action' => ['PostsController@destroy', $post->id], 'method' => 'POST', 'class' => 'float-right']) !!}
+                    {{-- Delete Post --}}
+                    {!! Form::open([
+                        'action' => ['PostsController@destroy', $post->id],
+                        'class' => 'float-right',
+                        'id' => 'deleteForm',
+                        'method' => 'POST',
+                    ]) !!}
+
                         {{ Form::hidden('_method', 'DELETE') }}
-                        {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
+
+                        <button type="button" class="btn btn-danger" id="deleteButton">Delete</button>
                     {!! Form::close() !!}
                 @endif
             </div>
@@ -296,6 +310,28 @@
                 })
             })
             // end getWhoLike request
+
+            // str delete post
+            $("#deleteButton").on('click', function(e) {
+                e.preventDefault()
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+
+                        $("#deleteForm").submit()
+
+                    }
+                })
+
+            })
+            // end delete post
         })
 
         // string directions based on detected language

@@ -40,9 +40,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'assign.guard:admin,admin/log
 	Route::resource('reports', 'ReportsController');
 });
 
+// User
+Route::get('profile/{user}', 'UserController@show');
+
 // Post
 Route::resource('posts', 'PostsController');
 Route::get('/post/search', 'PostsController@search');
+
 // Like
 Route::post('/post/like', 'PostsController@like');
 Route::post('/post/dislike', 'PostsController@dislike');

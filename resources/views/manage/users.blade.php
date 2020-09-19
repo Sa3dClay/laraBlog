@@ -158,7 +158,7 @@
   {{-- str js --}}
   <script>
     $(function () {
-      $('.deleteUser').on('click', function (e) {
+      $('.deleteUser').on('click', function(e) {
         e.preventDefault()
 
         var userId = $(this).attr('id')

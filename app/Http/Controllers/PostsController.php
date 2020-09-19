@@ -325,8 +325,8 @@ class PostsController extends Controller
             // check for search type
             if( $search_type != 'user' ) {
 
-                $posts = Post::whereRaw("lower(title) like '$str2%'")
-                    ->orWhereRaw("lower(category) like '$str2%'")
+                $posts = Post::whereRaw("lower(title) like '%$str2%'")
+                    ->orWhereRaw("lower(category) like '%$str2%'")
                     ->orWhereIn('user_id', function($query) use($str2){
                         $query->select('id')->from('users')->where('name', '=', "$str2");
                     })
@@ -345,7 +345,7 @@ class PostsController extends Controller
                 $newstr[$i] = "'".$newstr[$i]."'";
             }
 
-            if( strpos($str, "computer science&it") !== false
+            if( strpos($str, "computer science & it") !== false
                 || strpos($str, "computer science") !== false
                 || strpos($str, "it") !== false) {
                 array_push($newstr, "'cs'");

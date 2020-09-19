@@ -2,6 +2,7 @@
 <script>
     $(function () {
         var post_id = {{ $post->id }}
+        var post_author = {{ $post->user_id }}
 
         @if(isset(auth()->user()->id))
             var user_id = {{ auth()->user()->id }}
@@ -43,33 +44,44 @@
 
                                 <div class="row mar-bot-20">
                                     <div class="col-12">
+                                        
+                                        <div class="float-left">
 
                                         `
                                         + (
                                             user_id === comment.user_id ?
                                             `
-                                            <div class="float-left">
-                                                <button
-                                                    class="btn btn-sm btn-primary"
-                                                    data-toggle="collapse"
-                                                    data-target="#editCollapse` + comment.id + `"
-                                                    aria-controls="editCollapse` + comment.id + `"
-                                                    aria-expanded="false"
-                                                >
-                                                    <i class="far fa-edit"></i>
-                                                </button>
+                                            
+                                            <button
+                                                class="btn btn-sm btn-primary"
+                                                data-toggle="collapse"
+                                                data-target="#editCollapse` + comment.id + `"
+                                                aria-controls="editCollapse` + comment.id + `"
+                                                aria-expanded="false"
+                                            >
+                                                <i class="far fa-edit"></i>
+                                            </button>
 
-                                                <span id="` + comment.id + `">
-                                                    <button class="btn btn-sm btn-danger" id="deleteComment">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </span>
-                                            </div>
+                                            `
+                                            :
+                                            ""
+                                        ) + (
+                                            user_id === comment.user_id || user_id === post_author ?
+                                            `
+
+                                            <span id="` + comment.id + `">
+                                                <button class="btn btn-sm btn-danger" id="deleteComment">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </span>
+                                            
                                             `
                                             :
                                             ""
                                         ) +
                                         `
+
+                                        </div>
 
                                         `
                                         + (
@@ -155,7 +167,7 @@
             var comment_body = $('#comment_body').val()
 
             if(comment_body.length <= 0) {
-                alert('please type something!')
+                Swal.fire('please type something!')
                 return false
             }
 
@@ -262,7 +274,7 @@
             var new_comment = $('#new_comment'+comment_id).val()
 
             if(new_comment.length <= 0) {
-                alert('please type something!')
+                Swal.fire('please type something!')
                 return false
             }
 
@@ -296,21 +308,46 @@
 
             var int_comment_id = parseInt(comment_id, 10)
 
-            $.ajax({
-                url: "{{ url('/comment/delete') }}",
-                method: 'delete',
-                data: {
-                    comment_id: int_comment_id,
-                },
-                success: function(response) {
-                    // console.log(response)
+            Swal.fire({
+                title: 'Are you sure?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.value) {
 
-                    $('#cardBody'+comment_id).remove()
-                },
-                error: function(error) {
-                    console.log(error)
+                    $.ajax({
+                        url: "{{ url('/comment/delete') }}",
+                        method: 'delete',
+                        data: {
+                            comment_id: int_comment_id,
+                            post_author,
+                        },
+                        success: function(response) {
+                            // console.log(response)
+
+                            $('#cardBody'+comment_id).remove()
+
+                            Swal.fire({
+                                title: 'Deleted!',
+                                icon: 'success',
+                            })
+                        },
+                        error: function(error) {
+                            // console.log(error)
+
+                            Swal.fire({
+                                title: 'Failed!',
+                                icon: 'error',
+                            })
+                        }
+                    })
+
                 }
             })
+            // end swal fire
         })
         // end delete comment
     })
@@ -321,6 +358,7 @@
 <div class="modal-content">
     <div class="modal-header">
         <h5 class="modal-title blueColor">Opinions</h5>
+
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
