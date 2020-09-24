@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="about-us jumbotron my-4 py-4">
+    <div class="about-us jumbotron my-2 py-2">
         <div class="row justify-content-around">
             <div class="col-1"></div>
             <div class="col-2 about-img">
