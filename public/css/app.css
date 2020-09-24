@@ -401,6 +401,14 @@ textarea {
   font-size: 24px;
 }
 
+.about-us .about-info .typewriter {
+  padding-right: 8px;
+  letter-spacing: 0.15em;
+  border-right: 2px solid #3498db;
+  -webkit-animation: blink-caret 1s step-end infinite;
+          animation: blink-caret 1s step-end infinite;
+}
+
 .about-us .about-info .bio {
   color: #3498db;
   font-size: 20px;
@@ -410,6 +418,26 @@ textarea {
   color: #555;
   font-size: 16px;
   padding-top: 20px;
+}
+
+@-webkit-keyframes blink-caret {
+  from, to {
+    border-color: transparent;
+  }
+
+  50% {
+    border-color: #3498db;
+  }
+}
+
+@keyframes blink-caret {
+  from, to {
+    border-color: transparent;
+  }
+
+  50% {
+    border-color: #3498db;
+  }
 }
 
 /* end about */

@@ -288,6 +288,12 @@ textarea {
         .name {
             font-size: 24px;
         }
+        .typewriter {
+            padding-right: 8px;
+            letter-spacing: 0.15em;
+            border-right: 2px solid $blue;
+            animation: blink-caret 1s step-end infinite;
+        }
         .bio {
             color: $blue;
             font-size: 20px;
@@ -298,6 +304,11 @@ textarea {
             padding-top: 20px;
         }
     }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: $blue; }
 }
 /* end about */
 
