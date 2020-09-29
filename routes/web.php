@@ -36,8 +36,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'assign.guard:admin,admin/log
 	Route::post('/hidePost', 'AdminController@hidePost');
 	Route::get('/posts', 'AdminController@listHiddenPosts');
 	Route::post('/showPost/{post}', 'AdminController@showPost');
-	//manage reports
-	Route::resource('reports', 'ReportsController');
+	// manage Feedbacks
+	Route::get('/feedbacks/feedbacksList', 'FeedbacksController@list');
+	Route::post('/feedbacks/feedbackresonse', 'FeedbacksController@respond');
+	Route::post('/feedbacks/feedbackclosure', 'FeedbacksController@close');
 });
 
 // User
@@ -63,3 +65,6 @@ Route::get('/notifications/send/{type}/{user_id}/{post_id}', 'NotificationsContr
 Route::get('/notifications/get_new_Notif', 'NotificationsController@get_new_Notif');
 Route::get('/notifications/index', 'NotificationsController@index');
 Route::post('/notifications/isThereNew', 'NotificationsController@isThereNew');
+
+//Feedbacks
+Route::resource('feedbacks', 'FeedbacksController');

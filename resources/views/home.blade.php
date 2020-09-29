@@ -76,7 +76,7 @@
                                         ]) !!}
 
                                             {{ Form::hidden('_method', 'DELETE') }}
-                                            
+
                                             <button type="button" id="{{ $post->id }}"
                                                 class="btn btn-sm btn-danger deletePost">Delete</button>
 
@@ -112,7 +112,7 @@
 
             var postId = $(this).attr('id')
             // console.log(postId)
-            
+
             Swal.fire({
                 icon: 'warning',
                 title: 'Are you sure?',

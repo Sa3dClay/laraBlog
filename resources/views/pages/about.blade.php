@@ -13,8 +13,8 @@
                 <h2 class="name">
                     <span id="name1" class="typewriter"></span>
                 </h2>
-                <span class="bio">Full-stack Web Developer</span>
-                <p>I'm a programmer who loves coding, working in web development and have a few experiences about UI/UX, building web applications with Laravel & Vue.</p>
+                <span class="bio">Full-stack Web Developer / Database Developer</span>
+                <p>I'm a programmer who loves coding, working in web development and have a few experiences about UI/UX, building web applications with Laravel & Vue, building DBs using oracle/Mysql. </p>
             </div>
             <div class="col-1"></div>
         </div>
@@ -27,8 +27,8 @@
                 <h2 class="name">
                     <span id="name2" class="typewriter"></span>
                 </h2>
-                <span class="bio">Back-end Web Developer & Desktop App Developer</span>
-                <p>I'm a programmer who loves coding, working in web development/Desktop app development, building web applications with Laravel/desktop apps with Java.</p>
+                <span class="bio">Back-end Web / Desktop App Developer / Database Developer</span>
+                <p>I'm a programmer who loves coding, working in web development/Desktop app development, building web applications with Laravel/desktop apps with Java, building DBs using oracle/Mysql.</p>
             </div>
 
             <div class="col-2 about-img">
@@ -37,6 +37,9 @@
             <div class="col-1"></div>
         </div>
     </div>
+      <div class="row justify-content-around">
+          <a class="btn btn-primary btn-lg mybtn" href="{{ url('feedbacks') }}" role="button" style="text-align: center;">Contact Us</a>
+      </div>
 
     {{-- str JS --}}
     <script>
@@ -48,7 +51,7 @@
                 name2text = 'Abdulrahman Sobh',
                 name1 = document.getElementById("name1"),
                 name2 = document.getElementById("name2");
-            
+
             function typeWriter() {
                 if (i < name1text.length) {
                     name1.innerHTML += name1text.charAt(i)

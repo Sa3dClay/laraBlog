@@ -28,7 +28,7 @@
                     ),'other', ['class' => 'form-control']
                 ) }}
             </div>
-            
+
             <div class="form-group">
                 {{ Form::label('body', 'Body', ['class' => 'control-label']) }}
                 {{ Form::textarea('body', null, ['class' => 'form-control', 'id'=>'CKEditor', 'rows'=>'4', 'placeholder' => 'Body', 'required']) }}
@@ -62,7 +62,7 @@
                     $splName = explode('/', $image);
                     $imgName = $splName[1];
                     ?>
-                    
+
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <label>
                             {{ Form::radio('image_select', $imgName) }}
@@ -103,14 +103,12 @@
                 }
             })
         });
-      
+
         // prevent redundant requests
         $(function(){
-            // $("#submit").click(function (e) {
-            //     e.preventDefault()
-            //     $("#submit").attr("disabled", true)
-            //     $('#form').submit()
-            // });
+             $("#submit").click(function (e) {
+                 $("#submit").attr("disabled", true)
+             });
         });
     </script>
 
