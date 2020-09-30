@@ -16,7 +16,7 @@ class NotificationsController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth'])->except('index_userN_api');
+        $this->middleware(['web'])->only('index_userN_api');
         // then we should make a develop a middleware for api authentication
     }
 

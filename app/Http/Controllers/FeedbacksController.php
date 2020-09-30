@@ -16,8 +16,9 @@ class FeedbacksController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['list', 'show', 'respond', 'close']]);
-        $this->middleware('assign.guard:admin', ['except' => ['index', 'create', 'store']]);
+        $this->middleware('web', ['only' => ['show']]);
+        $this->middleware('auth', ['only' => ['create', 'store']]);
+        $this->middleware('assign.guard:admin', ['only' => ['list', 'respond', 'close']]);
     }
 
     public function index()
