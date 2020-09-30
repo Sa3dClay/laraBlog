@@ -37,9 +37,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'assign.guard:admin,admin/log
 	Route::get('/posts', 'AdminController@listHiddenPosts');
 	Route::post('/showPost/{post}', 'AdminController@showPost');
 	// manage Feedbacks
-	Route::get('/feedbacks/feedbacksList', 'FeedbacksController@list');
-	Route::post('/feedbacks/feedbackresonse', 'FeedbacksController@respond');
-	Route::post('/feedbacks/feedbackclosure', 'FeedbacksController@close');
+	Route::get('/feedbacks', 'FeedbacksController@list');
+	Route::get('/feedbacks/{id}/close', 'FeedbacksController@close');
+	Route::post('/feedbacks/{id}/respond', 'FeedbacksController@respond');
 });
 
 // User

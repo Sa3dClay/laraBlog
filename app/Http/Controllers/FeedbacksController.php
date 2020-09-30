@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Feedback;
+use App\Http\Controllers\NotificationsController;
 
 class FeedbacksController extends Controller
 {
@@ -15,7 +16,8 @@ class FeedbacksController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['feedbacksList', 'show']]);
+        $this->middleware('auth', ['except' => ['list', 'show', 'respond', 'close']]);
+        $this->middleware('assign.guard:admin', ['except' => ['index', 'create', 'store']]);
     }
 
     public function index()
@@ -104,25 +106,36 @@ class FeedbacksController extends Controller
     public function destroy($id)
     {
       $feedback = Feedback::find($id);
-      if(auth()->user()->id != $feedback->user_id){
+      if(auth()->user()->id != $feedback->user_id || !Auth::guard('admin')->check()){ //only admin and feedback's owner
         return redirect('home')->with('error', 'Unauthorized User!');
       }
 
       if($feedback->delete()){
         return redirect('about')->with('success', 'feedback Removed Successfully');
-      }else{
-        return redirect('about')->with('error', "Couldn't remove the feedback ");
       }
+      return redirect('about')->with('error', "Couldn't remove the feedback ");
+
     }
 
     //for admin
     public function list(){
+      $feedbacks = Feedback::all();
+      return view('manage.feedbacks')->with('feedbacks', $feedbacks);
+    }
+
+    public function close($id){
+      $feedback = Feedback::find($id);
+      $feedback_id = $feedback->id;
+      $feedback->closed = 1;
+      NotificationsController::send('feedback closure', Feedback::find($feedback_id)->user_id, $feedback_id);
+      if($feedback->save()){
+        return redirect('admin/feedbacks')->with('success', 'feedback Closed Successfully');
+      }
+      return redirect('admin/feedbacks')->with('error', "Couldn't close the selected feedback");
 
     }
-    public function respond(){
 
-    }
-    public function close(){
+    public function respond($id){
 
     }
 }

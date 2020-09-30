@@ -29,7 +29,7 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="manageDropdown">
                             <a class="dropdown-item" href="{{ url('admin/users') }}">Users</a>
                             <a class="dropdown-item" href="{{ url('admin/posts') }}">Posts</a>
-                            <a class="dropdown-item" href="{{ url('admin/reports') }}">Reports</a>
+                            <a class="dropdown-item" href="{{ url('admin/feedbacks') }}">Feedbacks</a>
                         </div>
                     </li>
 

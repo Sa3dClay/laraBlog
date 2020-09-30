@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use App\Http\Resources\Notification_resource;
 use App\Notification;
 use App\Post;
+use App\Feedback;
 use DB;
 
 class NotificationsController extends Controller
@@ -23,7 +24,7 @@ class NotificationsController extends Controller
     {
         $notifications = Notification::where('user_id','=',auth()->user()->id)->orderBy('created_at', 'desc')->get();
         // $notifications = auth()->user()->notifications;
-        
+
         $this->mark_last_view();
         // if(strpos(url()->current(),"api")!==false){ //for the api
         //     return Notification_resource::collection($notifications);
@@ -33,22 +34,34 @@ class NotificationsController extends Controller
         //return response()->json(['notifications'=> $notifications]);
     }
 
-    public static function send($type, $toWhom_id, $post_id)
+    public static function send($type, $toWhom_id, $post_id) // post_id or feedback_id
     {
-        $post = Post::find($post_id);
         $notification = new Notification;
         $message = null;
-        
-        if($type == 'like'){
-            $message = auth()->user()->name.' has liked your post "';
-        }else{
-            $message = auth()->user()->name.' has commented on your post "';
-        }
 
-        $message .= $post->title.'"';
+        if(strpos($type, 'feedback') !== false){
+          $feedback_title = Feedback::find($post_id)->title;
+
+          if($type == 'feedback closure'){
+              $message = "Your feedback ". "'$feedback_title'" ." has been closed";
+          }else{
+              //feedback response
+              $message = "You got a response for your problem '$feedback_title'";
+          }
+
+        }else{
+          $post = Post::find($post_id);
+
+          if($type == 'like'){
+              $message = auth()->user()->name.' has liked your post "';
+          }else{
+              $message = auth()->user()->name.' has commented on your post "';
+          }
+          $message .= $post->title.'"';
+        }
         $notification->type = $type;
         $notification->user_id = $toWhom_id;
-        $notification->post_id = $post_id;
+        $notification->post_id = $post_id; // or feedback_id
         $notification->message = $message;
         $notification->save();
     }
@@ -62,7 +75,7 @@ class NotificationsController extends Controller
                 ['type','=', $type],
                 ['created_at','=',$date]
             ])->delete();
-        
+
         } else if($type == 'like'){
             $notification = Notification::where([
                 ['post_id','=', $post_id],
@@ -96,7 +109,7 @@ class NotificationsController extends Controller
     public function get_new_Notif(Request $request){
         $newNots = Notification::whereColumn('created_at','=','updated_at')
             ->where('user_id','=', auth()->user()->id)
-            ->orderBy('created_at', 'desc')->get();        
+            ->orderBy('created_at', 'desc')->get();
         $this->mark_last_view();
 
         return response()->json(['newNots'=>$newNots]);
