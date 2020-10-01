@@ -13,8 +13,8 @@ class notification extends Model
   // Timestamps
   public $timestamps = true;
 
-  public function post() {
-      return $this->belongsTo('App\Post', 'post_id'); //key used post_id
+  public function post() { // or feedback
+      return $this->belongsTo('App\Post', 'post_id'); //key used post_id or feedback_id
   }
 
   //may be used or may not

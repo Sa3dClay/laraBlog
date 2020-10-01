@@ -37,8 +37,8 @@
                                     </p></td>
                                     @if($feedback->closed == 0)
                                       <td>
-                                        <a href="{{ url('admin/feedbacks'. '/' .$feedback->id . '/respond') }}"
-                                            class="btn btn-sm btn-success">Resond <i class="fa fa-chevron-circle-right" aria-hidden="true"></i></a>
+                                        <a href="{{ url('/feedbacks'. '/' .$feedback->id . '/'.auth()->user()->id. '/' .'responses') }}"
+                                            class="btn btn-sm btn-success">Respond <i class="fa fa-chevron-circle-right" aria-hidden="true"></i></a>
                                       </td>
                                     @else
                                       <td>

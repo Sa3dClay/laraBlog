@@ -39,7 +39,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'assign.guard:admin,admin/log
 	// manage Feedbacks
 	Route::get('/feedbacks', 'FeedbacksController@list');
 	Route::get('/feedbacks/{id}/close', 'FeedbacksController@close');
-	Route::post('/feedbacks/{id}/respond', 'FeedbacksController@respond');
+	//add response
+	Route::post('/feedbacks/respond/store', 'ResponseController@store')->name('storeResponse');
 });
 
 // User
@@ -68,3 +69,6 @@ Route::post('/notifications/isThereNew', 'NotificationsController@isThereNew');
 
 //Feedbacks
 Route::resource('feedbacks', 'FeedbacksController');
+
+//Feedback's responses
+Route::get('/feedbacks/{feedback_id}/{user_id}/responses', 'ResponseController@responses')->name('responses');

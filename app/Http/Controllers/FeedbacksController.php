@@ -18,7 +18,7 @@ class FeedbacksController extends Controller
     {
         $this->middleware('web', ['only' => ['show']]);
         $this->middleware('auth', ['only' => ['create', 'store']]);
-        $this->middleware('assign.guard:admin', ['only' => ['list', 'respond', 'close']]);
+        $this->middleware('assign.guard:admin', ['only' => ['list', 'close']]);
     }
 
     public function index()
@@ -54,7 +54,7 @@ class FeedbacksController extends Controller
       $feedback->message = $request->input('message');
       $feedback->user_id = auth()->user()->id;
       if($feedback->save()){
-        return redirect('about')->with('success', 'Feedback was sent Successfully');;
+        return redirect('about')->with('success', 'Feedback was sent Successfully');
       }
       return redirect('about')->with('success', 'Feedback was sent Successfully');
     }
@@ -136,7 +136,4 @@ class FeedbacksController extends Controller
 
     }
 
-    public function respond($id){
-
-    }
 }
