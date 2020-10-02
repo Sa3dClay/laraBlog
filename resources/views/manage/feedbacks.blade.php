@@ -37,7 +37,7 @@
                                     </p></td>
                                     @if($feedback->closed == 0)
                                       <td>
-                                        <a href="{{ url('/feedbacks'. '/' .$feedback->id . '/'.auth()->user()->id. '/' .'responses') }}"
+                                        <a href="{{ url('/feedbacks'. '/' .$feedback->id . '/'.$feedback->user_id. '/' .'responses') }}"
                                             class="btn btn-sm btn-success">Respond <i class="fa fa-chevron-circle-right" aria-hidden="true"></i></a>
                                       </td>
                                     @else

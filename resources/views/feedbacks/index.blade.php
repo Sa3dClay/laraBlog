@@ -31,7 +31,7 @@
                             @foreach ($feedbacks as $feedback)
                                 <tr>
                                     <td><p>
-                                        <a href="{{ url('/feedbacks'. '/' .$feedback->id) }}">{{ $feedback->title }}</a>
+                                        <a href="{{ url('/feedbacks/'. $feedback->id  .'/'. auth()->user()->id .'/responses') }}">{{ $feedback->title }}</a>
                                     </p></td>
 
                                     <td>
