@@ -39,8 +39,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'assign.guard:admin,admin/log
 	// manage Feedbacks
 	Route::get('/feedbacks', 'FeedbacksController@list');
 	Route::get('/feedbacks/{id}/close', 'FeedbacksController@close');
-	//add response
+	//Route::get('/feedbacks/{id}/mark_feedback', 'FeedbacksController@mark_feedback')->name('mark_feedback');
+	//add response & mark responded feedback //Note: post method requires a form to apply it
 	Route::post('/feedbacks/respond/store', 'ResponseController@store')->name('storeResponse');
+
 });
 
 // User

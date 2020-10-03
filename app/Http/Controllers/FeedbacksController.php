@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Feedback;
 use App\Http\Controllers\NotificationsController;
+use App\Response;
 
 class FeedbacksController extends Controller
 {
@@ -17,7 +18,7 @@ class FeedbacksController extends Controller
     public function __construct()
     {
         $this->middleware('web', ['only' => ['show']]);
-        $this->middleware('auth', ['only' => ['create', 'store']]);
+        $this->middleware('auth', ['only' => ['create', 'store', 'mark_feedback']]);
         $this->middleware('assign.guard:admin', ['only' => ['list', 'close']]);
     }
 
@@ -133,7 +134,14 @@ class FeedbacksController extends Controller
         return redirect('admin/feedbacks')->with('success', 'feedback Closed Successfully');
       }
       return redirect('admin/feedbacks')->with('error', "Couldn't close the selected feedback");
+    }
 
+    public static function mark_feedback($id){
+      $hasResponse = Response::where('feedback_id', '=', $id)->first();
+      if(isset($hasResponse)){
+        return true;
+      }
+      return false;
     }
 
 }

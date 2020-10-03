@@ -29,12 +29,17 @@
 
                             @foreach ($feedbacks as $feedback)
                                 <tr>
-                                    <td><p>
-                                        <a href="{{ url('/feedbacks'. '/' .$feedback->id) }}">{{ $feedback->title }} </a><b>Received from: </b>
+                                    <td>
+                                      <p>
+                                        <a href="{{ url('/feedbacks'. '/' .$feedback->id) }}">{{ $feedback->title }} </a><b>Received from:
                                         <small>
                                            <a href="{{ url('/profile' . '/' . $feedback->user->id) }}">{{$feedback->user->name}}</a>
                                         </small>
-                                    </p></td>
+                                        @if(\App\Http\Controllers\FeedbacksController::mark_feedback($feedback->id))
+                                          <i class="fa fa-check" style="color:green" aria-hidden="true"></i>
+                                        @endif
+                                      </p>
+                                    </td>
                                     @if($feedback->closed == 0)
                                       <td>
                                         <a href="{{ url('/feedbacks'. '/' .$feedback->id . '/'.$feedback->user_id. '/' .'responses') }}"
