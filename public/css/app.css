@@ -266,6 +266,7 @@ textarea {
   margin: 20px 0;
   color: #2c3e50;
   text-align: center;
+  background-color: #fff;
 }
 
 .post a {
@@ -625,7 +626,8 @@ textarea {
   left: 0;
 }
 
-.navbar-dark .navbar-nav .nav-link:hover:before {
+.navbar-dark .navbar-nav .nav-link:hover:before,
+.navbar-dark .navbar-nav .nav-link:active:before {
   width: 100%;
   color: #fff;
   border-top-color: #fff;

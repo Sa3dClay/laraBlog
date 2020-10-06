@@ -6,7 +6,12 @@
         <a href="{{ url('/posts'. '/' . $post->id) }}" class="btn btn-success mybtn">Go back</a>
 
         <h1 class="text-center hpc">Edit Post</h1>
-        {!! Form::open(['action' => ['PostsController@update', $post->id], 'method' => 'POST', 'files' => true]) !!}
+        {!! Form::open([
+            'action' => ['PostsController@update', $post->id],
+            'id' => 'editForm',
+            'method' => 'POST',
+            'files' => true
+        ]) !!}
             {{ csrf_field() }}
 
             <div class="form-group">
@@ -73,12 +78,14 @@
             </div>
 
             {{ Form::hidden('_method', 'PUT') }}
-            {{ Form::submit('Submit', ['class' => 'btn btn-sm btn-primary']) }}
+
+            <button type="button" id="submitEdit" class="btn btn-sm btn-primary">Update</button>
         {!! Form::close() !!}
     </div>
 
     {{-- JS --}}
     <script src="https://cdn.ckeditor.com/4.14.0/full/ckeditor.js"></script>
+
     <script>
         CKEDITOR.replace( 'CKEditor' );
 
@@ -86,9 +93,10 @@
             const x =  new RegExp("[\x00-\x80]+");
 
             $input = $('#title')
+            
             if( $input.val() ) {
                 var isAscii = x.test($input.val().charAt(0));
-                console.log($input.val().charAt(0), isAscii)
+                // console.log($input.val().charAt(0), isAscii)
 
                 if(isAscii) {
                     $input.css("direction", "ltr");
@@ -115,6 +123,16 @@
                     }
                 }
             })
+
+            // prevent redundant requests
+            $(function(){
+                $("#submitEdit").on('click', function (e) {
+                    e.preventDefault()
+
+                    $("#submitEdit").attr("disabled", true)
+                    $("#editForm").submit()
+                });
+            });
         })
     </script>
 

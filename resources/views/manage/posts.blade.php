@@ -45,7 +45,7 @@
                     @endforeach
 
                 @else
-                    <h2>No Posts Founded</h2>
+                    <h2>No Hidden Posts Founded</h2>
                 @endif
             </div>
         </div>

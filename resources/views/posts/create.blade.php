@@ -6,7 +6,12 @@
         <a href="{{ url('/home') }}" class="btn btn-success mybtn">Go back</a>
 
         <h1 class="text-center hpc">Create Post</h1>
-        {!! Form::open(['action' => 'PostsController@store', 'method' => 'POST', 'files' => true , 'id' => 'form']) !!}
+        {!! Form::open([
+            'action' => 'PostsController@store',
+            'id' => 'createForm',
+            'method' => 'POST',
+            'files' => true
+        ]) !!}
             {{ csrf_field() }}
 
             <div class="form-group">
@@ -31,7 +36,13 @@
 
             <div class="form-group">
                 {{ Form::label('body', 'Body', ['class' => 'control-label']) }}
-                {{ Form::textarea('body', null, ['class' => 'form-control', 'id'=>'CKEditor', 'rows'=>'4', 'placeholder' => 'Body', 'required']) }}
+                {{ Form::textarea('body', null, [
+                    'class' => 'form-control',
+                    'id'=>'CKEditor',
+                    'rows'=>'4',
+                    'placeholder' => 'Body',
+                    'required'
+                ]) }}
             </div>
 
             <a class="btn btn-sm btn-success hidden" data-toggle="collapse" href="#upload" role="button" aria-expanded="false" aria-controls="upload">
@@ -72,7 +83,7 @@
                 @endforeach
             </div>
 
-            {{ Form::submit('Submit', ['id' => 'submit', 'class' => 'btn btn-sm btn-primary']) }}
+            <button type="button" id="submitCreate" class="btn btn-sm btn-primary">Publish</button>
         {!! Form::close() !!}
     </div>
 
@@ -106,9 +117,12 @@
 
         // prevent redundant requests
         $(function(){
-             $("#submit").click(function (e) {
-                 $("#submit").attr("disabled", true)
-             });
+            $("#submitCreate").on('click', function (e) {
+                e.preventDefault()
+
+                $("#submitCreate").attr("disabled", true)
+                $("#createForm").submit()
+            });
         });
     </script>
 

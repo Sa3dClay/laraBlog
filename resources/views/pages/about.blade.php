@@ -37,9 +37,10 @@
             <div class="col-1"></div>
         </div>
     </div>
-      <div class="row justify-content-around">
-          <a class="btn btn-primary btn-lg mybtn" href="{{ url('feedbacks') }}" role="button" style="text-align: center;">Contact Us</a>
-      </div>
+
+    <div class="row justify-content-around my-2">
+        <a class="btn btn-primary mybtn" href="{{ url('feedbacks') }}" role="button">Contact Us</a>
+    </div>
 
     {{-- str JS --}}
     <script>

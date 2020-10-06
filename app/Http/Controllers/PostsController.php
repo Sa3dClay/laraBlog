@@ -330,7 +330,7 @@ class PostsController extends Controller
                     ->orWhereIn('user_id', function($query) use($str2){
                         $query->select('id')->from('users')->where('name', '=', "$str2");
                     })
-                    ->orderBy('created_at', 'desc')->paginate(5);
+                    ->orderBy('created_at', 'desc')->where('hidden','=',0)->paginate(5);
 
             } else {
                 $posts = Post::find_no_space($str2 ); // for user search
@@ -365,7 +365,7 @@ class PostsController extends Controller
                     ->orWhereIn('user_id', function($query) use($words) {
                         $query->select('id')->from('users')->whereRaw("lower(replace(name,' ','')) in ($words)");
                     })
-                    ->orderBy('created_at', 'desc')->paginate(5);
+                    ->orderBy('created_at', 'desc')->where('hidden','=',0)->paginate(5);
             } else {
                 $posts = Post::find_space($words); // for user search
             }
