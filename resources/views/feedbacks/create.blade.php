@@ -6,31 +6,46 @@
         <a href="{{ url('/home') }}" class="btn btn-success mybtn">Go back</a>
 
         <h1 class="text-center hpc">Create Post</h1>
-        {!! Form::open(['action' => 'FeedbacksController@store', 'method' => 'POST']) !!}
+        
+        {!! Form::open(['action' => 'FeedbacksController@store', 'method' => 'POST', 'id' => 'createForm']) !!}
             {{ csrf_field() }}
 
             <div class="form-group">
-                {{ Form::label('title', 'Title', ['class' => 'control-label']) }}
-                {{ Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Title', 'required']) }}
+                <label for="feedTitle" class="control-label">Title</label>
+                <input type="text" name="title" id="feedTitle" class="form-control"
+                    placeholder="Title of Feedback" maxlength="20" required>
             </div>
 
             <div class="form-group">
-                {{ Form::label('message', 'Message', ['class' => 'control-label']) }}
-                {{ Form::textarea('message', null, ['class' => 'form-control', 'id'=>'CKEditor', 'rows'=>'4', 'placeholder' => 'message', 'required']) }}
+                <label for="feedMessage" class="control-label">Message</label>
+                <textarea name="message" id="feedMessage" rows="4" class="form-control"
+                    placeholder="Feedback Message" required></textarea>
             </div>
 
-            {{ Form::submit('Submit', ['id' => 'submit', 'class' => 'btn btn-sm btn-primary']) }}
+            <button type="button" id="submitCreate" class="btn btn-sm btn-primary">Create</button>
         {!! Form::close() !!}
     </div>
 
+    {{-- STR JS --}}
+    <script>
+        // prevent redundant requests
+        $(function() {
+            $("#submitCreate").click(function (e) {
+                e.preventDefault()
 
-<script>
-// prevent redundant requests
-$(function(){
-     $("#submit").click(function (e) {
-         $("#submit").attr("disabled", true)
-     });
-});
-</script>
+                let title = $("#feedTitle").val(),
+                    message = $("#feedMessage").val()                
+                // console.log(title, message)
+
+                if(!title || !message) {
+                    Swal.fire('Please fill all fields!')
+                } else {
+                    $("#submitCreate").attr("disabled", true)
+                    $("#createForm").submit()
+                }
+            });
+        });
+    </script>
+    {{-- END JS --}}
 
 @endsection

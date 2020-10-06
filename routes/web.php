@@ -37,9 +37,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'assign.guard:admin,admin/log
 	Route::get('/posts', 'AdminController@listHiddenPosts');
 	Route::post('/showPost/{post}', 'AdminController@showPost');
 	// manage Feedbacks
-	Route::get('/feedbacks/feedbacksList', 'FeedbacksController@list');
-	Route::post('/feedbacks/feedbackresonse', 'FeedbacksController@respond');
-	Route::post('/feedbacks/feedbackclosure', 'FeedbacksController@close');
+	Route::get('/feedbacks', 'FeedbacksController@list');
+	Route::get('/feedbacks/{id}/close', 'FeedbacksController@close');
+	//Route::get('/feedbacks/{id}/mark_feedback', 'FeedbacksController@mark_feedback')->name('mark_feedback');
+	//add response & mark responded feedback //Note: post method requires a form to apply it
+	Route::post('/feedbacks/respond/store', 'ResponseController@store')->name('storeResponse');
+
 });
 
 // User
@@ -68,3 +71,6 @@ Route::post('/notifications/isThereNew', 'NotificationsController@isThereNew');
 
 //Feedbacks
 Route::resource('feedbacks', 'FeedbacksController');
+
+//Feedback's responses
+Route::get('/feedbacks/{feedback_id}/{user_id}/responses', 'ResponseController@responses')->name('responses');

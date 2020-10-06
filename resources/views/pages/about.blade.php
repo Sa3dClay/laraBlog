@@ -38,9 +38,11 @@
         </div>
     </div>
 
-    <div class="row justify-content-around my-2">
-        <a class="btn btn-primary mybtn" href="{{ url('feedbacks') }}" role="button">Contact Us</a>
-    </div>
+    @if(Auth::guard('user')->check())
+        <div class="row justify-content-around my-2">
+            <a class="btn btn-primary mybtn" href="{{ url('feedbacks') }}" role="button">Contact Us</a>
+        </div>
+    @endif
 
     {{-- str JS --}}
     <script>
