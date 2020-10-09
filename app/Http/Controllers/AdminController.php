@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\User;
 use App\Post;
+use App\Http\Controllers\NotificationsController;
 
 class AdminController extends Controller
 {
@@ -53,6 +54,8 @@ class AdminController extends Controller
 
             $user = User::find($user_id);
             $user->banned_until = $block_until;
+            //Notify user
+            NotificationsController::send('account block', $user_id, 0); //0 refers to no post/feedback
 
             if( $user->save() ) {
                 return redirect()->back()->with('success', 'User banned successfully');
@@ -69,6 +72,8 @@ class AdminController extends Controller
     {
         $user = User::find($id);
         $user->banned_until = null;
+        //Notify user
+        NotificationsController::send('account revocation', $id, 0); //0 refers to no post/feedback
 
         if( $user->save() ) {
             return redirect()->back()->with('success', 'User revoked successfully');
@@ -93,6 +98,8 @@ class AdminController extends Controller
 
             $post = Post::find($post_id);
             $post->hidden = 1;
+            //Notify user
+            NotificationsController::send('post visibility', $post->user->id, $post_id);
 
             if( $post->save() ) {
                 return redirect('/posts')->with('success', 'Post '.$post_id.' is now hidden');

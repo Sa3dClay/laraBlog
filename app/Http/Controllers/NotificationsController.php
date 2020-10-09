@@ -38,15 +38,23 @@ class NotificationsController extends Controller
     {
         $notification = new Notification;
         $message = null;
+        if(strpos($type, 'account') !== false){
+          if($type == 'account block'){
+            //in case of account block, $post_id won't refer to nothing (0)
+            $message = "Your account has been temporarily blocked!" ;
+          }else{
+            //in case of account revocation, $post_id won't refer to nothing (0)
+            $message = "Your account has been revoked successfully.";
+          }
 
-        if(strpos($type, 'feedback') !== false){
+        }else if(strpos($type, 'feedback') !== false){
           $feedback_title = Feedback::find($post_id)->title;
 
           if($type == 'feedback closure'){
-              $message = "Your feedback ". "'$feedback_title'" ." has been closed";
+              $message = "Your feedback ". '"'. $feedback_title .'"' ." has been closed";
           }else{
               //feedback response
-              $message = "You got a response for your problem '$feedback_title'";
+              $message = "You got a response for your problem ". '"'. $feedback_title . '"';
           }
 
         }else{

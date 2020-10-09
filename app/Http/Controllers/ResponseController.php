@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Response;
 use App\Feedback;
-use App\Notification;
+use App\Http\Controllers\NotificationsController;
 
 class ResponseController extends Controller
 {
@@ -40,6 +40,9 @@ class ResponseController extends Controller
        $response->user_id = $request->input('user_id');
        $response->feedback_id = $request->input('feedback_id');
        $response->response = $request->input('response');
+       //Notify user
+       NotificationsController::send('feedback response', Feedback::find($response->feedback_id)->user_id, $response->feedback_id);
+
        if($response->save()){
          return redirect('/admin/feedbacks')->with('success', 'response was sent Successfully');
        }
