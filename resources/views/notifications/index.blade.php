@@ -10,8 +10,16 @@
                 @foreach ($notifications as $notification)
                     <tr>
                         <td class="float-left">
-                            {{ $notification->message }}
-
+                            @if($notification->post_id != 0)
+                                <!-- only notifications of feedbacks/posts-->
+                                @if(strpos($notification->type, 'feedback') !== false)
+                                    <a href="{{ url('/feedbacks/'. $notification->post_id .'/'. auth()->user()->id . '/responses') }}"> {{ $notification->message }} </a>
+                                @else
+                                    <a href="{{ url('/posts/'. $notification->post_id) }}"> {{ $notification->message }} </a>
+                                @endif
+                            @else
+                                {{ $notification->message }}
+                            @endif
                             @if($notification->updated_at == $notification->created_at)
                                 <i class="far fa-bell new-notification"></i>
                             @endif
