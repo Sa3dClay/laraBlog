@@ -34,6 +34,15 @@
                     </li>
 
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ url('admin/notifications/index') }}" >
+                            <i class="fas fa-bell"></i>
+                            <span id="newICON" class="badge badge-pill badge-danger hidden">
+                                New
+                            </span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.logout') }}"
                             onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">

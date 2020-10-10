@@ -40,9 +40,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'assign.guard:admin,admin/log
 	Route::get('/feedbacks', 'FeedbacksController@list');
 	Route::get('/feedbacks/{id}/close', 'FeedbacksController@close');
 	//Route::get('/feedbacks/{id}/mark_feedback', 'FeedbacksController@mark_feedback')->name('mark_feedback');
-	//add response & mark responded feedback //Note: post method requires a form to apply it
+	//add response & mark responded feedback //Note: POST method requires a form to apply it
 	Route::post('/feedbacks/respond/store', 'ResponseController@store')->name('storeResponse');
-
+  // Notification
+	Route::get('/notifications/send/{type}/{user_id}/{post_id}', 'NotificationsController@send');
+	Route::get('/notifications/get_new_Notif', 'NotificationsController@get_new_Notif');
+	Route::get('/notifications/index', 'NotificationsController@index');
+	Route::post('/notifications/isThereNew', 'NotificationsController@isThereNew');
 });
 
 // User
@@ -64,10 +68,10 @@ Route::post('/comment/store', 'CommentsController@store');
 Route::delete('/comment/delete', 'CommentsController@delete');
 
 // Notification
-Route::get('/notifications/send/{type}/{user_id}/{post_id}', 'NotificationsController@send');
-Route::get('/notifications/get_new_Notif', 'NotificationsController@get_new_Notif');
-Route::get('/notifications/index', 'NotificationsController@index');
-Route::post('/notifications/isThereNew', 'NotificationsController@isThereNew');
+Route::get('/notifications/send/{type}/{user_id}/{post_id}', 'NotificationsController@send')->middleware('auth');
+Route::get('/notifications/get_new_Notif', 'NotificationsController@get_new_Notif')->middleware('auth');
+Route::get('/notifications/index', 'NotificationsController@index')->middleware('auth'); // GET methods can be called by forms/url()/route()
+Route::post('/notifications/isThereNew', 'NotificationsController@isThereNew')->middleware('auth'); // POST methods can be called by forms ONLY
 
 //Feedbacks
 Route::resource('feedbacks', 'FeedbacksController');

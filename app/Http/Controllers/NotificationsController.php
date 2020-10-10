@@ -16,7 +16,7 @@ class NotificationsController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['web'])->only('index_userN_api');
+        //$this->middleware(['web'])->only('index_userN_api'); //web is the default middleware for all methods 
         // then we should make a develop a middleware for api authentication
     }
 
