@@ -1,4 +1,11 @@
 {{-- STR JS --}}
+
+@if(Auth::guard('admin')->check())
+  <input id='userUrl' type="hidden" value="{{url('admin/notifications/get_new_Notif')}}">
+@else
+  <input id='userUrl' type="hidden" value="{{url('notifications/get_new_Notif')}}">
+@endif
+
 <script>
     $(function () {
         $.ajaxSetup({
@@ -10,7 +17,7 @@
         $(document).ready(setInterval(function() {
 
             $.ajax({
-                url: "{{ url('notifications/get_new_Notif') }}",
+                url: document.getElementById('userUrl').value,
                 method: 'get',
                 success: (response) => {
                     //console.log(response);

@@ -55,7 +55,7 @@ class AdminController extends Controller
             $user = User::find($user_id);
             $user->banned_until = $block_until;
             //Notify user
-            NotificationsController::send('account block', $user_id, 0); //0 refers to no post/feedback
+            NotificationsController::send('account block', $user_id, 0, $block_reason); //0 refers to no post/feedback
 
             if( $user->save() ) {
                 return redirect()->back()->with('success', 'User banned successfully');
@@ -98,10 +98,11 @@ class AdminController extends Controller
 
             $post = Post::find($post_id);
             $post->hidden = 1;
-            //Notify user
-            NotificationsController::send('post visibility', $post->user->id, $post_id);
 
             if( $post->save() ) {
+              //Notify user
+              NotificationsController::send('hidden post', $post->user->id, $post->id, $hide_reason);
+
                 return redirect('/posts')->with('success', 'Post '.$post_id.' is now hidden');
             } else {
                 return redirect()->back()->with('error', 'Failed, something goes wrong!');
@@ -118,6 +119,9 @@ class AdminController extends Controller
         $post->hidden = 0;
 
         if( $post->save() ) {
+          //Notify user
+          NotificationsController::send('unhidden post', $post->user->id, $post->id);
+
             return redirect()->back()->with('success', 'Post '.$id.' is now visible');
         } else {
             return redirect()->back()->with('error', 'Failed, something goes wrong!');

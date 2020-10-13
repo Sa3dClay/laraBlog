@@ -88,6 +88,7 @@ class PostsController extends Controller
         }
 
         $post->save();
+        NotificationsController::send('new post',0 ,$post->id); // 0 is insignificant
 
         return redirect('/posts')->with('success', 'Post Created Successfully');
     }
@@ -213,7 +214,7 @@ class PostsController extends Controller
         $post_id = $request->post_id;
 
         //send a notification to post's owner
-        NotificationsController::send('like', Post::find($post_id)->user_id, $post_id);
+        NotificationsController::send('like', Post::find($post_id)->user_id, $post->id);
 
         $user_likes = DB::table('likes')->where('user_id', $user_id)->get();
 

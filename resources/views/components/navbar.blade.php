@@ -110,6 +110,12 @@
     </div>
 </nav>
 
+@if(Auth::guard('admin')->check())
+  <input id='userType' type="hidden" value="{{url('admin/notifications/isThereNew')}}">
+@else
+  <input id='userType' type="hidden" value="{{url('notifications/isThereNew')}}">
+@endif
+
 {{-- STR JS --}}
 <script>
 $(function () {
@@ -121,8 +127,8 @@ $(function () {
 
     $(document).ready(setInterval(function() {
         $.ajax({
-            url: "{{ url('notifications/isThereNew') }}",
-            method: 'post',
+            url: document.getElementById('userType').value,
+            method: 'get',
             success: (response) => {
                 //console.log(response);
                 if(response.new_notif) {
@@ -135,8 +141,8 @@ $(function () {
                 //console.log(error);
             }
         });
-    },1000 * 60 * 0.5));
-    // Check The DB every 0.5 min
+    },1000 * 60 * 1));
+    // Check The DB every 1 min
 });
 </script>
 {{-- END JS --}}

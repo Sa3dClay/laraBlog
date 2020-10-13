@@ -46,7 +46,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'assign.guard:admin,admin/log
 	Route::get('/notifications/send/{type}/{user_id}/{post_id}', 'NotificationsController@send');
 	Route::get('/notifications/get_new_Notif', 'NotificationsController@get_new_Notif');
 	Route::get('/notifications/index', 'NotificationsController@index');
-	Route::post('/notifications/isThereNew', 'NotificationsController@isThereNew');
+	Route::get('/notifications/isThereNew', 'NotificationsController@isThereNew');
 });
 
 // User
@@ -71,7 +71,7 @@ Route::delete('/comment/delete', 'CommentsController@delete');
 Route::get('/notifications/send/{type}/{user_id}/{post_id}', 'NotificationsController@send')->middleware('auth');
 Route::get('/notifications/get_new_Notif', 'NotificationsController@get_new_Notif')->middleware('auth');
 Route::get('/notifications/index', 'NotificationsController@index')->middleware('auth'); // GET methods can be called by forms/url()/route()
-Route::post('/notifications/isThereNew', 'NotificationsController@isThereNew')->middleware('auth'); // POST methods can be called by forms ONLY
+Route::get('/notifications/isThereNew', 'NotificationsController@isThereNew')->middleware('auth'); // POST methods can be called by forms ONLY
 
 //Feedbacks
 Route::resource('feedbacks', 'FeedbacksController');

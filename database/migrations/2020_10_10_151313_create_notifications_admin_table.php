@@ -15,8 +15,6 @@ class CreateNotificationsAdminTable extends Migration
     {
         Schema::create('notifications_admin', function (Blueprint $table) {
           $table->string('type')->nullable(false);
-          $table->integer('admin_id')->nullable(false)->references('id')->on('admins')
-            ->onDelete('cascade');
           $table->integer('post_id')->default(0)->references('id')->on('posts')
           ->onDelete('cascade');
           $table->integer('feedback_id')->default(0)->references('id')->on('feedbacks')

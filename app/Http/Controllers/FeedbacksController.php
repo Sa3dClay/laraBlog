@@ -55,6 +55,8 @@ class FeedbacksController extends Controller
       $feedback->message = $request->input('message');
       $feedback->user_id = auth()->user()->id;
       if($feedback->save()){
+        NotificationsController::send('new feedback',0 ,$feedback->id); // 0 is insignificant
+
         return redirect('about')->with('success', 'Feedback was sent Successfully');
       }
       return redirect('about')->with('success', 'Feedback was sent Successfully');
@@ -113,6 +115,11 @@ class FeedbacksController extends Controller
       }
 
       if($feedback->delete()){
+        // delete sent-notification
+        NotificationsController::delete('feedback closure', $feedback->id, $feedback->created_at);
+        NotificationsController::delete('feedback response', $feedback->id, $feedback->created_at);
+        NotificationsController::delete('new feedback', $feedback->id, $feedback->created_at);
+
         return redirect('about')->with('success', 'feedback Removed Successfully');
       }
       return redirect('about')->with('error', "Couldn't remove the feedback ");

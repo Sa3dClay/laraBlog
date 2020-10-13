@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class notification_admin extends Model
+class Notification_admin extends Model
 {
   /// Table Name
   protected $table = 'notifications_admin';
@@ -21,8 +21,8 @@ class notification_admin extends Model
       return $this->belongsTo('App\Feedback', 'feedback_id');
   }
 
-  //may be used or may not
-  public function user() {
+  //Notification will be sent to all admins
+  /*public function user() {
       return $this->belongsTo('App\Admin', 'admin_id');
-  }
+  }*/
 }

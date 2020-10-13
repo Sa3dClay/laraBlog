@@ -5,8 +5,8 @@
     <div class="container py-4">
         <a href="{{ url('/home') }}" class="btn btn-success mybtn">Go back</a>
 
-        <h1 class="text-center hpc">Create Post</h1>
-        
+        <h1 class="text-center hpc">Send Feedback</h1>
+
         {!! Form::open(['action' => 'FeedbacksController@store', 'method' => 'POST', 'id' => 'createForm']) !!}
             {{ csrf_field() }}
 
@@ -22,7 +22,7 @@
                     placeholder="Feedback Message" required></textarea>
             </div>
 
-            <button type="button" id="submitCreate" class="btn btn-sm btn-primary">Create</button>
+            <button type="button" id="submitCreate" class="btn btn-sm btn-primary">Send</button>
         {!! Form::close() !!}
     </div>
 
@@ -34,7 +34,7 @@
                 e.preventDefault()
 
                 let title = $("#feedTitle").val(),
-                    message = $("#feedMessage").val()                
+                    message = $("#feedMessage").val()
                 // console.log(title, message)
 
                 if(!title || !message) {
