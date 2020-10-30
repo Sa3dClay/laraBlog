@@ -110,20 +110,20 @@ class FeedbacksController extends Controller
     public function destroy($id)
     {
       $feedback = Feedback::find($id);
-      if(auth()->user()->id != $feedback->user_id || !Auth::guard('admin')->check()){ //only admin and feedback's owner
-        return redirect('home')->with('error', 'Unauthorized User!');
+      if(auth()->guard('user')->check()){
+        if(auth()->user()->id == $feedback->user->id){ // feedback's owner
+          $res = $this->remove_feedback_nots($feedback);
+        }
       }
-
-      if($feedback->delete()){
-        // delete sent-notification
-        NotificationsController::delete('feedback closure', $feedback->id, $feedback->created_at);
-        NotificationsController::delete('feedback response', $feedback->id, $feedback->created_at);
-        NotificationsController::delete('new feedback', $feedback->id, $feedback->created_at);
-
-        return redirect('about')->with('success', 'feedback Removed Successfully');
+      else if(auth()->guard('admin')->check()){ //only admin
+          $res = $this->remove_feedback_nots($feedback);
+      }else{
+          return redirect('home')->with('error', 'Unauthorized User!');
       }
-      return redirect('about')->with('error', "Couldn't remove the feedback ");
-
+      if($res){
+          return redirect('about')->with('success', 'feedback Removed Successfully');
+      }
+       return redirect('about')->with('error', "Couldn't remove the feedback ");
     }
 
     //for admin
@@ -146,6 +146,18 @@ class FeedbacksController extends Controller
     public static function mark_feedback($id){
       $hasResponse = Response::where('feedback_id', '=', $id)->first();
       if(isset($hasResponse)){
+        return true;
+      }
+      return false;
+    }
+
+    private function remove_feedback_nots($feedback){
+      if($feedback->delete()){
+        // delete sent-notification
+        NotificationsController::delete('feedback closure', $feedback->id, $feedback->created_at);
+        NotificationsController::delete('feedback response', $feedback->id, $feedback->created_at);
+        NotificationsController::delete('new feedback', $feedback->id, $feedback->created_at);
+
         return true;
       }
       return false;
