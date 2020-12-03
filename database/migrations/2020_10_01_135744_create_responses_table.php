@@ -14,12 +14,9 @@ class CreateResponsesTable extends Migration
     public function up()
     {
         Schema::create('responses', function (Blueprint $table) {
-            $table->integer('user_id')->nullable(false)->references('id')->on('users')
-              ->onDelete('cascade');
-            $table->integer('admin_id')->nullable(false)->references('id')->on('admins')
-              ->onDelete('cascade');
-            $table->integer('feedback_id')->nullable(false)->references('id')->on('feedbacks')
-              ->onDelete('cascade');
+            $table->integer('user_id')->nullable(false)->references('id')->on('users')->onDelete('cascade');
+            $table->integer('admin_id')->nullable(false)->references('id')->on('admins')->onDelete('cascade');
+            $table->integer('feedback_id')->nullable(false)->references('id')->on('feedbacks')->onDelete('cascade');
             $table->mediumText('response')->nullable(false);
             $table->timestamps();
         });
