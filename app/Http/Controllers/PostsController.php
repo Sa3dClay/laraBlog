@@ -214,7 +214,7 @@ class PostsController extends Controller
         $post_id = $request->post_id;
 
         //send a notification to post's owner
-        NotificationsController::send('like', Post::find($post_id)->user_id, $post->id);
+        NotificationsController::send('like', Post::find($post_id)->user_id, $post_id);
 
         $user_likes = DB::table('likes')->where('user_id', $user_id)->get();
 
@@ -264,6 +264,7 @@ class PostsController extends Controller
 
         $post_id = $request->post_id;
         $post_likes = DB::table('likes')->where('post_id', $post_id)->get();
+        
         //delete sent-notification
         NotificationsController::delete('like', $post_id, null);
 
