@@ -1,7 +1,7 @@
 $(function () {
     $("body").niceScroll({
-        cursorcolor     : "#3498db",
-        cursorwidth     : "8px",
+        cursorcolor: "#3498db",
+        cursorwidth: "8px",
         cursoropacitymin: 0.4,
         cursoropacitymax: 0.8
     })

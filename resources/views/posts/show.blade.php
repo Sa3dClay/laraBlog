@@ -4,7 +4,7 @@
 
     <div class="container-fluid">
         <a href="{{ url('/posts') }}" class="btn btn-success mybtn">Go back</a>
-        
+
         <div class="post">
             <h2 class="blueColor">{{ $post->title }}</h2>
             <div class="postBody">
@@ -22,10 +22,79 @@
                 </div>
             @endif
             <hr>
-            <small>Written on {{$post->created_at}} by {{$post->user->name}}</small>
+            <small class="float-right" >
+                Written on {{$post->created_at}} by 
+
+                <b>
+                    <a href="{{ url('/profile' . '/' . $post->user->id) }}">{{$post->user->name}}</a>
+                </b>
+            </small>
+            <small class="float-left">  Category: <b> {{$post->category}} </b> </small>
         </div>
-        
-        @if(isset(auth()->user()->id))
+
+        {{-- Admin --}}
+        @if(Auth::guard('admin')->check())
+            <button
+                type="button"
+                data-toggle="modal"
+                data-target="#hideModal"
+                class="btn btn-primary btn-sm my-2 px-4"
+            >
+                Hide This Post
+            </button>
+
+            <!-- str hide modal -->
+            <div
+                id="hideModal"
+                class="modal fade"
+                tabindex="-1"
+                role="dialog"
+                aria-hidden="true"
+                aria-labelledby="hideModalLabel"
+            >
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="hideModalLabel">Hide Post</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+
+                            {!! Form::open([
+                                'action' => 'AdminController@hidePost',
+                                'method' => 'Post'
+                            ]) !!}
+
+                                <div class="form-group">
+                                    <label class="control-label">hide reason</label>
+                                    <input
+                                        type="text"
+                                        name="hide_reason"
+                                        class="form-control"
+                                        required
+                                    >
+                                </div>
+
+                                <input type="hidden" name="post_id" value="{{ $post->id }}">
+
+                                <button type="submit" class="btn btn-danger btn-sm px-4">Hide</button>
+
+                            {!! Form::close() !!}
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- end hide modal -->
+        @endif
+
+        {{-- User --}}
+        @if(Auth::guard('user')->check())
             <div class="float-left">
 
                 @if(isset($like))
@@ -43,8 +112,8 @@
 
                     <span class="hidden" id="like_id">{{ $like->id }}</span>
                 @else
-                    {{-- {!! Form::open(['action' => ['PostsController@like', $post->id], 'method' => 'POST']) !!}   
-                        {{ Form::submit('Like', ['class' => 'btn btn-primary']) }}
+                    {{-- {!! Form::open(['action' => ['PostsController@like', $post->id], 'method' => 'POST' ,'id' => 'form']) !!}
+                        {{ Form::submit('Like', ['id' => 'submitLike' ,'class' => 'btn btn-primary']) }}
                     {!! Form::close() !!} --}}
 
                     <button class="btn btn-sm btn-primary" id="like_post_ajax">
@@ -82,7 +151,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                    
+
                         <div class="modal-body px-2 py-2">
                             <ul id="likers_list" class="list-group list-group-flush">
                                 {{-- list placed by js --}}
@@ -113,14 +182,22 @@
             {{-- END Comments --}}
 
             <div class="clearfix"></div><hr />
-            
+
             <div class="mar-bot-20">
                 @if(auth()->user()->id == $post->user_id)
                     <a href="{{ url('/posts'.'/'.$post->id.'/edit') }}" class="btn btn-success">Edit</a>
 
-                    {!! Form::open(['action' => ['PostsController@destroy', $post->id], 'method' => 'POST', 'class' => 'float-right']) !!}
+                    {{-- Delete Post --}}
+                    {!! Form::open([
+                        'action' => ['PostsController@destroy', $post->id],
+                        'class' => 'float-right',
+                        'id' => 'deleteForm',
+                        'method' => 'POST',
+                    ]) !!}
+
                         {{ Form::hidden('_method', 'DELETE') }}
-                        {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
+
+                        <button type="button" class="btn btn-danger" id="deleteButton">Delete</button>
                     {!! Form::close() !!}
                 @endif
             </div>
@@ -141,6 +218,7 @@
 
             // str like request
             $("#like_post_ajax").on('click', function (event) {
+                $("#submit").attr("disabled", true);
                 event.preventDefault();
                 // console.log(post_id)
 
@@ -152,11 +230,12 @@
                     },
                     success: function(response) {
                         // console.log(response)
+
                         $('#like_post_ajax').hide()
                         $('#dislike_post_ajax').show()
 
                         $("#like_id").text(response.like.id)
-                        
+
                         var likes = response.likes
                         if(likes.length > 0) {
                             if (likes.length === 1) {
@@ -175,7 +254,7 @@
             // str dislike request
             $("#dislike_post_ajax").on('click', function (event) {
                 event.preventDefault();
-                
+
                 var like_id = $('#like_id').text()
                 // console.log(like_id)
 
@@ -188,6 +267,7 @@
                     },
                     success: function(response) {
                         // console.log(response)
+
                         $('#like_post_ajax').show()
                         $('#dislike_post_ajax').hide()
 
@@ -214,12 +294,11 @@
                     },
                     success: (response) => {
                         // console.log(response)
-
                         var likers = response.likers
 
                         if(likers && likers.length>0) {
                             $('#likers_list').text('')
-                            
+
                             $.each(likers, (i, liker) => {
                                 $('#likers_list').append(`
                                     <li class="list-group-item text-center px-1 py-1">` + liker.user_name + `</li>
@@ -233,6 +312,28 @@
                 })
             })
             // end getWhoLike request
+
+            // str delete post
+            $("#deleteButton").on('click', function(e) {
+                e.preventDefault()
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+
+                        $("#deleteForm").submit()
+
+                    }
+                })
+
+            })
+            // end delete post
         })
 
         // string directions based on detected language

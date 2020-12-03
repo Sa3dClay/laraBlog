@@ -9,13 +9,15 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    protected $guard = 'user';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'banned_until'
     ];
 
     /**
@@ -25,6 +27,10 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token',
+    ];
+
+    protected $dates = [
+        'banned_until'
     ];
 
     public function posts() {
@@ -39,6 +45,10 @@ class User extends Authenticatable
         return $this->hasMany('App\Comment', 'user_id');
     }
 
+    public function notifications() {
+        return $this->hasMany('App\Notification', 'user_id');
+    }
+
     protected static function boot()
     {
         parent::boot();
@@ -49,6 +59,7 @@ class User extends Authenticatable
             // delete activities on other users posts
             $user->likes()->delete();
             $user->comments()->delete();
+            $user->notifications()->delete();
         });
     }
 }
