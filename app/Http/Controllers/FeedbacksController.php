@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Feedback;
 use App\Http\Controllers\NotificationsController;
 use App\Response;
+use Illuminate\Http\Request;
 
 class FeedbacksController extends Controller
 {
@@ -14,7 +14,6 @@ class FeedbacksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
     public function __construct()
     {
         $this->middleware('web', ['only' => ['show']]);
@@ -46,20 +45,22 @@ class FeedbacksController extends Controller
      */
     public function store(Request $request)
     {
-      $this->validate($request, [
-          'title' => 'required',
-          'message' => 'required',
-      ]);
-      $feedback = new Feedback;
-      $feedback->title = $request->input('title');
-      $feedback->message = $request->input('message');
-      $feedback->user_id = auth()->user()->id;
-      if($feedback->save()){
-        NotificationsController::send('new feedback',0 ,$feedback->id); // 0 is insignificant
+        $this->validate($request, [
+            'title' => 'required',
+            'message' => 'required',
+        ]);
 
+        $feedback = new Feedback;
+        $feedback->title = $request->input('title');
+        $feedback->message = $request->input('message');
+        $feedback->user_id = auth()->user()->id;
+
+        if ($feedback->save()) {
+            NotificationsController::send('new feedback', 0, $feedback->id); // 0 is insignificant
+
+            return redirect('about')->with('success', 'Feedback was sent Successfully');
+        }
         return redirect('about')->with('success', 'Feedback was sent Successfully');
-      }
-      return redirect('about')->with('success', 'Feedback was sent Successfully');
     }
 
     /**
@@ -71,7 +72,7 @@ class FeedbacksController extends Controller
     public function show($id)
     {
         $feedback = Feedback::find($id);
-        return view('feedbacks.show')->with('feedback',$feedback);
+        return view('feedbacks.show')->with('feedback', $feedback);
     }
 
     /**
@@ -80,12 +81,8 @@ class FeedbacksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     /* Not supported for this controller
-    public function edit($id)
-    {
-        //
-    }
-    */
+    public function edit($id){}
+    
 
     /**
      * Update the specified resource in storage.
@@ -94,12 +91,7 @@ class FeedbacksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
-     /* Not supported for this controller
-    public function update(Request $request, $id)
-    {
-        //
-    }*/
+    public function update(Request $request, $id){}
 
     /**
      * Remove the specified resource from storage.
@@ -109,58 +101,70 @@ class FeedbacksController extends Controller
      */
     public function destroy($id)
     {
-      $feedback = Feedback::find($id);
-      if(auth()->guard('user')->check()){
-        if(auth()->user()->id == $feedback->user->id){ // feedback's owner
-          $res = $this->remove_feedback_nots($feedback);
+        $feedback = Feedback::find($id);
+
+        if (auth()->guard('user')->check()) {
+            if (auth()->user()->id == $feedback->user->id) { // feedback's owner
+                $res = $this->remove_feedback_nots($feedback);
+            }
+
+        } else if (auth()->guard('admin')->check()) { //only admin
+            $res = $this->remove_feedback_nots($feedback);
+
+        } else {
+            return redirect('home')->with('error', 'Unauthorized User!');
         }
-      }
-      else if(auth()->guard('admin')->check()){ //only admin
-          $res = $this->remove_feedback_nots($feedback);
-      }else{
-          return redirect('home')->with('error', 'Unauthorized User!');
-      }
-      if($res){
-          return redirect('about')->with('success', 'feedback Removed Successfully');
-      }
-       return redirect('about')->with('error', "Couldn't remove the feedback ");
+
+        if ($res) {
+            return redirect('about')->with('success', 'feedback Removed Successfully');
+        }
+
+        return redirect('about')->with('error', "Couldn't remove the feedback ");
     }
 
     //for admin
-    public function list(){
-      $feedbacks = Feedback::all();
-      return view('manage.feedbacks')->with('feedbacks', $feedbacks);
+    function list() {
+        $feedbacks = Feedback::all();
+        return view('manage.feedbacks')->with('feedbacks', $feedbacks);
     }
 
-    public function close($id){
-      $feedback = Feedback::find($id);
-      $feedback_id = $feedback->id;
-      $feedback->closed = 1;
-      NotificationsController::send('feedback closure', Feedback::find($feedback_id)->user_id, $feedback_id);
-      if($feedback->save()){
-        return redirect('admin/feedbacks')->with('success', 'feedback Closed Successfully');
-      }
-      return redirect('admin/feedbacks')->with('error', "Couldn't close the selected feedback");
+    public function close($id)
+    {
+        $feedback = Feedback::find($id);
+        $feedback_id = $feedback->id;
+        $feedback->closed = 1;
+        
+        NotificationsController::send('feedback closure', Feedback::find($feedback_id)->user_id, $feedback_id);
+
+        if ($feedback->save()) {
+            return redirect('admin/feedbacks')->with('success', 'feedback Closed Successfully');
+        }
+
+        return redirect('admin/feedbacks')->with('error', "Couldn't close the selected feedback");
     }
 
-    public static function mark_feedback($id){
-      $hasResponse = Response::where('feedback_id', '=', $id)->first();
-      if(isset($hasResponse)){
-        return true;
-      }
-      return false;
+    public static function mark_feedback($id)
+    {
+        $hasResponse = Response::where('feedback_id', '=', $id)->first();
+        
+        if (isset($hasResponse)) {
+            return true;
+        }
+        
+        return false;
     }
 
-    private function remove_feedback_nots($feedback){
-      if($feedback->delete()){
-        // delete sent-notification
-        NotificationsController::delete('feedback closure', $feedback->id, $feedback->created_at);
-        NotificationsController::delete('feedback response', $feedback->id, $feedback->created_at);
-        NotificationsController::delete('new feedback', $feedback->id, $feedback->created_at);
+    private function remove_feedback_nots($feedback)
+    {
+        if ($feedback->delete()) {
+            // delete sent-notification
+            NotificationsController::delete('feedback closure', $feedback->id, $feedback->created_at);
+            NotificationsController::delete('feedback response', $feedback->id, $feedback->created_at);
+            NotificationsController::delete('new feedback', $feedback->id, $feedback->created_at);
 
-        return true;
-      }
-      return false;
+            return true;
+        }
+
+        return false;
     }
-
 }

@@ -88,7 +88,8 @@ class PostsController extends Controller
         }
 
         $post->save();
-        NotificationsController::send('new post',0 ,$post->id); // 0 is insignificant
+
+        NotificationsController::send('new post', 0, $post->id); // 0 is insignificant
 
         return redirect('/posts')->with('success', 'Post Created Successfully');
     }
