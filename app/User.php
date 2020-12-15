@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use DB;
 
 class User extends Authenticatable
 {
@@ -47,6 +48,10 @@ class User extends Authenticatable
 
     public function notifications() {
         return $this->hasMany('App\Notification', 'user_id');
+    }
+
+    public static function add_reset_password_token($email, $token, $created_at){
+        DB::insert("insert into password_resets(email, token, created_at) values (?,?,?)", [$email, $token, $created_at]);
     }
 
     protected static function boot()

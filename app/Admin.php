@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use DB;
 
 class Admin extends Authenticatable
 {
@@ -28,4 +29,8 @@ class Admin extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public static function add_reset_password_token($email, $token, $created_at){
+        DB::insert("insert into admin_password_resets(email, token, created_at) values (?,?,?)", [$email, $token, $created_at]);
+    }
 }

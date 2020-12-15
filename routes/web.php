@@ -17,9 +17,14 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 // User
 Auth::routes();
+//override user mailer
+Route::post('password/email','Mail_senderController@send_pass_link')->name('password.email');
 
 // Admin
 Route::get('admin/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.loginForm');
+Route::get('admin/password/reset','Auth\ForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
+Route::get('admin/password/reset/{token}','Auth\ForgotPasswordController@showResetForm_admin')->name('admin.password.reset');
+Route::post('admin/password/email','Mail_senderController@send_pass_link')->name('admin.password.email');
 Route::post('admin/login', 'Auth\AdminLoginController@login')->name('admin.login');
 Route::post('admin/logout','Auth\AdminLoginController@logout')->name('admin.logout');
 
