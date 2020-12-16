@@ -15,16 +15,18 @@ Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
 Route::get('/home', 'HomeController@index')->name('home');
 
-// User
+// User //No middleware
 Auth::routes();
 //override user mailer
-Route::post('password/email','Mail_senderController@send_pass_link')->name('password.email');
+Route::post('password/email', 'Mail_senderController@send_pass_link')->name('password.email');
+Route::post('password/change', 'Auth\ResetPasswordController@changePass')->name('password.change');
 
-// Admin
+// Admin //No middleware
 Route::get('admin/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.loginForm');
-Route::get('admin/password/reset','Auth\ForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
-Route::get('admin/password/reset/{token}','Auth\ForgotPasswordController@showResetForm_admin')->name('admin.password.reset');
-Route::post('admin/password/email','Mail_senderController@send_pass_link')->name('admin.password.email');
+Route::get('admin/password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
+Route::get('admin/password/reset/{token}', 'Auth\ResetPasswordController@showResetForm_admin')->name('admin.password.reset');
+Route::post('admin/password/email', 'Mail_senderController@send_pass_link')->name('admin.password.email');
+Route::post('admin/password/change', 'Auth\ResetPasswordController@changePass_admin')->name('admin.password.change');
 Route::post('admin/login', 'Auth\AdminLoginController@login')->name('admin.login');
 Route::post('admin/logout','Auth\AdminLoginController@logout')->name('admin.logout');
 

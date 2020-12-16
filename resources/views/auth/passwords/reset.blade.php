@@ -8,7 +8,11 @@
                 <div class="card-header">{{ __('Reset Password') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('password.request') }}" aria-label="{{ __('Reset Password') }}">
+                  @if(strpos(url()->current(),"admin") !== false)
+                     <form method="POST" action="{{ route('admin.password.change') }}" aria-label="{{ __('Reset Password') }}">
+                  @else
+                    <form method="POST" action="{{ route('password.change') }}" aria-label="{{ __('Reset Password') }}">
+                  @endif
                         @csrf
 
                         <input type="hidden" name="token" value="{{ $token }}">

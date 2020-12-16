@@ -6,7 +6,6 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Support\Facades\Crypt;
 use App\User;
 use App\Admin;
 
@@ -34,13 +33,13 @@ class TokenGenerator extends Mailable
      */
     public function build()
     {
-        $token = Crypt::encrypt($this->generate_code());
+        $token = $this->generate_code();
         if($this->user_type == 'admin'){
-          Admin::add_reset_password_token($this->email, $token, date("Y-m-d H:i:s"));
-          return $this->view('mails.reset_password')->subject('LSAPP')->with('token_admin',Crypt::decrypt($token));
+          Admin::add_reset_password_token($this->email, base64_encode($token), date("Y-m-d H:i:s"));
+          return $this->view('mails.reset_password')->subject('LSAPP')->with('token_admin',$token);
         }else{
-          User::add_reset_password_token($this->email, $token, date("Y-m-d H:i:s"));
-          return $this->view('mails.reset_password')->subject('LSAPP')->with('token_user',Crypt::decrypt($token));
+          User::add_reset_password_token($this->email, base64_encode($token), date("Y-m-d H:i:s"));
+          return $this->view('mails.reset_password')->subject('LSAPP')->with('token_user',$token);
         }
     }
 
