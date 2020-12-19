@@ -34,26 +34,30 @@ class TokenGenerator extends Mailable
     public function build()
     {
         $token = $this->generate_code();
+
         if($this->user_type == 'admin'){
-          Admin::add_reset_password_token($this->email, base64_encode($token), date("Y-m-d H:i:s"));
-          return $this->view('mails.reset_password')->subject('LSAPP')->with('token_admin',$token);
-        }else{
-          User::add_reset_password_token($this->email, base64_encode($token), date("Y-m-d H:i:s"));
-          return $this->view('mails.reset_password')->subject('LSAPP')->with('token_user',$token);
+            Admin::add_reset_password_token($this->email, base64_encode($token), date("Y-m-d H:i:s"));
+            return $this->view('mails.reset_password')->subject('LSAPP')->with('token_admin',$token);
+        } else {
+            User::add_reset_password_token($this->email, base64_encode($token), date("Y-m-d H:i:s"));
+            return $this->view('mails.reset_password')->subject('LSAPP')->with('token_user',$token);
         }
     }
 
     private function generate_code(){
         $chars = "abcdefghijkmnopqrstuvwxyz0123456789";
         srand((double)microtime()*1000000);
+        
         $i = 0;
         $pass = '' ;
+
         while ($i <= 7) {
             $num = rand() % 33;
             $tmp = substr($chars, $num, 1);
             $pass = $pass . $tmp;
             $i++;
         }
+        
         return $pass;
     }
 
