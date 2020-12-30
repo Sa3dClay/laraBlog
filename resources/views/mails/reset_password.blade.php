@@ -1,236 +1,181 @@
 <!DOCTYPE html>
+
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <!-- <can't load links in mails!>
-  <link href="{{ asset('css/mail.css') }}" rel="stylesheet" />-->
-  <title>Reset Password</title>
-  <style>
-      /* Base ------------------------------ */
-      *:not(br):not(tr):not(html) {
-        font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
-        -webkit-box-sizing: border-box;
-        box-sizing: border-box;
-      }
-      body {
-        width: 100% !important;
-        height: 100%;
-        margin: 0;
-        line-height: 1.4;
-        background-color: #F5F7F9;
-        color: #839197;
-        -webkit-text-size-adjust: none;
-      }
-      a {
-        color: #414EF9;
-      }
-      /* Layout ------------------------------ */
-      .email-wrapper {
-        width: 100%;
-        margin: 0;
-        padding: 0;
-        background-color: #F5F7F9;
-      }
-      .email-content {
-        width: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      /* Masthead ----------------------- */
-      .email-masthead {
-        padding: 25px 0;
-        text-align: center;
-      }
-      .email-masthead_logo {
-        max-width: 400px;
-        border: 0;
-      }
-      .email-masthead_name {
-        font-size: 16px;
-        font-weight: bold;
-        color: #839197;
-        text-decoration: none;
-        text-shadow: 0 1px 0 white;
-      }
-      /* Body ------------------------------ */
-      .email-body {
-        width: 100%;
-        margin: 0;
-        padding: 0;
-        border-top: 1px solid #E7EAEC;
-        border-bottom: 1px solid #E7EAEC;
-        background-color: #FFFFFF;
-      }
-      .email-body_inner {
-        width: 570px;
-        margin: 0 auto;
-        padding: 0;
-      }
-      .email-footer {
-        width: 570px;
-        margin: 0 auto;
-        padding: 0;
-        text-align: center;
-      }
-      .email-footer p {
-        color: #839197;
-      }
-      .body-action {
-        width: 100%;
-        margin: 30px auto;
-        padding: 0;
-        text-align: center;
-      }
-      .body-sub {
-        margin-top: 25px;
-        padding-top: 25px;
-        border-top: 1px solid #E7EAEC;
-      }
-      .content-cell {
-        padding: 35px;
-      }
-      .align-right {
-        text-align: right;
-      }
-      /* Type ------------------------------ */
-      h1 {
-        margin-top: 0;
-        color: #292E31;
-        font-size: 19px;
-        font-weight: bold;
-        text-align: left;
-      }
-      h2 {
-        margin-top: 0;
-        color: #292E31;
-        font-size: 16px;
-        font-weight: bold;
-        text-align: left;
-      }
-      h3 {
-        margin-top: 0;
-        color: #292E31;
-        font-size: 14px;
-        font-weight: bold;
-        text-align: left;
-      }
-      p {
-        margin-top: 0;
-        color: #839197;
-        font-size: 16px;
-        line-height: 1.5em;
-        text-align: left;
-      }
-      p.sub {
-        font-size: 12px;
-      }
-      p.center {
-        text-align: center;
-      }
-      /* Buttons ------------------------------ */
-      .button {
-        display: inline-block;
-        width: 200px;
-        background-color: #414EF9;
-        border-radius: 3px;
-        color: #ffffff;
-        font-size: 15px;
-        line-height: 45px;
-        text-align: center;
-        text-decoration: none;
-        -webkit-text-size-adjust: none;
-        mso-hide: all;
-      }
-      .button--green {
-        background-color: #28DB67;
-      }
-      .button--red {
-        background-color: #FF3665;
-      }
-      .button--blue {
-        background-color: #007bff;
-      }
-      /*Media Queries ------------------------------ */
-      @media only screen and (max-width: 600px) {
-        .email-body_inner,
-        .email-footer {
-          width: 100% !important;
-        }
-      }
-      @media only screen and (max-width: 500px) {
-        .button {
-          width: 100% !important;
-        }
-      }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  </style>
+    <title>Reset Password</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        html {
+            font-family: sans-serif;
+            line-height: 1.15;
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #212529;
+            text-align: left;
+            background-color: #fff;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .container {
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .text-center {
+           text-align: center !important;
+        }
+
+        .text-white {
+           color: #fff !important;
+        }
+
+        .text-secondary {
+           color: #6c757d !important;
+        }
+
+        .bg-primary {
+            background-color: #007bff !important;
+        }
+
+        .bg-light {
+           background-color: #f8f9fa !important;
+        }
+
+        .py-2 {
+            padding-top: 0.5rem !important;
+            padding-bottom: 0.5rem !important;
+        }
+
+        .btn {
+            display: inline-block;
+            font-weight: 400;
+            color: #212529;
+            text-align: center;
+            vertical-align: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-color: transparent;
+            border: 1px solid transparent;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: 0.25rem;
+            transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        .btn:hover {
+            color: #212529;
+            text-decoration: none;
+        }
+
+        .btn:focus, .btn.focus {
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        .btn:not(:disabled):not(.disabled) {
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            color: #fff;
+            background-color: #0069d9;
+            border-color: #0062cc;
+        }
+
+        .btn-primary:focus, .btn-primary.focus {
+            color: #fff;
+            background-color: #0069d9;
+            border-color: #0062cc;
+            box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+        }
+
+        .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
+        .show > .btn-primary.dropdown-toggle {
+            color: #fff;
+            background-color: #0062cc;
+            border-color: #005cbf;
+        }
+
+        .btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus,
+        .show > .btn-primary.dropdown-toggle:focus {
+            box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+        }
+    </style>
 </head>
+
 <body>
-  <table class="email-wrapper" width="100%" cellpadding="0" cellspacing="0">
-    <tr>
-      <td align="center">
-        <table class="email-content" width="100%" cellpadding="0" cellspacing="0">
-          <!-- Logo -->
-          <tr style="background-color:#007bff;">
-            <td class="email-masthead">
-              <a class="email-masthead_name" style="color:#fff;">LSAPP</a>
-            </td>
-          </tr>
-          <!-- Email Body -->
-          <tr>
-            <td class="email-body" width="100%">
-              <table class="email-body_inner" align="center" width="570" cellpadding="0" cellspacing="0">
-                <!-- Body content -->
-                <tr>
-                  <td class="content-cell">
-                    <h1>Reset Email password</h1>
-                    <p>Thanks for using LSAPP!</p>
-                    <!-- Action -->
-                    <table class="body-action" align="center" width="100%" cellpadding="0" cellspacing="0">
-                      <tr>
-                        <td align="center">
-                          <div>
-                            @if(isset($token_admin))
-                                <a href="{{route('admin.password.reset', $token_admin)}}" class="button button--blue">Reset password</a>
-                            @else
-                                <a href="{{route('password.reset', $token_user)}}" class="button button--blue">Reset password</a>
-                            @endif
-                          </div>
-                        </td>
-                      </tr>
-                    </table>
-                    <p>Thanks,<br>The LSAPP Team</p>
-                    <!-- Sub copy -->
-                    <table class="body-sub">
-                      <tr>
-                        <td>
-                          <p class="sub">If you’re having trouble while clicking the button, copy and paste the URL below into your web browser.
-                          </p>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <table class="email-footer" align="center" width="570" cellpadding="0" cellspacing="0">
-                <tr>
-                  <td class="content-cell">
-                    <p class="sub center">
-                      Abdos' team.
-                    </p>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
+    <div>
+        <div class="bg-primary py-2">
+            <h2 class="text-center text-white">LaraBlog</h2>
+        </div>
+
+        <div class="container py-2">
+            <h3>Reset Email Password</h3>
+
+            <p class="text-secondary">Thanks for using LaraBlog!</p>
+        
+            <div class="text-center">
+                
+                @if(isset($token_admin))
+                    <a
+                        type="button" class="btn btn-primary"
+                        href="{{ route('admin.password.reset', ['token' => $token_admin]) }}"
+                    >Reset password</a>
+                @else
+                    <a
+                        type="button" class="btn btn-primary"
+                        href="{{ route('password.reset', ['token' => $token_user]) }}"
+                    >Reset password</a>
+                @endif
+
+            </div>
+            
+            <p class="text-secondary">Thanks, The A Team</p>
+        </div>
+        
+        <div class="bg-light py-2">
+            <h2 class="text-center">The A Team</h2>
+        </div>
+    </div>
 </body>
 </html>
