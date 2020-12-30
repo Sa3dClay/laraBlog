@@ -1,23 +1,28 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+
             <div class="card">
                 <div class="card-header">{{ __('Reset Password') }}</div>
 
                 <div class="card-body">
+
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
                         </div>
                     @endif
+
                     @if(strpos(url()->current(),"admin") !== false)
                        <form method="POST" action="{{ route('admin.password.email') }}" aria-label="{{ __('Reset Password') }}">
                     @else
                        <form method="POST" action="{{ route('password.email') }}" aria-label="{{ __('Reset Password') }}">
                     @endif
+                        
                         @csrf
 
                         <div class="form-group row">
@@ -44,7 +49,9 @@
                     </form>
                 </div>
             </div>
+            
         </div>
     </div>
 </div>
+
 @endsection
