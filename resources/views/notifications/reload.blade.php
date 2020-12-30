@@ -35,7 +35,7 @@
                     //console.log(error);
                 }
             });
-        },1000 * 60 * 1)); //Check The DB every 1 min
+        }, 1000 * 60 * 3)); //Check The DB every 3 min
     });
 </script>
 {{-- END JS --}}

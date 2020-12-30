@@ -7,14 +7,11 @@ use App\Http\Resources\Notification_resource;
 use App\Notification;
 use App\Notification_admin;
 use App\Post;
-use Illuminate\Bus\Queueable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class NotificationsController extends Controller
 {
-    use Queueable;
-
     public function __construct()
     {
         //$this->middleware(['web'])->only('index_userN_api'); //web is the default middleware for all methods
