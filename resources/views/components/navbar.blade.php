@@ -112,7 +112,7 @@
 
 @if(Auth::guard('admin')->check())
   <input id='userType' type="hidden" value="{{url('admin/notifications/isThereNew')}}">
-@else
+@elseif(Auth::guard('user')->check())
   <input id='userType' type="hidden" value="{{url('notifications/isThereNew')}}">
 @endif
 
