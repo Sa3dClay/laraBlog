@@ -11,7 +11,7 @@
             </div>
         </div>
 
-        <P>My First App With Laravel From Scratch</p>
+        <h4 class="px-5">LaraBlog is a blog where you can share your thoughts and experiences with others</h4>
         
         <p class="mb-0">
             {{-- Admin --}}
