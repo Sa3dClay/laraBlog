@@ -279,9 +279,11 @@ textarea {
         padding: 40px 0;
         img {
             opacity: 0.8;
-            border-radius: 44%;
-            transform: scale(1.4);
-            border: 1px solid $blue;
+            @extend %trans;
+            border-radius: 50%;
+            &:hover {
+                opacity: 1;
+            }
         }
     }
     .about-info {

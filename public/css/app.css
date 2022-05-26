@@ -388,10 +388,11 @@ textarea {
 
 .about-us .about-img img {
   opacity: 0.8;
-  border-radius: 44%;
-  -webkit-transform: scale(1.4);
-          transform: scale(1.4);
-  border: 1px solid #3498db;
+  border-radius: 50%;
+}
+
+.about-us .about-img img:hover {
+  opacity: 1;
 }
 
 .about-us .about-info {
@@ -582,6 +583,7 @@ textarea {
 .post .post-img i,
 .post .post-img img,
 .post .post-img span,
+.about-us .about-img img,
 .navbar-brand i,
 .navbar-dark .navbar-nav .nav-link::before {
   -webkit-transition: all 0.3s;
