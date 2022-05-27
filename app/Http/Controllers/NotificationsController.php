@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
 use App\Feedback;
-use App\Http\Resources\Notification_resource;
 use App\Notification;
 use App\Notification_admin;
-use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\NotificationResource;
 
 class NotificationsController extends Controller
 {
@@ -30,7 +30,7 @@ class NotificationsController extends Controller
         $this->mark_last_view();
 
         // if(strpos(url()->current(),"api")!==false){ //for the api
-        //     return Notification_resource::collection($notifications);
+        //     return NotificationResource::collection($notifications);
         // }
 
         return view('notifications.index')->with('notifications', $notifications);
@@ -208,6 +208,6 @@ class NotificationsController extends Controller
 
         //$notifications = auth()->user()->notifications;
 
-        return Notification_resource::collection($notifications);
+        return NotificationResource::collection($notifications);
     }
 }

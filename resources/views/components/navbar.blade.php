@@ -112,10 +112,11 @@
 
 @if(Auth::guard('admin')->check())
   <input id='userType' type="hidden" value="{{url('admin/notifications/isThereNew')}}">
-@elseif(Auth::guard('user')->check())
+@else
   <input id='userType' type="hidden" value="{{url('notifications/isThereNew')}}">
 @endif
 
+@auth
 {{-- STR JS --}}
 <script>
 $(function () {
@@ -146,3 +147,4 @@ $(function () {
 });
 </script>
 {{-- END JS --}}
+@endauth
