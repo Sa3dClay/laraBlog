@@ -641,11 +641,6 @@ textarea {
     padding-left: 0.6rem;
   }
 
-  .navbar-dark .navbar-nav .nav-link::before {
-    padding-right: 0.6rem;
-    padding-left: 0.6rem;
-  }
-
   .about-us .about-img {
     padding: 40px;
   }
