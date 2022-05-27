@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Mail\TokenGenerator;
-use Mail;
 use App\User;
 use App\Admin;
+use Illuminate\Http\Request;
+use App\Mail\TokenGenerator;
+use Illuminate\Support\Facades\Mail;
 
 class Mail_senderController extends Controller
 {

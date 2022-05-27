@@ -50,16 +50,6 @@ class ResetPasswordController extends Controller
        }
     }
 
-    //@override trait function
-    public function showResetForm($token){
-      $token = base64_encode($token);
-      if(User::compare_token($token)){
-        return view("auth.passwords.reset")->with('token', $token);
-      }else{
-        return redirect('password/reset')->with('error', "Not valid recovery token, please try again");
-      }
-    }
-
     public function changePass_admin(Request $request){
       try{
         $token = $request->input("token");
