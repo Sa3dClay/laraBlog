@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Notification_admin extends Model
+class NotificationAdmin extends Model
 {
     protected $table = 'notifications_admin';
     // there's no primary key, it's a weak entity

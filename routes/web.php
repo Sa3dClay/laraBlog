@@ -22,20 +22,19 @@ Route::get('/home', 'HomeController@index')->name('home');
 // User //No middleware
 Auth::routes();
 //override user mailer
-Route::post('password/email', 'Mail_senderController@send_pass_link')->name('password.email');
+Route::post('password/email', 'MailSenderController@send_pass_link')->name('password.email');
 Route::post('password/change', 'Auth\ResetPasswordController@changePass')->name('password.change');
 
 // Admin //No middleware
 Route::get('admin/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.loginForm');
 Route::get('admin/password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
 Route::get('admin/password/reset/{token}', 'Auth\ResetPasswordController@showResetForm_admin')->name('admin.password.reset');
-Route::post('admin/password/email', 'Mail_senderController@send_pass_link')->name('admin.password.email');
+Route::post('admin/password/email', 'MailSenderController@send_pass_link')->name('admin.password.email');
 Route::post('admin/password/change', 'Auth\ResetPasswordController@changePass_admin')->name('admin.password.change');
 Route::post('admin/login', 'Auth\AdminLoginController@login')->name('admin.login');
-Route::post('admin/logout','Auth\AdminLoginController@logout')->name('admin.logout');
+Route::post('admin/logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
 
-Route::group(['prefix' => 'admin', 'middleware' => 'assign.guard:admin,admin/login'], function()
-{
+Route::group(['prefix' => 'admin', 'middleware' => 'assign.guard:admin,admin/login'], function () {
 	// manage home
 	Route::get('/home', 'AdminController@index');
 	// manage users
@@ -50,10 +49,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'assign.guard:admin,admin/log
 	// manage Feedbacks
 	Route::get('/feedbacks', 'FeedbacksController@list');
 	Route::get('/feedbacks/{id}/close', 'FeedbacksController@close');
-	//Route::get('/feedbacks/{id}/mark_feedback', 'FeedbacksController@mark_feedback')->name('mark_feedback');
 	//add response & mark responded feedback //Note: POST method requires a form to apply it
 	Route::post('/feedbacks/respond/store', 'ResponseController@store')->name('storeResponse');
-  // Notification
+	// Notification
 	Route::get('/notifications/send/{type}/{user_id}/{post_id}', 'NotificationsController@send');
 	Route::get('/notifications/get_new_Notif', 'NotificationsController@get_new_Notif');
 	Route::get('/notifications/index', 'NotificationsController@index');

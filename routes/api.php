@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,9 +14,9 @@ use Illuminate\Http\Request;
 |
 */
 //for api authentication
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::get('/user', function (Request $request) {
     return $request->user();
-});
+})->middleware('auth:api');
 
 // Notification
 Route::get('/notifications/{user_id}/index_userN_api', 'NotificationsController@index_userN_api');

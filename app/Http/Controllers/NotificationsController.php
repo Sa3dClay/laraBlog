@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Post;
 use App\Feedback;
 use App\Notification;
-use App\Notification_admin;
+use App\NotificationAdmin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\NotificationResource;
@@ -21,7 +21,7 @@ class NotificationsController extends Controller
     public function index()
     {
         if (Auth::guard('admin')->check()) {
-            $notifications = Notification_admin::orderBy('created_at', 'desc')->get();
+            $notifications = NotificationAdmin::orderBy('created_at', 'desc')->get();
         } else {
             $notifications = Notification::where('user_id', '=', auth()->user()->id)->orderBy('created_at', 'desc')->get();
             // $notifications = auth()->user()->notifications;
@@ -79,7 +79,7 @@ class NotificationsController extends Controller
 
         } else { // user notes
             if (strpos($type, 'new ') !== false) {
-                $notification_admin = new Notification_admin;
+                $notification_admin = new NotificationAdmin;
 
                 if ($type == 'new feedback') {
                     $message = "New feedback has just arrived!";
@@ -122,7 +122,7 @@ class NotificationsController extends Controller
     {
         if (Auth::guard('admin')->check()) {
             if ($type == 'new feedback') {
-                $notification = Notification_admin::where([
+                $notification = NotificationAdmin::where([
                     ['feedback_id', '=', $post_id], // in case of new-feedback type
                     ['type', '=', $type],
                     ['created_at', '=', $date],
@@ -161,7 +161,7 @@ class NotificationsController extends Controller
     private function mark_last_view()
     {
         if (Auth::guard('admin')->check()) {
-            Notification_admin::where('post_id', '=', 0)->orWhere('feedback_id', '=', 0)
+            NotificationAdmin::where('post_id', '=', 0)->orWhere('feedback_id', '=', 0)
                 ->update(array('updated_at' => date("Y-m-d H:i:s"))); // update all rows
 
         } else {
@@ -175,7 +175,7 @@ class NotificationsController extends Controller
     public function isThereNew(Request $request)
     {
         if (Auth::guard('admin')->check()) {
-            $note = Notification_admin::whereColumn('created_at', '=', 'updated_at')->first();
+            $note = NotificationAdmin::whereColumn('created_at', '=', 'updated_at')->first();
 
         } else {
             $note = Notification::whereColumn('created_at', '=', 'updated_at')
@@ -188,7 +188,7 @@ class NotificationsController extends Controller
     public function get_new_Notif(Request $request)
     {
         if (Auth::guard('admin')->check()) {
-            $newNots = Notification_admin::whereColumn('created_at', '=', 'updated_at')
+            $newNots = NotificationAdmin::whereColumn('created_at', '=', 'updated_at')
                 ->orderBy('created_at', 'desc')->get();
 
         } else {

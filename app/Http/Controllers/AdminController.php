@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Carbon\Carbon;
 use App\User;
 use App\Post;
+use Carbon\Carbon;
 use App\Http\Controllers\NotificationsController;
 
 class AdminController extends Controller
