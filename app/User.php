@@ -2,13 +2,14 @@
 
 namespace App;
 
+use Illuminate\Support\Facades\DB;
+use Overtrue\LaravelFollow\Followable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, Followable;
 
     protected $guard = 'user';
 

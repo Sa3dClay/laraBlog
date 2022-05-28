@@ -208,13 +208,7 @@
 
     <script>
         $(function () {
-            var post_id = {{ $post->id }}
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            })
+            var post_id = "{{ $post->id }}"
 
             // str like request
             $("#like_post_ajax").on('click', function (event) {

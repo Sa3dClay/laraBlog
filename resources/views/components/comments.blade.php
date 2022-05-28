@@ -1,20 +1,16 @@
+@auth
+<script>
+    var user_id = "{{ auth()->user()->id }}";
+</script>
+@endauth
+
 {{-- STR JS --}}
 <script>
     $(function () {
-        var post_id = {{ $post->id }}
-        var post_author = {{ $post->user_id }}
+        var post_id = "{{ $post->id }}";
+        var post_author = "{{ $post->user_id }}";
 
-        @if(isset(auth()->user()->id))
-            var user_id = {{ auth()->user()->id }}
-            // console.log('user_id:', user_id)
-        @endif
-
-        // setup ajax
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        })
+        console.log('user_id:', user_id)
 
         // str get comments
         $.ajax({
