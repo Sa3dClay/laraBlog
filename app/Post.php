@@ -14,20 +14,38 @@ class Post extends Model
     // Timestamps
     public $timestamps = true;
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo('App\User', 'user_id');
     }
 
-    public function likes() {
+    public function likes()
+    {
         return $this->hasMany('App\Like', 'post_id');
     }
 
-    public function comments() {
+    public function comments()
+    {
         return $this->morphMany('App\Comment', 'commentable')->whereNull('parent_id');
     }
 
-    public function notifications() {
+    public function notifications()
+    {
         return $this->hasMany('App\Notification', 'post_id');
+    }
+
+    public function scopePostsFromFollowings()
+    {
+        $followings_ids = auth()->user()->followings()->pluck('following_id');
+
+        return $this->whereIn('user_id', $followings_ids)->orderBy('id', 'desc')->get();
+    }
+
+    public function scopePostsFromNotFollowings()
+    {
+        $followings_ids = auth()->user()->followings()->pluck('following_id');
+
+        return $this->whereNotIn('user_id', $followings_ids)->orderBy('id', 'desc')->get();
     }
 
     protected static function boot()
@@ -42,7 +60,8 @@ class Post extends Model
     }
 
     // search
-    public static function find_no_space($str2) {
+    public static function find_no_space($str2)
+    {
         $user_id = auth()->user()->id;
         $user_name = strtolower(auth()->user()->name);
 
@@ -52,7 +71,8 @@ class Post extends Model
     }
 
     // search
-    public static function find_space($words){
+    public static function find_space($words)
+    {
         $user_id = auth()->user()->id;
         $user_name = strtolower(auth()->user()->name);
 

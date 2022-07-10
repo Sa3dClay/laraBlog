@@ -25,17 +25,14 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Post $post)
     {
-        //$posts = Post::all(); /* get all posts */
-        //$posts = DB::select('SELECT * FROM posts'); /* for database */
-        //$posts = Post::orderBy('id', 'asc')->get(); /* for ordering */
-        //$posts = Post::orderBy('id', 'asc')->take(1)->get(); /* max NO posts to return */
+        $postsFromFollowings = $post->postsFromFollowings();
+        $postsFromNotFollowings = $post->postsFromNotFollowings();
 
-        $posts = Post::orderBy('id', 'desc')->where('hidden','=',0)->paginate(5);
+        $posts = $postsFromFollowings->merge($postsFromNotFollowings)->paginate(5);
+
         return view('posts.index')->with('posts', $posts);
-
-        // we can also use: Post::where('name', 'value')->get(); to return specific post
     }
 
     /**
@@ -74,13 +71,12 @@ class PostsController extends Controller
 
             $image_name = $_FILES['image']['name'];
             $destPath   = public_path('uploads');
-            $imgPath    = $destPath.'/'.$image_name;
+            $imgPath    = $destPath . '/' . $image_name;
 
-            if(!file_exists($imgPath)) {
+            if (!file_exists($imgPath)) {
                 $image->move($destPath, $image_name);
             }
             $post->image_name = $image_name;
-
         } else if ($request->input('image_select')) {
             $image_name = $request->input('image_select');
             $post->image_name = $image_name;
@@ -103,12 +99,11 @@ class PostsController extends Controller
     {
         $post = Post::find($id);
 
-        if($post->hidden) {
+        if ($post->hidden) {
             return redirect()->back()->with('error', 'Sorry, this post is hidden!');
         }
 
-        if(isset(auth()->user()->id))
-        {
+        if (isset(auth()->user()->id)) {
             $user_id = auth()->user()->id;
 
             $post_likes = DB::table('likes')->where('post_id', $id)->get();
@@ -131,7 +126,7 @@ class PostsController extends Controller
         $post = Post::find($id);
 
         // Check for right user
-        if(auth()->user()->id !== $post->user_id) {
+        if (auth()->user()->id !== $post->user_id) {
             return redirect('/posts')->with('error', 'Unauthorized Page');
         }
 
@@ -164,13 +159,12 @@ class PostsController extends Controller
 
             $image_name = $_FILES['image']['name'];
             $destPath   = public_path('uploads');
-            $imgPath    = $destPath.'/'.$image_name;
+            $imgPath    = $destPath . '/' . $image_name;
 
-            if(!file_exists($imgPath)) {
+            if (!file_exists($imgPath)) {
                 $image->move($destPath, $image_name);
             }
             $post->image_name = $image_name;
-
         } else if ($request->input('image_select')) {
             $image_name = $request->input('image_select');
             $post->image_name = $image_name;
@@ -209,7 +203,8 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      *
      */
-    public function like(Request $request) {
+    public function like(Request $request)
+    {
         $user_id = auth()->user()->id;
         $post_id = $request->post_id;
 
@@ -218,11 +213,9 @@ class PostsController extends Controller
 
         $user_likes = DB::table('likes')->where('user_id', $user_id)->get();
 
-        if ($user_likes)
-        {
-            foreach ($user_likes as $like)
-            {
-                if($like->post_id == $post_id)
+        if ($user_likes) {
+            foreach ($user_likes as $like) {
+                if ($like->post_id == $post_id)
                     return redirect()->back()->with('error', 'You Already Like This Post');
             }
         }
@@ -239,9 +232,9 @@ class PostsController extends Controller
         // return redirect()->back()->with('success', 'Like Added Successfully');
 
         return response()->json([
-            'success'=>'like successfully added to the post',
-            'like'=>$like,
-            'likes'=>$post_likes
+            'success' => 'like successfully added to the post',
+            'like' => $like,
+            'likes' => $post_likes
         ]);
     }
 
@@ -256,7 +249,7 @@ class PostsController extends Controller
         $like_id = $request->like_id;
         $like = Like::find($like_id);
 
-        if(auth()->user()->id !== $like->user_id) {
+        if (auth()->user()->id !== $like->user_id) {
             return redirect()->back()->with('error', 'Unauthorized Action');
         }
 
@@ -264,19 +257,20 @@ class PostsController extends Controller
 
         $post_id = $request->post_id;
         $post_likes = DB::table('likes')->where('post_id', $post_id)->get();
-        
+
         //delete sent-notification
         NotificationsController::delete('like', $post_id, null);
 
         // return redirect()->back()->with('success', 'Disliked Successfully');
 
         return response()->json([
-            'success'=>'like successfully removed from the post',
-            'likes'=>$post_likes
+            'success' => 'like successfully removed from the post',
+            'likes' => $post_likes
         ]);
     }
 
-    public function getWhoLike(Request $request) {
+    public function getWhoLike(Request $request)
+    {
         $post_id = $request->post_id;
 
         $likers = DB::table('likes')
@@ -286,20 +280,21 @@ class PostsController extends Controller
             ->get();
 
         return response()->json([
-            'msg'=>'get likers successfully',
-            'likers'=>$likers
+            'msg' => 'get likers successfully',
+            'likers' => $likers
         ]);
     }
 
     // Search
-    public function search(Request $request){
+    public function search(Request $request)
+    {
         $strword = $request->input('search');
         $search_type = $request->input('searchField');
 
         // replace special characters with empty word
         $strword = preg_replace('/[^A-Za-z0-9\s\-]/', '', $strword);
 
-        if( strlen($strword) == 0 ) {
+        if (strlen($strword) == 0) {
             return back();
         }
 
@@ -308,72 +303,78 @@ class PostsController extends Controller
         $str2 = '';
         $n = strpos($str, ' ');
 
-        if(!is_numeric($n)) {
+        if (!is_numeric($n)) {
             //$str2 = implode($str2, $chars);
             $str2 = $str;
 
-            if( strtolower($str2) == "computerscience&it"
+            if (
+                strtolower($str2) == "computerscience&it"
                 || strtolower($str2) == "computerscience"
-                || strtolower($str2) == "it" ) {
+                || strtolower($str2) == "it"
+            ) {
                 $str2 = 'cs';
             }
 
-            if( strtolower($str2) == "problemdiscussion"
+            if (
+                strtolower($str2) == "problemdiscussion"
                 || strtolower($str2) == "discussion"
-                || strtolower($str2) == "problem" ) {
+                || strtolower($str2) == "problem"
+            ) {
                 $str2 = 'pd';
             }
 
             // check for search type
-            if( $search_type != 'user' ) {
+            if ($search_type != 'user') {
 
                 $posts = Post::whereRaw("lower(title) like '%$str2%'")
                     ->orWhereRaw("lower(category) like '%$str2%'")
-                    ->orWhereIn('user_id', function($query) use($str2){
+                    ->orWhereIn('user_id', function ($query) use ($str2) {
                         $query->select('id')->from('users')->where('name', '=', "$str2");
                     })
-                    ->orderBy('created_at', 'desc')->where('hidden','=',0)->paginate(5);
-
+                    ->orderBy('created_at', 'desc')->where('hidden', '=', 0)->paginate(5);
             } else {
-                $posts = Post::find_no_space($str2 ); // for user search
+                $posts = Post::find_no_space($str2); // for user search
             }
-
         } else {
             // split by spaces
             $newstr = explode(" ", $str);
             array_push($newstr, str_replace(' ', '', $str));
 
-            for($i=0; $i<count($newstr); $i++) {
-                $newstr[$i] = "'".$newstr[$i]."'";
+            for ($i = 0; $i < count($newstr); $i++) {
+                $newstr[$i] = "'" . $newstr[$i] . "'";
             }
 
-            if( strpos($str, "computer science & it") !== false
+            if (
+                strpos($str, "computer science & it") !== false
                 || strpos($str, "computer science") !== false
-                || strpos($str, "it") !== false) {
+                || strpos($str, "it") !== false
+            ) {
                 array_push($newstr, "'cs'");
             }
 
-            if ( strpos($str, "problem discussion") !== false
+            if (
+                strpos($str, "problem discussion") !== false
                 || strpos($str, "discussion") !== false
-                || strpos($str, "problem") !== false ) {
+                || strpos($str, "problem") !== false
+            ) {
                 array_push($newstr, "'pd'");
             }
 
             $words = implode(',', $newstr);
             // check for search type
-            if( $search_type != 'user' ) {
+            if ($search_type != 'user') {
                 $posts = Post::whereRaw("lower(replace(title,' ','')) in ($words)")
                     ->orWhereRaw("lower(replace(category,' ','')) in ($words)")
-                    ->orWhereIn('user_id', function($query) use($words) {
+                    ->orWhereIn('user_id', function ($query) use ($words) {
                         $query->select('id')->from('users')->whereRaw("lower(replace(name,' ','')) in ($words)");
                     })
-                    ->orderBy('created_at', 'desc')->where('hidden','=',0)->paginate(5);
+                    ->orderBy('created_at', 'desc')->where('hidden', '=', 0)->paginate(5);
             } else {
                 $posts = Post::find_space($words); // for user search
             }
         }
 
-        if( $search_type == 'user' ) {
+        if ($search_type == 'user') {
             return view('home')->with('posts', $posts);
         } else {
             return view('posts.index')->with('posts', $posts);
@@ -381,27 +382,26 @@ class PostsController extends Controller
     }
 
     // Draft
-    public function draftSearch(Request $request) {
+    public function draftSearch(Request $request)
+    {
         $search_text = $request->input('search');
         $search_type = $request->input('searchField');
 
         $search_text = strtolower($search_text);
 
-        if ( $search_type == "user" ) {
+        if ($search_type == "user") {
 
             $user_id = auth()->user()->id;
 
             $posts = Post::where('user_id', '=', $user_id)
-                ->whereRaw('LOWER(`title`) LIKE ? ', ['%'. $search_text .'%'])
-                ->orWhereRaw('LOWER(`category`) LIKE ? ', ['%'. $search_text .'%'])
+                ->whereRaw('LOWER(`title`) LIKE ? ', ['%' . $search_text . '%'])
+                ->orWhereRaw('LOWER(`category`) LIKE ? ', ['%' . $search_text . '%'])
                 ->orderBy('created_at', 'desc')->paginate(5);
-
         } else {
 
-            $posts = Post::whereRaw('LOWER(`title`) LIKE ? ', ['%'. $search_text .'%'])
-                ->orWhereRaw('LOWER(`category`) LIKE ? ', ['%'. $search_text .'%'])
+            $posts = Post::whereRaw('LOWER(`title`) LIKE ? ', ['%' . $search_text . '%'])
+                ->orWhereRaw('LOWER(`category`) LIKE ? ', ['%' . $search_text . '%'])
                 ->orderBy('created_at', 'desc')->paginate(5);
-
         }
     }
 }
