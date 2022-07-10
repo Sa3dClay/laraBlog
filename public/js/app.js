@@ -75,7 +75,13 @@ module.exports = __webpack_require__(2);
 /* 1 */
 /***/ (function(module, exports) {
 
-document.getElementById("app").style.minHeight = window.outerHeight - 116 + 'px';
+document.getElementById("app").style.minHeight = window.outerHeight - 116 + "px";
+// setup ajax
+$.ajaxSetup({
+  headers: {
+    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+  }
+});
 
 /***/ }),
 /* 2 */

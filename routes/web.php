@@ -60,6 +60,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'assign.guard:admin,admin/log
 
 // User
 Route::get('profile/{user}', 'UserController@show');
+Route::post('follow', 'UserController@followUser')->name('follow');
 
 // Post
 Route::resource('posts', 'PostsController');
