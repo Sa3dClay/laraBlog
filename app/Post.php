@@ -38,14 +38,19 @@ class Post extends Model
     {
         $followings_ids = auth()->user()->followings()->pluck('following_id');
 
-        return $this->whereIn('user_id', $followings_ids)->orderBy('id', 'desc')->get();
+        return $this->notMine()->whereIn('user_id', $followings_ids)->orderBy('id', 'desc')->get();
     }
 
     public function scopePostsFromNotFollowings()
     {
         $followings_ids = auth()->user()->followings()->pluck('following_id');
 
-        return $this->whereNotIn('user_id', $followings_ids)->orderBy('id', 'desc')->get();
+        return $this->notMine()->whereNotIn('user_id', $followings_ids)->orderBy('id', 'desc')->get();
+    }
+
+    public function scopeNotMine()
+    {
+        return $this->where('user_id', '!=', auth()->id());
     }
 
     protected static function boot()

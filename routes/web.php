@@ -63,7 +63,7 @@ Route::get('profile/{user}', 'UserController@show');
 Route::post('follow', 'UserController@followUser')->name('follow');
 
 // Post
-Route::resource('posts', 'PostsController');
+Route::resource('posts', 'PostsController')->middleware('auth');
 Route::get('/post/search', 'PostsController@search');
 
 // Like

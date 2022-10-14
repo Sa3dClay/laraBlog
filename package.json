@@ -12,14 +12,13 @@
     "devDependencies": {
         "axios": "^0.21",
         "bootstrap": "^4.0.0",
-        "popper.js": "^1.12",
         "cross-env": "^5.1",
         "jquery": "^3.2",
         "laravel-mix": "^2.0",
         "lodash": "^4.17.21",
-        "vue": "^2.5.7"
-    },
-    "dependencies": {
+        "popper.js": "^1.12",
+        "vue": "^2.5.7",
+        "node-sass": "^4.14.1",
         "vue-router": "^3.4.0"
     }
 }
