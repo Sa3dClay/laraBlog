@@ -14,11 +14,11 @@
         "bootstrap": "^4.0.0",
         "cross-env": "^5.1",
         "jquery": "^3.2",
-        "laravel-mix": "^2.0",
+        "laravel-mix": "^6.0",
         "lodash": "^4.17.21",
         "popper.js": "^1.12",
         "vue": "^2.5.7",
-        "node-sass": "^4.14.1",
+        "node-sass": "^9.0.0",
         "vue-router": "^3.4.0"
     }
 }
